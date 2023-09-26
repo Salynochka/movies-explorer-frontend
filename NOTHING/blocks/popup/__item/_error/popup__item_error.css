@@ -1,0 +1,4 @@
+.popup__item_error{
+    border: 0px solid rgba(255, 0, 0, 1);
+    border-bottom-width: 1px;
+}

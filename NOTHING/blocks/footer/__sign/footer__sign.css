@@ -1,0 +1,25 @@
+.footer__sign{
+    margin: 0;
+    margin-top: 67px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #545454;
+}
+
+@media screen and (max-width: 900px){
+    .footer__sign{
+    margin-left: 19px;
+    }
+}
+
+
+@media screen and (max-width: 500px){
+    .footer__sign{
+    margin-left: 14px;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 48px;
+    }
+}

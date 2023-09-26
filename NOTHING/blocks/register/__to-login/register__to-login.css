@@ -1,0 +1,14 @@
+.register__to-login{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.register__to-login:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}

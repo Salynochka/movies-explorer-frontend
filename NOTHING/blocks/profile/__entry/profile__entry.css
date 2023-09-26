@@ -1,0 +1,11 @@
+.profile__entry{
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+@media screen and (max-width: 600px){
+    .profile__entry{
+    padding: 0;
+    }
+}

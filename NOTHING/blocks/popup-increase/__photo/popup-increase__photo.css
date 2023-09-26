@@ -1,0 +1,6 @@
+.popup-increase__photo{
+    max-width: 75vw;
+    max-height: 75vh;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.5);
+}

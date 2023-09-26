@@ -1,0 +1,10 @@
+.popup-increase__heading{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0;
+    margin-top: 10px;
+    color: #FFFFFF;
+    /*position: absolute;*/
+}
