@@ -1,0 +1,23 @@
+.search{
+    background: #202020;
+}
+
+.search__info{
+    display: flex;
+    flex-direction: row;
+}
+
+.search__title{
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 34px;
+    text-align: left;
+    background: #8B8B8B;
+    margin-top: 70px;
+    border-bottom: #424242;
+    border-bottom-width: 1140px;
+}
+
+.search__icon{
+    background-image: url(../../../images/);
+}

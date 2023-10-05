@@ -1,0 +1,36 @@
+.filter{
+    background: #202020;
+}
+
+.filter__info{
+    margin-top: 33px;
+    margin-bottom: 48px;
+    display: block;
+}
+
+.filter__checkbox{
+    background: #EBEBEB;
+    width: 36px;
+    height: 20px;
+    border-radius: 20px;
+}
+
+.filter__checkbox_round{
+    background: #F5F5F5;
+    width: 36px;
+    height: 20px;
+    border-radius: 20px;
+}
+
+.filter__checkbox:hover{
+    cursor: pointer;
+}
+
+.filter__text{
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    color: #FFFFFF;
+    margin-left: 14px;
+}

@@ -6,25 +6,18 @@ import AboutMe from "./AboutMe/AboutMe";
 import Portfolio from "./Portfolio/Portfolio";
 
 function Main(props) {
-  
-    return (
-      <>
-        <main>
-        <Promo 
-        />
-        <NavTab 
-        />
-        <AboutProject 
-        />
-        <Techs 
-        />
-        <AboutMe 
-        />
-        <Portfolio 
-        />
-        </main>
-      </>
-    );
-  }
+  return (
+    <>
+      <main>
+        <Promo />
+        <NavTab />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </main>
+    </>
+  );
+}
 
 export default Main;

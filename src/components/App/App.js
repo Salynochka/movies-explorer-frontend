@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Main from "../Main/Main";
@@ -18,52 +18,16 @@ function App() {
       <div className="root">
         <div className="page">
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                />
-              }
-            />
-            <Route
-              path="/movies"
-              element={
-                <Movies
-                />
-              }
-            />
-            <Route
-              path="/saved-movies"
-              element={
-                <SavedMovies
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                />
-              }
-            />
-            <Route
-              path="/signin"
-              element={
-                <Login
-                />
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <Register
-                />
-              }
-            />
+            <Route path="/" element={<Main />} />
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/saved-movies" element={<SavedMovies />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<Register />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <ErrorWindow
-            // isOpen={}
+          // isOpen={}
           />
         </div>
       </div>

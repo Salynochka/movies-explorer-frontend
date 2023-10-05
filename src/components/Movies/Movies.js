@@ -1,25 +1,21 @@
+import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import Preloader from "./Preloader/Preloader";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
-import MoviesCard from "./MoviesCard/MoviesCard";
+import Footer from "../Footer/Footer";
 
 function Movies(props) {
-  
-    return (
-      <>
-        <main>
-        <SearchForm 
-        />
-        <FilterCheckbox 
-        />
-        <MoviesCardList 
-        />
-        <MoviesCard 
-        />
-        </main>
-      </>
-    );
-  }
+  return (
+    <>
+      <Header />
+      <SearchForm />
+      <FilterCheckbox />
+      <MoviesCardList />
+      <Preloader />
+      <Footer />
+    </>
+  );
+}
 
 export default Movies;

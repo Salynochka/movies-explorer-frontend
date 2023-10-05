@@ -1,18 +1,19 @@
+import Header from "../Header/Header";
+import SearchForm from "./SearchForm/SearchForm";
+import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
-import MoviesCard from "../Movies/MoviesCard/MoviesCard";
+import Footer from "../Footer/Footer";
 
-function Movies(props) {
-  
-    return (
-      <>
-        <movies>
-            <MoviesCardList 
-            />
-            <MoviesCard 
-            />
-        </movies>
-      </>
-    );
-  }
+function SavedMovies(props) {
+  return (
+    <>
+      <Header />
+      <SearchForm />
+      <FilterCheckbox />
+      <MoviesCardList />
+      <Footer />
+    </>
+  );
+}
 
-export default Movies;
+export default SavedMovies;

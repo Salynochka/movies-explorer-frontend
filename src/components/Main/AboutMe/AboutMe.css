@@ -1,0 +1,56 @@
+.student{
+    background-color: #202020;
+    ;
+}
+
+.student__header{
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 27px;
+    color: white;
+}
+
+.student__container{
+    display: flex;
+    flex-direction: row;
+}
+
+.student__info{
+    display: flex;
+}
+
+.student__name{
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 58px;
+    color: white;
+}
+
+.student__major{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+    color: white;
+}
+
+.student__description{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: white;
+}
+
+.student__link{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    text-decoration: none;
+    color: white;
+}
+
+
+.student__photo{
+    width: 270px;
+    height: 327px;
+    border-radius: 10px;
+}
