@@ -1,6 +1,7 @@
 import React from "react";
-import './Login.css';
+import "./Login.css";
 import { Link } from "react-router-dom";
+import logo from "../../images/logo.svg";
 
 function Login(props) {
   const [formValue, setFormValue] = React.useState({
@@ -23,7 +24,7 @@ function Login(props) {
 
   return (
     <>
-      <img className="logo" />
+      <img className="login__logo" src={logo} alt="Логотип"/>
       <section className="login">
         <h2 className="login__title">Рады видеть!</h2>
         <div className="login__container" onSubmit={handleSubmit}>
@@ -56,7 +57,9 @@ function Login(props) {
               />
               <span className="login__form-error login__form-error_type_password password-error" />
             </fieldset>
-            <button className="login__button" type="submit">Зарегистрироваться</button>
+            <button className="login__button" type="submit">
+              Зарегистрироваться
+            </button>
             <div className="login__ask">
               <h3 className="login__question">Уже зарегистрированы? </h3>
               <Link to="/signup" className="login__to-register">

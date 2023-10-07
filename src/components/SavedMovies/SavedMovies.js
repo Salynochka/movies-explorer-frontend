@@ -1,6 +1,6 @@
 import Header from "../Header/Header";
-import SearchForm from "./SearchForm/SearchForm";
-import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
+import SearchForm from "../Movies/SearchForm/SearchForm";
+import FilterCheckbox from "../Movies/FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 

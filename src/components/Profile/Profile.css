@@ -1,0 +1,73 @@
+.profile{
+    background: #202020;
+    max-width: 410px;
+}
+
+.profile__title{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 29px;
+    text-align: center;
+    color: white;
+    margin-top: 74px;
+}
+
+.profile__info{
+    margin-top: 123px;
+}
+
+.profile__line{
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.profile__line:first-of-type{
+    border-bottom-color: #424242;
+    border-bottom-width: 410px;
+}
+
+.profile__heading{
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 13px;
+    text-align: left;
+    color: white;
+}
+
+.profile__name{
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    text-align: right;
+    color: white;
+}
+
+.profile__email{
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    text-align: right;
+    color: white;
+}
+
+.profile__changing{
+    margin-top: 204px;
+}
+
+.profile__edit{
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: center;
+    color: white;
+}
+
+.profile__to-login{
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    color: #EE3465;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import './Register.css';
 import { Link } from "react-router-dom";
+import logo from "../../images/logo.svg";
 
 function Register(props) {
   const [formValue, setFormValue] = React.useState({
@@ -23,7 +24,7 @@ function Register(props) {
 
   return (
     <>
-      <img className="logo"/>
+      <img className="register__logo" src={logo} alt="Логотип"/>
       <section className="register">
         <h2 className="register__title">Добро пожаловать!</h2>
         <div className="register__container" onSubmit={handleSubmit}>

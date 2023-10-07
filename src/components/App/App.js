@@ -1,5 +1,7 @@
+import "./App.css";
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
 
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -9,14 +11,11 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import ErrorWindow from "../ErrorWindow/ErrorWindow";
 
-import { CurrentUserContext } from "../../context/CurrentUserContext.js";
-// import { ProtectedRoute } from "./ProtectedRoute.js";
-
 function App() {
   return (
-    <CurrentUserContext.Provider>
-      <div className="root">
-        <div className="page">
+    <div className="root">
+      <div className="page">
+        <ErrorBoundary fallback={<p>Something went wrong</p>}>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/movies" element={<Movies />} />
@@ -26,12 +25,12 @@ function App() {
             <Route path="/signup" element={<Register />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-          <ErrorWindow
-          // isOpen={}
-          />
-        </div>
+        </ErrorBoundary>
+        <ErrorWindow
+        // isOpen={}
+        />
       </div>
-    </CurrentUserContext.Provider>
+    </div>
   );
 }
 

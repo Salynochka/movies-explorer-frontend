@@ -1,4 +1,5 @@
 import "./Promo.css";
+import webWorld from "../../../images/webWorld.png"
 
 function Promo(props) {
   return (
@@ -17,7 +18,7 @@ function Promo(props) {
         </div>
         <img
           className="promo-web-world"
-          src="web-world"
+          src={webWorld}
           alt="Планета из слова Веб"
         />
       </div>

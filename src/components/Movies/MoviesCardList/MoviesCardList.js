@@ -1,4 +1,4 @@
-import "./MoviesCards.css";
+import "../MoviesCard/MoviesCard.css";
 import MoviesCard from "../MoviesCard/MoviesCard.js";
 
 function MoviesCards(props) {

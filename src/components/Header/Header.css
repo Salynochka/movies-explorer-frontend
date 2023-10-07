@@ -8,12 +8,13 @@
     justify-content: space-between;
     align-items: center;
     color: white;
+    max-width: 1140px;
+    margin: 0 auto;
 }
 
 .header__logo{
     height: 38px;
     width: 38px;
-    margin-top: 18px;
     background-image: url(../../images/logo.svg);
 }
 
@@ -53,6 +54,7 @@
 }
 
 .header__name{
+    vertical-align: middle;
 }
 
 .header__profile{
@@ -71,12 +73,18 @@
 .header__entrance-buttons_visible{
     visibility: visible;
     opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .header__register{
-    height: 26px;
-    width: 26px;
     margin-right: 30px;
+}
+
+.header__register:hover{
+    cursor: pointer;
 }
 
 .header__button-login{
@@ -93,6 +101,7 @@
     margin-top: 21px;
     text-align: center;
     border: none;
+    align-self: center;
 }
 
 

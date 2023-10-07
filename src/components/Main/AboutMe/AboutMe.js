@@ -1,4 +1,5 @@
 import "./AboutMe.css";
+import PhotoOfAlena from "../../../images/photoOfAlena.jpg";
 
 function AboutMe(props) {
   return (
@@ -15,11 +16,13 @@ function AboutMe(props) {
             2022 году работаю репетитором по математике. Недавно закончила курс
             по веб-разработке. На текущий момент нахожусь в поиске стажировки.{" "}
           </p>
-          <a className="student__link">GitHub</a>
+          <a className="student__link" href="https://github.com/Salynochka">
+            GitHub
+          </a>
         </div>
         <img
           className="student__photo"
-          src="Photo of Alena"
+          src={PhotoOfAlena}
           alt="Photo of Alena"
         ></img>
       </div>
