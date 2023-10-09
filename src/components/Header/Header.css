@@ -81,6 +81,12 @@
 
 .header__register{
     margin-right: 30px;
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: right;
 }
 
 .header__register:hover{
@@ -98,10 +104,11 @@
     background: #3DDC84;
     color: black;
     padding: 0;
-    margin-top: 21px;
-    text-align: center;
     border: none;
-    align-self: center;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

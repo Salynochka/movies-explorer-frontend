@@ -1,5 +1,7 @@
 .techs{
     background-color: #272727;
+    width: 100%;
+    letter-spacing: -0.04em;
 }
 
 .techs__theme{
@@ -10,14 +12,15 @@
     color: white;
     padding-bottom: 23px;
     max-width: 1140px;
-    border-bottom: #DADADA;
-    border-width: 1px;
-    border-width: 1140px;
+    border-bottom: 1px solid #DADADA;
+    margin: 100px auto 0;
 }
 
 .techs__container{
     display: flex;
     flex-direction: column;
+    max-width: 1140px;
+    margin: 0 auto;
 }
 
 .techs__header{
@@ -26,7 +29,7 @@
     line-height: 58px;
     text-align: center;
     color: white;
-    margin-top: 90px;
+    margin: 90px 0 0;
 }
 
 .techs__text{
@@ -35,15 +38,17 @@
     line-height: 20px;
     text-align: center;
     color: white;    
-    margin-top: 26px;
+    margin: 26px auto 0;
+    max-width: 460px;
 }
 
 .techs__technologies{
     display: flex;
     flex-direction: row;
-    row-gap: 10px;
+    column-gap: 10px;
     margin-top: 100px;
     margin-bottom: 100px;
+    justify-content: center;
 }
 
 .techs__element{
@@ -54,6 +59,9 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
-    text-align: center;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }

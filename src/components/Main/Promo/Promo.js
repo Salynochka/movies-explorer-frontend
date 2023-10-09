@@ -7,7 +7,7 @@ function Promo(props) {
       <div className="promo__container">
         <div className="promo__main">
           <h1 className="promo__header">
-            Учебный проект студента факультета Веб-разработки.
+            Учебный проект студента факультета Веб&#8209;разработки.
           </h1>
           <p className="promo__text">
             Листайте ниже, чтобы узнать больше про этот проект и его создателя.

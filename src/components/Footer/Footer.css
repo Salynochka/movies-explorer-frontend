@@ -1,5 +1,5 @@
 .footer{
-
+    background: #202020;
 }
 
 .footer__title{
@@ -8,33 +8,46 @@
     line-height: 16px;
     text-align: center;
     color: #8B8B8B;
-    background: #202020;
     margin-top: 79px;
-    border-bottom: #424242;
-    border-width: 1140px;
+    border-bottom: 1px solid #424242;
+    padding-bottom: 20px;
+    margin: 80px auto 0;
+    max-width: 1140px;
 }
 
 .footer__info{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     margin-top: 20px;
     font-size: 13px;
     font-weight: 400;
     line-height: 16px;
     color: white;
+    margin: 20px auto 20px;
+    max-width: 1140px;
 }
 
 .footer__year{
-    align-items: self-end;
+    display: flex;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: left;
 }
 
 .footer__nav{
     display: flex;
     flex-direction: row;
-    row-gap: 20px;
-    color: white;
+    column-gap: 20px;
 }
 
 .footer__link{
     margin-right: 0;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    color: white;
 }
