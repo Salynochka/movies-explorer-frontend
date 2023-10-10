@@ -1,11 +1,13 @@
 .register{
     background: #202020;
-    max-width: 396px;
+    height: 100vh;
 }
 
 .register__logo{
     width: 38px;
     height: 38px;
+    margin: 80px 0 0;
+    background: #202020;
 }
 
 .register__title{
@@ -14,12 +16,14 @@
     line-height: 29px;
     text-align: left;
     color: #FFFFFF;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 40px 0 20px;
 }
 
 .register__container{
-
+    display: flex;
+    flex-direction: column;
+    max-width: 396px;
+    margin: 0 auto;
 }
 
 .register__form{
@@ -27,7 +31,8 @@
 }
 
 .register__input{
-
+    border: none;
+    padding: 0;
 }
 
 .register__heading{
@@ -36,6 +41,7 @@
     line-height: 12px;
     text-align: left;
     color: #8B8B8B;
+    margin: 20px 0 10px;
 }
 
 .register__item{
@@ -47,7 +53,16 @@
     background: #2F2F2F;
     width: 396px;
     height: 46px;
+    border: none;
+    padding: 0;
     border-radius: 8px;
+}
+
+.register__item::placeholder{
+    padding-left: 15px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
 }
 
 .register__form-error{
@@ -56,6 +71,7 @@
     line-height: 12px;
     text-align: left;
     color: #EE3465;
+    padding: 0;
 }
 
 .register__button{
@@ -68,13 +84,17 @@
     width: 396px;
     height: 45px;
     border-radius: 3px;
-    margin-top: 69px;
+    margin-top: 90px;
+    border: none;
+    padding: 0;
 }
 
 .register__ask{
     display: flex;
     flex-direction: row;
     margin-top: 16px;
+    justify-content: center;
+    column-gap: 6px;
 }
 
 .register__question{
@@ -83,12 +103,14 @@
     line-height: 17px;
     text-align: center;
     color: #8B8B8B;
+    margin-top: 0;
 }
 
 .register__to-login{
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
-    text-align: center;    
     color: #4285F4;
+    text-decoration: none;
+    margin-top: 0;
 }

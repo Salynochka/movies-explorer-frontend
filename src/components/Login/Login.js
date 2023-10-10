@@ -24,10 +24,10 @@ function Login(props) {
 
   return (
     <>
-      <img className="login__logo" src={logo} alt="Логотип"/>
       <section className="login">
-        <h2 className="login__title">Рады видеть!</h2>
         <div className="login__container" onSubmit={handleSubmit}>
+          <img className="login__logo" src={logo} alt="Логотип" />
+          <h2 className="login__title">Рады видеть!</h2>
           <form className="login__form" name="login">
             <fieldset className="login__input">
               <h2 className="login__heading">E-mail</h2>
@@ -58,12 +58,12 @@ function Login(props) {
               <span className="login__form-error login__form-error_type_password password-error" />
             </fieldset>
             <button className="login__button" type="submit">
-              Зарегистрироваться
+              Войти
             </button>
             <div className="login__ask">
-              <h3 className="login__question">Уже зарегистрированы? </h3>
+              <h3 className="login__question">Ещё не зарегистрированы? </h3>
               <Link to="/signup" className="login__to-register">
-                Войти
+                Регистрация
               </Link>
             </div>
           </form>

@@ -4,8 +4,8 @@ function SearchForm() {
   return (
     <div className="search">
       <div className="search__info">
-        <h3 className="search__title">Фильм</h3>
-        <img className="search__icon" alt="Поиск"/>
+        <input className="search__input" placeholder="Фильм"/>
+        <button className="search__button" alt="Поиск"/>
       </div>
     </div>
   );

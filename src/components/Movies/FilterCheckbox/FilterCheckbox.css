@@ -5,25 +5,48 @@
 .filter__info{
     margin-top: 33px;
     margin-bottom: 48px;
-    display: block;
+    display: flex;
+    max-width: 1140px;
+    margin: 32px auto 47px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .filter__checkbox{
-    background: #EBEBEB;
     width: 36px;
     height: 20px;
     border-radius: 20px;
+    background: #EBEBEB;
+    padding: 0;
+    margin: 0;
+    border: none;
+    position: relative;
 }
 
-.filter__checkbox_round{
-    background: #F5F5F5;
-    width: 36px;
-    height: 20px;
-    border-radius: 20px;
+.filter__checkbox_active{
+    background: #3DDC84;
 }
 
 .filter__checkbox:hover{
     cursor: pointer;
+}
+
+.filter__checkbox-round{
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    position: absolute;
+    margin: 0;
+    border: none;
+    top: 2px;
+    left: 2px;
+    background-color: #F5F5F5;
+}
+
+.filter__checkbox-round_active{
+    top: 2px;
+    left: 18px;
 }
 
 .filter__text{
@@ -32,5 +55,5 @@
     line-height: 18px;
     text-align: left;
     color: #FFFFFF;
-    margin-left: 14px;
+    margin: 0 0 0 14px;
 }

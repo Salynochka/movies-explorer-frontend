@@ -1,5 +1,6 @@
 .card{
-
+    margin: 70px auto 0;
+    position: relative;
 }
 
 .card__info{
@@ -13,10 +14,8 @@
 
 .card__photo{
     width: 270px;
-    height: 151px;
+    min-height: 151px;
     object-fit: cover;
-    object-position: center;
-    overflow: hidden;
     border-radius: 10px 10px 0 0;
 }
 
@@ -29,7 +28,7 @@
 .card__section{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .card__title{
@@ -37,11 +36,21 @@
     font-weight: 500;
     line-height: 16px;
     text-align: left;
+    margin: 0;
+    color: white;
 }
 
 .card__save-button{
     width: 16px;
     height: 16px;
+    background: #313131;
+    border-radius: 16px;
+    padding: 0;
+    border: 2px solid white;
+}
+
+.card__save-button_active{
+    background: #2BE080;
 }
 
 .card__duration{

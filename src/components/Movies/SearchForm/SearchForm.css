@@ -5,19 +5,33 @@
 .search__info{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    max-width: 1140px;
+    margin: 70px auto 0;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #424242;
 }
 
-.search__title{
+.search__input{
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.search__input::placeholder{
     font-size: 28px;
     font-weight: 500;
     line-height: 34px;
     text-align: left;
-    background: #8B8B8B;
-    margin-top: 70px;
-    border-bottom: #424242;
-    border-bottom-width: 1140px;
+    color: #8B8B8B;
 }
 
-.search__icon{
+.search__button{
     background-image: url(../../../images/find.png);
+    padding: 0;
+    border: none;
+    margin: 0;
+    background-color: #202020;
+    width: 34px;
+    height: 34px;
 }

@@ -24,10 +24,10 @@ function Register(props) {
 
   return (
     <>
-      <img className="register__logo" src={logo} alt="Логотип"/>
       <section className="register">
-        <h2 className="register__title">Добро пожаловать!</h2>
         <div className="register__container" onSubmit={handleSubmit}>
+          <img className="register__logo" src={logo} alt="Логотип"/>
+          <h2 className="register__title">Добро пожаловать!</h2>
           <form
             className="register__form"
             name="register"
@@ -75,7 +75,7 @@ function Register(props) {
             </fieldset>
             <button className="register__button" type="submit">Зарегистрироваться</button>
             <div className="register__ask">
-              <h3 className="register__question">Уже зарегистрированы? </h3>
+              <h3 className="register__question">Уже зарегистрированы?</h3>
               <Link to="/signin" className="register__to-login">
                 Войти
               </Link>

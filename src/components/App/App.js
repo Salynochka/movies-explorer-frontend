@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
+import ErrorBoundary from "../ErrorBoudaries/ErrorBoundary";
 
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="root">
       <div className="page">
-        <ErrorBoundary fallback={<p>Something went wrong</p>}>
+        <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/movies" element={<Movies />} />
