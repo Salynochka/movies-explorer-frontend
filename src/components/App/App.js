@@ -11,8 +11,6 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import ErrorWindow from "../ErrorWindow/ErrorWindow";
 
-import Navigation from "../Main/Navigation/Navigation";
-
 function App() {
   return (
     <div className="root">
@@ -25,7 +23,6 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="/nav" element={<Navigation />} />
             <Route path="*" element={<ErrorWindow />} />
           </Routes>
         </ErrorBoundary>
