@@ -1,6 +1,6 @@
 .profile{
     background: #202020;
-    height: 100vh;
+    height: 100%;
 }
 
 .profile__title{
@@ -14,7 +14,6 @@
 }
 
 .profile__info{
-    margin-top: 123px;
     flex-direction: column;
     max-width: 410px;
     margin: 123px auto 0;
@@ -83,4 +82,18 @@
     line-height: 16px;
     color: #EE3465;
     text-decoration: none;
+}
+
+@media screen and (max-width: 800px){
+    .profile__title{
+        margin-top: 240px;
+    }
+
+    .profile__info{
+        margin-top: 96px;
+    }
+
+    .profile__changing{
+        margin: 195px auto 269px;
+    }
 }

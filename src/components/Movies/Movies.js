@@ -6,13 +6,13 @@ import Footer from "../Footer/Footer";
 
 function Movies(props) {
   return (
-    <section className="movies">
+    <>
       <Header />
       <SearchForm />
       <FilterCheckbox />
       <MoviesCardList />
       <Footer />
-    </section>
+    </>
   );
 }
 

@@ -7,6 +7,11 @@ function AboutMe(props) {
       <h2 className="student__theme">Студент</h2>
       <div className="student__container">
         <div className="student__info">
+          <img
+            className="student__photo_mobile"
+            src={PhotoOfAlena}
+            alt="student"
+          ></img>
           <h3 className="student__name">Алена</h3>
           <h4 className="student__major">Фронтенд-разработчик, 27 лет</h4>
           <p className="student__description">
@@ -17,7 +22,7 @@ function AboutMe(props) {
             по веб-разработке. На текущий момент нахожусь в поиске стажировки.{" "}
           </p>
           <a className="student__link" href="https://github.com/Salynochka" target="_blank" rel="noreferrer">
-            GitHub
+            Github
           </a>
         </div>
         <img

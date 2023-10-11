@@ -26,6 +26,7 @@
     justify-content: space-between;
     align-items: center;
     letter-spacing: -0.04em;
+    border-bottom: 1px solid #DADADA;
 }
 
 .portfolio__part:last-of-type{
@@ -56,4 +57,44 @@
     line-height: 50px;
     text-align: left;
     color: white;
+}
+
+@media screen and (max-width: 800px){
+    .portfolio__theme{
+        color: #A0A0A0;
+        max-width: 670px;
+        margin: 0 auto 50px;
+    }
+    
+    .portfolio__container{
+        max-width: 670px;
+        margin-bottom: 70px;
+    }
+
+    .portfolio__title{
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .portfolio__theme{
+        max-width: 284px;
+        margin-bottom: 40px;
+    }
+    
+    .portfolio__container{
+        max-width: 284px;
+    }
+
+    .portfolio__title{
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: -0.04em;
+        vertical-align: middle;
+    }
+
+    .portfolio__link{
+        width: 12px;
+        height: 12px;
+    }
 }

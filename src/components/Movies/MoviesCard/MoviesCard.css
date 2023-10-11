@@ -61,3 +61,15 @@
     color: #8B8B8B;
     margin-top: 10px;
 }
+
+@media screen and (max-width: 800px){
+    .card__info{
+        width: 339px;
+        height: 257px;
+    }
+
+    .card__photo{
+        width: 339px;
+        min-height: 190px;
+    }
+}

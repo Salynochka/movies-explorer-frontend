@@ -1,6 +1,6 @@
 .error{
     background-color: #202020;
-    height: 100vh;
+    height: 100%;
 }
 
 .error__info{
@@ -35,4 +35,15 @@
     text-align: center;
     margin: 184px auto 60px;
     text-decoration: none;
+}
+
+@media screen and (max-width: 800px){
+    .error__text{
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .error__type{
+        margin-top: 408px;
+    }
 }

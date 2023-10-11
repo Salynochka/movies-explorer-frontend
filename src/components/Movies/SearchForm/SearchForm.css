@@ -24,6 +24,7 @@
     line-height: 34px;
     text-align: left;
     color: #8B8B8B;
+    margin-bottom: 13px;
 }
 
 .search__button{
@@ -34,4 +35,11 @@
     background-color: #202020;
     width: 34px;
     height: 34px;
+}
+
+@media screen and (max-width: 800px){
+    .search__info{
+        max-width: 708px;
+        margin-top: 80px;
+    }
 }

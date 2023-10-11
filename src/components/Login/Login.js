@@ -4,28 +4,11 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 
 function Login(props) {
-  const [formValue, setFormValue] = React.useState({
-    password: "",
-    email: "",
-  });
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    props.handleSubmit(formValue.password, formValue.email);
-  }
 
   return (
     <>
       <section className="login">
-        <div className="login__container" onSubmit={handleSubmit}>
+        <div className="login__container" onSubmit={props.handleSubmit}>
           <img className="login__logo" src={logo} alt="Логотип" />
           <h2 className="login__title">Рады видеть!</h2>
           <form className="login__form" name="login">
@@ -39,8 +22,6 @@ function Login(props) {
                 minLength="2"
                 maxLength="40"
                 required
-                onChange={handleChange}
-                value={formValue.email || ""}
               />
               <span className="login__form-error login__form-error_type_email email-error" />
               <h2 className="login__heading">Пароль</h2>
@@ -52,8 +33,6 @@ function Login(props) {
                 minLength="2"
                 maxLength="200"
                 required
-                onChange={handleChange}
-                value={formValue.password || ""}
               />
               <span className="login__form-error login__form-error_type_password password-error" />
             </fieldset>

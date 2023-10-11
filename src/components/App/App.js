@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ErrorBoundary from "../ErrorBoudaries/ErrorBoundary";
 
 import Main from "../Main/Main";
@@ -10,6 +10,8 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import ErrorWindow from "../ErrorWindow/ErrorWindow";
+
+import Navigation from "../Main/Navigation/Navigation";
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
+            <Route path="/nav" element={<Navigation />} />
             <Route path="*" element={<ErrorWindow />} />
           </Routes>
         </ErrorBoundary>

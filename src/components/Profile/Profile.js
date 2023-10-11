@@ -24,7 +24,7 @@ function Profile(props) {
             Редактировать
           </button>
           <Link to="/signin" className="profile__to-login">
-            Выйти из аккаунта?
+            Выйти из аккаунта
           </Link>
         </div>
       </section>

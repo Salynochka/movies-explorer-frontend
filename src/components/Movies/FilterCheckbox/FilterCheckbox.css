@@ -47,6 +47,10 @@
     left: 18px;
 }
 
+.filter__text_mobile{
+    display: none;
+}
+
 .filter__text{
     font-size: 13px;
     font-weight: 400;
@@ -54,4 +58,29 @@
     text-align: left;
     color: #FFFFFF;
     margin: 0 0 0 14px;
+    display: block;
+}
+
+@media screen and (max-width: 800px){
+    .filter__info{
+        max-width: 708px;
+        margin: 30px auto 61px;
+        flex-direction: row;
+        justify-content: end;
+        align-items: center;
+    }
+
+    .filter__text_mobile{
+        display: block;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 18px;
+        text-align: left;
+        color: #FFFFFF;
+        margin: 0 14px 0 0;
+    }
+
+    .filter__text{
+        display: none;
+    }
 }

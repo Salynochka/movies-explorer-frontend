@@ -5,6 +5,11 @@ function Promo(props) {
   return (
     <section className="promo">
       <div className="promo__container">
+      <img
+          className="promo__picture-before"
+          src={webWorld}
+          alt="Планета из слова Веб"
+        />
         <div className="promo__main">
           <h1 className="promo__header">
             Учебный проект студента факультета Веб&#8209;разработки.
@@ -17,7 +22,7 @@ function Promo(props) {
           </button>
         </div>
         <img
-          className="promo-web-world"
+          className="promo__picture-after"
           src={webWorld}
           alt="Планета из слова Веб"
         />

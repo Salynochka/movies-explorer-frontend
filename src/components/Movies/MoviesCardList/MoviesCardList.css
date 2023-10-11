@@ -12,25 +12,13 @@
     margin: 0 auto 0;
 }
 
-@media screen and (max-width: 900px){
-    .cards{
-        grid-template-columns: repeat(2, auto);
-        grid-template-rows: repeat(3, auto);
-        justify-items: center;
-    }
-}
-
-@media screen and (max-width: 600px){
-    .cards{
-        grid-template-columns: repeat(1, auto);
-        grid-template-rows: repeat(6, auto);
-        row-gap: 20px;
-        margin-top: 36px;
-    }
-}
-
 .cards__more{
     background: #202020;
+    display: block;
+}
+
+.cards__more_hidden{
+    display: none;
 }
 
 .cards__button{
@@ -49,4 +37,25 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 15px;
+}
+
+@media screen and (max-width: 800px){
+    .cards__full{
+        max-width: 708px;
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(3, auto);
+        justify-items: center;
+        row-gap: 36px;
+        column-gap: 30px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .cards__full{
+        grid-template-columns: repeat(1, auto);
+        grid-template-rows: repeat(6, auto);
+        row-gap: 20px;
+        margin-top: 36px;
+        max-width: 708px;
+    }
 }

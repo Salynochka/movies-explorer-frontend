@@ -63,9 +63,105 @@
     margin: 100px 0 100px;
 }
 
-
 .student__photo{
     width: 270px;
     height: 327px;
     border-radius: 10px;
+    display: block;
+}
+
+.student__photo_mobile{
+    display: none;
+}
+
+@media screen and (max-width: 800px){
+    .student__container{
+        max-width: 670px;
+    }
+
+    .student__theme{
+        max-width: 670px;
+        margin-top: 90px;
+    }
+
+    .student__description{
+        max-width: 670px;
+        margin-top: 20px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .student__name{
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    .student__info{
+        max-width: 364px;
+    }
+
+    .student__photo{
+        width: 255px;
+        height: 307px;
+    }
+
+    .student__major{
+        margin-top: 16px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .student__link{
+        margin: 87px 0 91px;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .student__container{
+        max-width: 284px;
+        flex-direction: column;
+    }
+
+    .student__theme{
+        max-width: 284px;
+        margin-top: 70px;
+        padding-bottom: 28px;
+    }
+
+    .student__description{
+        max-width: 284px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .student__name{
+        font-size: 40px;
+        line-height: 40px;
+        margin-top: 40px;
+    }
+
+    .student__info{
+        max-width: 284px;
+    }
+
+    .student__photo{
+        display: none;
+    }
+
+    .student__photo_mobile{
+        display: block;
+        width: 292px;
+        height: 352px;
+        border-radius: 10px;
+    }
+
+    .student__major{
+        margin-top: 20px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .student__link{
+        margin: 40px 0 70px;
+    }
 }
