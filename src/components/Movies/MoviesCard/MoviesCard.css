@@ -73,3 +73,15 @@
         min-height: 190px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .card__info{
+        width: 300px;
+        height: 235px;
+    }
+
+    .card__photo{
+        width: 300px;
+        min-height: 168px;
+    }
+}

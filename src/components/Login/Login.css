@@ -132,3 +132,43 @@
         margin-bottom: 232px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .login__container{
+        max-width: 260px;
+    }
+
+    .login__logo{
+        margin: 56px auto 0;
+    }
+
+    .login__item{
+        width: 260px;
+    }
+
+    .login__title{
+        text-align: center;
+        margin: 50px 0 80px;
+    }
+
+    .login__button{
+        font-size: 12px;
+        line-height: 15px;
+        width: 260px;
+        margin-top: 267px;
+    }
+
+    .login__ask{
+        margin: 14px auto 30px;
+    }
+
+    .login__question{
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .login__to-register{
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

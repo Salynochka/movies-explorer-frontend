@@ -43,3 +43,10 @@
         margin-top: 80px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .search__info{
+        max-width: 292px;
+        margin-top: 80px;
+    }
+}

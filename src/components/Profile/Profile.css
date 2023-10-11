@@ -97,3 +97,19 @@
         margin: 195px auto 269px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .profile__title{
+        margin-top: 90px;
+        max-width: 260px;
+    }
+
+    .profile__info{
+        margin-top: 80px;
+        max-width: 260px;
+    }
+
+    .profile__changing{
+        margin: 379px auto 40px;
+    }
+}

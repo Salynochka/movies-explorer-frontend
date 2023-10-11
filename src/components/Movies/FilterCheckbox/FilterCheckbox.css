@@ -84,3 +84,17 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 400px){
+    .filter__info{
+        max-width: 292px;
+        margin: 41px auto 51px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .filter__text_mobile{
+        font-size: 11px;
+    }
+}

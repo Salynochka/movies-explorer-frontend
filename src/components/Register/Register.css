@@ -130,3 +130,43 @@
         margin-bottom: 232px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .register__container{
+        max-width: 260px;
+    }
+
+    .register__logo{
+        margin: 56px auto 0;
+    }
+
+    .register__item{
+        width: 260px;
+    }
+    
+    .register__title{
+        text-align: center;
+        margin: 50px 0 80px;
+    }
+
+    .register__button{
+        font-size: 12px;
+        line-height: 15px;
+        width: 260px;
+        margin-top: 267px;
+    }
+
+    .register__ask{
+        margin: 14px auto 30px;
+    }
+
+    .register__question{
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .register__to-login{
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
