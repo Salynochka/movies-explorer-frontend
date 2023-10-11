@@ -3,11 +3,9 @@
 }
 
 .filter__info{
-    margin-top: 33px;
-    margin-bottom: 48px;
     display: flex;
     max-width: 1140px;
-    margin: 32px auto 47px;
+    margin: 33px auto 48px;
     display: flex;
     flex-direction: row;
     align-items: center;
