@@ -23,12 +23,9 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<ErrorWindow />} />
           </Routes>
         </ErrorBoundary>
-        <ErrorWindow
-        // isOpen={}
-        />
       </div>
     </div>
   );

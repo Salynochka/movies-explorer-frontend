@@ -24,7 +24,7 @@ function Header(props) {
             <img className="header__profile" src={account} alt="Профиль" />
           </Link>
         </div>
-        <div className={`${props.logIn ? "" : "header__entrance-buttons"}`}>
+        <div className={`header__entrance-buttons${props.logIn ? "_hidden" : ""}`}>
           <Link to="/signup" className="header__register">
             Регистрация
           </Link>
