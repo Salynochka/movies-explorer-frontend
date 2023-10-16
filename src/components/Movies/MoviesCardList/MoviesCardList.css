@@ -1,5 +1,6 @@
 .cards{
     background: #202020;
+    margin-top: 130px;
 }
 
 .cards__full{
@@ -61,6 +62,10 @@
 
     .cards__more{
        padding-bottom: 20px;
+    }
+
+    .cards__button{
+        margin-top: 42px;
     }
 }
 

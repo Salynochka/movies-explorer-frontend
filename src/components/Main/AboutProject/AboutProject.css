@@ -102,6 +102,23 @@
     margin: 0;
 }
 
+@media screen and (max-width: 1200px){
+    .project__container{
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .project__theme{
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .project__weeks{
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+}
+
 @media screen and (max-width: 800px){
     .project__container{
         max-width: 670px;

@@ -1,11 +1,13 @@
 import "./Navigation.css";
 import account from "../../../images/account.svg";
+import exit from "../../../images/exit.svg";
 import { Link } from "react-router-dom";
 
 function Navigation(props) {
   return (
-    <section className="navigation">
+    <section className="navigation" isOpen={props.isOpen}>
       <nav className="navigation__menu">
+      <img className="navigation__exit" src={exit} alt="Выход" onClick={props.closeNavigation}/>
         <Link to="/" className="navigation__link">
           <p>Главная</p>
         </Link>

@@ -5,7 +5,7 @@
 .filter__info{
     display: flex;
     max-width: 1140px;
-    margin: 33px auto 48px;
+    margin: 30px auto 48px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -61,10 +61,17 @@
     display: block;
 }
 
+@media screen and (max-width: 1200px){
+    .filter__info{
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+}
+
 @media screen and (max-width: 800px){
     .filter__info{
         max-width: 708px;
-        margin: 30px auto 61px;
+        margin: 30px 20px 61px 30px;
         flex-direction: row;
         justify-content: end;
         align-items: center;
