@@ -1,6 +1,10 @@
 .profile{
     background: #202020;
-    height: 100%;
+}
+
+.profile__section{ 
+    height: 100vh;
+    background: #202020;
 }
 
 .profile__title{
@@ -85,6 +89,10 @@
 }
 
 @media screen and (max-width: 800px){
+    .profile{
+        height: 100%;
+    }
+
     .profile__title{
         margin-top: 240px;
     }
@@ -99,8 +107,12 @@
 }
 
 @media screen and (max-width: 400px){
+    .profile__section{
+        height: 100%;
+    }
+    
     .profile__title{
-        margin-top: 90px;
+        margin-top: 80px;
         max-width: 260px;
     }
 
@@ -109,7 +121,22 @@
         max-width: 260px;
     }
 
+    .profile__line{
+        margin-bottom: 20px;
+    }
+
     .profile__changing{
-        margin: 379px auto 40px;
+        margin: 362px auto 0;
+        padding-bottom: 40px;
+    }
+
+    .profile__edit{
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .profile__to-login{
+        font-size: 12px;
+        line-height: 15px;
     }
 }

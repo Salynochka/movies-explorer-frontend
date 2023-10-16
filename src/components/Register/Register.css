@@ -1,6 +1,6 @@
 .register{
     background: #202020;
-    height: 100%;
+    height: 100vh;
 }
 
 .register__logo{
@@ -115,6 +115,10 @@
 }
 
 @media screen and (max-width: 800px){
+    .register{
+        height: 100%;
+    }
+
     .register__container{
         margin: 96 auto 0;
     }
@@ -131,7 +135,7 @@
     }
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 430px){
     .register__container{
         max-width: 260px;
     }
@@ -146,14 +150,14 @@
     
     .register__title{
         text-align: center;
-        margin: 50px 0 80px;
+        margin: 50px 0 60px;
     }
 
     .register__button{
         font-size: 12px;
         line-height: 15px;
         width: 260px;
-        margin-top: 267px;
+        margin-top: 178px;
     }
 
     .register__ask{

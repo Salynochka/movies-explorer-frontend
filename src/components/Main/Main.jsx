@@ -9,17 +9,17 @@ import "./Main.css";
 
 function Main(props) {
   return (
-    <>
-      <main className="main">
-        <Header />
+    <div className="page">
+      <Header />
+      <main>
         <Promo />
         <AboutProject />
         <Techs />
         <AboutMe />
         <Portfolio />
-        <Footer />
       </main>
-    </>
+      <Footer />
+    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 .student{
     background-color: #202020;
+    padding: 110px 0 0;
 }
 
 .student__theme{
@@ -11,7 +12,7 @@
     padding-bottom: 23px;
     max-width: 1140px;
     border-bottom: 1px solid #DADADA;
-    margin: 110px auto 0;
+    margin: 0 auto 0;
     letter-spacing: -0.04em;
 }
 
@@ -116,16 +117,23 @@
     }
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 400px){
+    .student{
+        padding: 0;
+    }
+    
     .student__container{
         max-width: 284px;
         flex-direction: column;
+        margin-top: 60px;
     }
 
     .student__theme{
         max-width: 284px;
-        margin-top: 70px;
-        padding-bottom: 28px;
+        padding: 70px 0 28px;
+        margin: 0 auto 0;
+        font-size: 18px;
+        line-height: 22px;
     }
 
     .student__description{
@@ -135,9 +143,10 @@
     }
 
     .student__name{
-        font-size: 40px;
-        line-height: 40px;
-        margin-top: 40px;
+        font-size: 30px;
+        line-height: 36px;
+        margin-top: 40px
+
     }
 
     .student__info{
@@ -157,8 +166,13 @@
 
     .student__major{
         margin-top: 20px;
-        font-size: 12px;
-        line-height: 18px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .student__description{
+        font-size: 11px;
+        line-height: 16px;
     }
 
     .student__link{

@@ -19,7 +19,8 @@ function Portfolio(props) {
             href="https://github.com/Salynochka/how-to-learn"
             target="_blank"
             rel="noreferrer"
-          />
+            title="static-website"
+          > </a>
         </li>
         <li className="portfolio__part">
           <a
@@ -35,7 +36,7 @@ function Portfolio(props) {
             href="https://github.com/Salynochka/russian-travel"
             target="_blank"
             rel="noreferrer"
-          />
+          > </a>
         </li>
         <li className="portfolio__part">
           <a
@@ -51,7 +52,7 @@ function Portfolio(props) {
             href="https://github.com/Salynochka/react-mesto-api-full-gha"
             target="_blank"
             rel="noreferrer"
-          />
+          > </a>
         </li>
       </ul>
     </section>

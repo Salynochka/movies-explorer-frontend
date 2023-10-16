@@ -1,9 +1,11 @@
 .header{
     background-color: #073042;
+    padding-top: 18px;
 }
 
-.header-gray{
+.header_type_gray{
     background-color: #202020;
+    padding-top: 18px;
 }
 
 .header__burger{
@@ -174,7 +176,7 @@
 
 @media screen and (max-width: 400px){
     .header__info{
-        max-width: 284px;
+        max-width: 292px;
         margin: 18px auto 18px;
     }
 
@@ -189,5 +191,7 @@
 
     .header__button-login{
         font-size: 10px;
+        width: 54px;
+        height: 26px;
     }
 }

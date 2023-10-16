@@ -8,7 +8,7 @@ function AboutMe(props) {
       <div className="student__container">
         <div className="student__info">
           <img
-            className="student__photo_mobile"
+            className="student__photo student__photo_mobile"
             src={PhotoOfAlena}
             alt="student"
           ></img>

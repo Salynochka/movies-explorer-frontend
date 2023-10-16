@@ -1,6 +1,6 @@
 .error{
     background-color: #202020;
-    height: 100%;
+    height: 100vh;
 }
 
 .error__info{
@@ -38,12 +38,46 @@
 }
 
 @media screen and (max-width: 800px){
+    .error{
+        height: 100%;
+    }
+
     .error__text{
         font-size: 16px;
         line-height: 20px;
+        margin-top: 0;
+        font-weight: 400;
     }
 
     .error__type{
-        margin-top: 408px;
+        margin: 408px auto 0;
+    }
+
+    .error__back{
+        margin-top: 164px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .error{
+        height: 100%;
+    }
+
+    .error__text{
+        font-size: 12px;
+        line-height: 15px;
+        margin-top: 5px;
+    }
+
+    .error__type{
+        font-size: 80px;
+        line-height: 97px;
+        margin-top: 329px;
+    }
+
+    .error__back{
+        font-size: 12px;
+        line-height: 15px;
+        margin: 264px auto 30px;
     }
 }

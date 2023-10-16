@@ -7,7 +7,7 @@ function Header(props) {
   return (
     <header className={`${props.logIn ? "header-gray" : "header"}`}>
       <div className="header__info">
-        <div className={`header__burger${props.fullVersion ? "" : "_hidden"}`}>
+        <div className={`header__burger header__burger${props.fullVersion ? "" : "_hidden"}`}>
           <span className="header__burger-line"></span>
           <span className="header__burger-line"></span>
           <span className="header__burger-line"></span>

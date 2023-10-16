@@ -1,6 +1,7 @@
 .project{
     background: #202020;
     width: 100%;
+    padding: 110px 0 110px;
 }
 
 .project__theme{
@@ -9,7 +10,7 @@
     line-height: 27px;
     color: #FFFFFF;
     max-width: 1140px;
-    margin: 110px auto 0;
+    margin: 0 auto 0;
     padding-bottom: 23px;
     border-bottom: 1px solid #DADADA;
     letter-spacing: -0.04em;
@@ -82,7 +83,7 @@
     display: flex;
     flex-direction: row;
     max-width: 1140px;
-    margin: 14px auto 110px;
+    margin: 14px auto 0;
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
@@ -135,38 +136,47 @@
 }
 
 @media screen and (max-width: 400px){
+    .project{
+        padding: 0 0 69px;
+    }
+
     .project__container{
         max-width: 284px;
-        margin: 50px auto 0;
+        margin-top: 0;
         flex-direction: column;
     }
 
     .project__steps{
         max-width: 284px;
-        margin-top: 20px;
     }
 
     .project__steps-header{
-        margin-top: 58px;
         font-size: 18px;
         line-height: 22px;
+        margin-top: 37px;
     }
 
     .project__steps-text{
         font-size: 11px;
         line-height: 16px;
         margin-top: 16px;
+        max-width: 284px;
     }
 
     .project__theme{
         max-width: 284px;
-        margin-top: 70px;
-        padding-bottom: 28px;
+        padding: 70px 0 28px;
+        font-family: Inter;
+        font-size: 18px;
+        line-height: 22px;
+        margin-top: 0;
     }
 
     .project__weeks{
         max-width: 284px;
         margin-top: 60px;
+        font-size: 11px;
+        line-height: 13px;
     }
 
     .project__weeks-back{
@@ -192,11 +202,5 @@
     .project__parts-front{
         width: 65%;
     }
-
-    .project__steps-text{
-        font-size: 12px;
-        line-height: 18px;
-    }
-
 }
 

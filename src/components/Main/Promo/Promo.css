@@ -12,7 +12,7 @@
 }
 
 .promo__header{
-    margin-top: 75px;
+    margin-top: 85px;
     max-width: 640px;
     color: white;
     font-size: 50px;
@@ -33,21 +33,24 @@
 }
 
 .promo__button{
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px;
     width: 129px;
     height: 36px;
     border-radius: 3px;
     background: #073042;
-    color: white;
     padding: 0;
-    margin-top: 134px;
-    text-align: center;
+    margin: 134px 0 75px;
     border-width: 1px;
     border-color: white;
     opacity: 60%;
-    margin-bottom: 75px;
+}
+
+.promo__button-text{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
 }
 
 .promo__button:hover{
@@ -126,7 +129,7 @@
     }
 
     .promo__header{
-        margin-top: 44px;
+        margin-top: 38px;
         font-size: 30px;
         line-height: 38px;
         letter-spacing: -0.04em;
@@ -151,9 +154,4 @@
     .promo__picture-after{
         display: none;
     }
-
-    .promo__button{
-        margin-top: 92px;
-    }
-    
 }

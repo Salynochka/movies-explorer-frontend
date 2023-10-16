@@ -28,7 +28,7 @@
 }
 
 .search__button{
-    background-image: url(../../../images/find.png);
+    background-image: url(../../../images/find.svg);
     padding: 0;
     border: none;
     margin: 0;
@@ -47,6 +47,13 @@
 @media screen and (max-width: 400px){
     .search__info{
         max-width: 292px;
-        margin-top: 80px;
+        margin-top: 90px;
+        padding-bottom: 10px;
+    }
+
+    .search__input::placeholder{
+        font-size: 18px;
+        line-height: 22px;
+        margin-bottom: 13px;
     }
 }

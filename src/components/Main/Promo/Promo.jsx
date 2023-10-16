@@ -18,7 +18,7 @@ function Promo(props) {
             Листайте ниже, чтобы узнать больше про этот проект и его создателя.
           </p>
           <button className="promo__button" onClick={props.handleClick}>
-            Узнать больше
+            <a href="#project" className="promo__button-text" >Узнать больше</a>
           </button>
         </div>
         <img

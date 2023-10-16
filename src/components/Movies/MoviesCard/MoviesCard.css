@@ -10,6 +10,7 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 16px 24px rgba(0, 0, 0, .05);
 }
 
 .card__photo{
@@ -63,6 +64,10 @@
 }
 
 @media screen and (max-width: 800px){
+    .card{
+        margin-top: 0;
+    }
+
     .card__info{
         width: 339px;
         height: 257px;

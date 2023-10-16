@@ -10,10 +10,10 @@
     line-height: 27px;
     text-align: left;
     color: white;
-    padding-bottom: 23px;
+    padding: 100px 0 23px;
     max-width: 1140px;
     border-bottom: 1px solid #DADADA;
-    margin: 100px auto 0;
+    margin: 0 auto 0;
 }
 
 .techs__container{
@@ -117,8 +117,11 @@
 
     .techs__theme{
         max-width: 284px;
-        margin-top: 70px;
-        padding-bottom: 28px;
+        margin-top: 0;
+        padding: 0 0 28px;
+        font-size: 18px;
+        line-height: 22px;
+        letter-spacing: -0.04em;
     }
 
     .techs__header{

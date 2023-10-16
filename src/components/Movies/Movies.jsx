@@ -3,16 +3,19 @@ import SearchForm from "./SearchForm/SearchForm";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
+import "./Movies.css";
 
 function Movies(props) {
   return (
-    <>
+    <div className="movies">
       <Header />
-      <SearchForm />
-      <FilterCheckbox />
-      <MoviesCardList />
+      <main>
+        <SearchForm />
+        <FilterCheckbox />
+        <MoviesCardList />
+      </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 
 function Login(props) {
-
   return (
-    <>
+    <main>
       <section className="login">
         <div className="login__container" onSubmit={props.handleSubmit}>
-          <img className="login__logo" src={logo} alt="Логотип" />
-          <h2 className="login__title">Рады видеть!</h2>
+          <Link to="/" className="login__logo">
+            <img src={logo} alt="Логотип" />
+          </Link>
+          <h1 className="login__title">Рады видеть!</h1>
           <form className="login__form" name="login">
             <fieldset className="login__input">
               <h2 className="login__heading">E-mail</h2>
@@ -48,7 +49,7 @@ function Login(props) {
           </form>
         </div>
       </section>
-    </>
+    </main>
   );
 }
 
