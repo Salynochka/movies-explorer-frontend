@@ -5,23 +5,30 @@ import { Link } from "react-router-dom";
 
 function Navigation(props) {
   return (
-    <section className="navigation" isOpen={props.isOpen}>
+    <section className="navigation navigation_hidden" isOpen={props.isopen}>
       <nav className="navigation__menu">
-      <img className="navigation__exit" src={exit} alt="Выход" onClick={props.closeNavigation}/>
-        <Link to="/" className="navigation__link">
-          <p>Главная</p>
-        </Link>
-        <Link to="/movies" className="navigation__link">
-          <p>Фильмы</p>
-        </Link>
-        <Link to="/saved-movies" className="navigation__link">
-          <p>Сохраненные фильмы</p>
-        </Link>
+        <img
+          className="navigation__exit"
+          src={exit}
+          alt="Выход"
+          onClick={props.closeNavigation}
+        />
+        <div className="navigation__group">
+          <Link to="/" className="navigation__link navigation__link_active">
+            <p className="navigation__link">Главная</p>
+          </Link>
+          <Link to="/movies" className="navigation__link navigation__link_active">
+            <p className="navigation__link">Фильмы</p>
+          </Link>
+          <Link to="/saved-movies" className="navigation__link navigation__link_active">
+            <p className="navigation__link">Сохраненные фильмы</p>
+          </Link>
+        </div>
+        <div className="navigation__profile">
+          <p className="navigation__account">Аккаунт</p>
+          <img className="navigation__img" src={account} alt="Профиль" />
+        </div>
       </nav>
-      <div className="navigation__profile">
-        <p className="navigation__account">Аккаунт</p>
-        <img className="navigation__profile" src={account} alt="Профиль" />
-      </div>
     </section>
   );
 }

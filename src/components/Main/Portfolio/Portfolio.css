@@ -44,11 +44,21 @@
     letter-spacing: -0.04em;
 }
 
+.portfolio__title:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 .portfolio__link{
     width: 16px;
     height: 16px;
     background-image: url(../../../images/narrow.svg);
     background-size: cover;
+}
+
+.portfolio__link:hover{
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 .portfolio__website{
@@ -79,7 +89,7 @@
     .portfolio__theme{
         color: #A0A0A0;
         max-width: 670px;
-        margin: 0 auto 50px;
+        margin: 0 30px 50px;
     }
 
     .portfolio__part{

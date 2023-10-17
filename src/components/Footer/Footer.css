@@ -56,6 +56,11 @@
     color: white;
 }
 
+.footer__link:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 @media screen and (max-width: 1200px){
     .footer__info{
         margin-left: 30px;

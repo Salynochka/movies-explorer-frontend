@@ -50,6 +50,10 @@
     border: 2px solid white;
 }
 
+.card__save-button:hover{
+    cursor: pointer;
+}
+
 .card__save-button_active{
     background: #2BE080;
 }

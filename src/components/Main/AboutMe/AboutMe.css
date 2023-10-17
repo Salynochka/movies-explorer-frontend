@@ -64,6 +64,11 @@
     margin: 100px 0 100px;
 }
 
+.student__link:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 .student__photo{
     width: 270px;
     height: 327px;

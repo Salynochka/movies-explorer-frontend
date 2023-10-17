@@ -9,6 +9,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
+import Navigation from "../Main/Navigation/Navigation";
 import ErrorWindow from "../ErrorWindow/ErrorWindow";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/signup" element={<Register />} />
             <Route path="*" element={<ErrorWindow />} />
           </Routes>
+          <Navigation />
         </ErrorBoundary>
       </div>
     </div>
