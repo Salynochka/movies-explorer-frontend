@@ -22,29 +22,27 @@
     position: relative;
 }
 
-.filter__checkbox_active{
+.filter__checkbox::after{
     background: #3DDC84;
-}
-
-.filter__checkbox:hover{
-    cursor: pointer;
 }
 
 .filter__checkbox-round{
     width: 16px;
     height: 16px;
-    border-radius: 16px;
     position: absolute;
-    margin: 0;
-    border: none;
     top: 2px;
     left: 2px;
     background-color: #F5F5F5;
+    border-radius: 50%;
 }
 
-.filter__checkbox-round_active{
+.filter__checkbox-round:checked {
+    width: 16px;
+    height: 16px;
     top: 2px;
     left: 18px;
+    background-color: #FFFFFF;
+    color: white;
 }
 
 .filter__text_mobile{

@@ -75,7 +75,7 @@
 }
 
 .login__button{
-    background: #3456F3;
+    background: #4285F4;
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
@@ -173,7 +173,7 @@
     }
 
     .login__ask{
-        margin: 14px auto 30px;
+        margin: 14px auto 20px;
     }
 
     .login__question{

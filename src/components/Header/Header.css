@@ -1,9 +1,9 @@
-.header{
+.header__theme-green{
     background-color: #073042;
     padding: 18px 0 18px;
 }
 
-.header__type_gray{
+.header__theme-gray{
     background-color: #202020;
     padding: 18px 0 18px;
 }
@@ -12,7 +12,7 @@
     display: none;
 }
 
-.header__burger_hidden{
+.header__burger_visible{
     display: none;
 }
 
@@ -52,6 +52,11 @@
     color: white;
 }
 
+.header__films:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 .header__films_active{
     font-weight: 500;
 }
@@ -65,12 +70,17 @@
     font-weight: 500;
 }
 
+.header__saved-films:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 .header__account{
-    visibility: hidden;
-    opacity: 0;
+    display: none;
 }
 
 .header__account_visible{
+    display: block;
     visibility: visible;
     opacity: 1;
 }
@@ -88,6 +98,11 @@
     align-items: center;
 }
 
+.header__name:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 .header__profile{
     height: 26px;
     width: 26px;
@@ -96,6 +111,10 @@
 }
 
 .header__entrance-buttons{
+    display: none;
+}
+
+.header__entrance-buttons_visible{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -103,10 +122,6 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
-}
-
-.header__entrance-buttons_hidden{
-    display: none
 }
 
 .header__register{
@@ -156,16 +171,24 @@
 }
 
 @media screen and (max-width: 800px){
-    .header__info{
-        max-width: 708px;
-        margin: 18px 30px 31px;
+    .header__theme-green{
+        padding: 0;
     }
     
-    .header__burger_hidden{
-        display: none;
+    .header__theme-gray{
+        padding-top: 18px;
+    }
+
+    .header__info{
+        max-width: 708px;
+        margin: 0 30px 0;
     }
 
     .header__burger{
+        display: block;
+    }
+    
+    .header__burger_visible{
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -174,30 +197,45 @@
         position: absolute;
         top: 1%;
         right: 3%;
-        margin: 15px 15px 30px auto;
+        margin: 10px 15px 30px auto;
         background-color: #202020;
     }
     
-    .header__burger-line{
+    .header__burger_line{
         width: 28px;
         height: 3px;
         background-color: white;
     }
+    
+    .header__account_visible{
+        display: none
+    }
 
     .header__navigation_visible{
-        column-gap: 14px;
+        display: none;
     }
     
 }
 
 @media screen and (max-width: 400px){
+    .header__theme-gray{
+        padding: 0;
+    }
+
     .header__info{
         max-width: 292px;
         margin: 18px auto 18px;
     }
 
-    .header__burger{
+    .header__burger_visible{
         margin: 15px 14px 18px auto;
+        align-items: flex-end;
+    }
+
+    .header__burger_line{
+        width: 22px;
+        height: 3px;
+        background-color: white;
     }
 
     .header__register{

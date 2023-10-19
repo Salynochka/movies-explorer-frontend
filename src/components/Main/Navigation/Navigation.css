@@ -45,6 +45,16 @@
     margin: 0 auto 0;
 }
 
+.navigation__text{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    margin: 0 auto 0;
+}
+
 .navigation__profile{
     margin: 618px auto 90px;
     display: flex;

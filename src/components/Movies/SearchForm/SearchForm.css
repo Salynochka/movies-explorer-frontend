@@ -3,13 +3,16 @@
 }
 
 .search__info{
+    margin: 70px auto 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #424242;
+}
+
+.search__form{
+    max-width: 1140px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    max-width: 1140px;
-    margin: 87px auto 0;
-    padding-bottom: 13px;
-    border-bottom: 1px solid #424242;
 }
 
 .search__input{
@@ -52,20 +55,27 @@
 @media screen and (max-width: 800px){
     .search__info{
         max-width: 708px;
-        margin-top: 100px;
-        padding-bottom: 10px;
+        margin-top: 80px;
+    }
+
+    .search__form{
+        max-width: 708px;
     }
 }
 
 @media screen and (max-width: 400px){
     .search__info{
         max-width: 292px;
-        margin-top: 90px;
+        margin: 100px auto 41px 14px;
     }
 
     .search__input::placeholder{
         font-size: 18px;
         line-height: 22px;
         margin-bottom: 13px;
+    }
+
+    .search__form{
+        max-width: 292px;
     }
 }

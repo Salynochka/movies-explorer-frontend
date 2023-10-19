@@ -15,13 +15,13 @@ function Navigation(props) {
         />
         <div className="navigation__group">
           <Link to="/" className="navigation__link navigation__link_active">
-            <p className="navigation__link">Главная</p>
+            <p className="navigation__text">Главная</p>
           </Link>
           <Link to="/movies" className="navigation__link navigation__link_active">
-            <p className="navigation__link">Фильмы</p>
+            <p className="navigation__text">Фильмы</p>
           </Link>
           <Link to="/saved-movies" className="navigation__link navigation__link_active">
-            <p className="navigation__link">Сохраненные фильмы</p>
+            <p className="navigation__text">Сохраненные фильмы</p>
           </Link>
         </div>
         <div className="navigation__profile">

@@ -10,8 +10,8 @@ function MoviesCards(props) {
           <MoviesCard />
         </div>
       </section>
-      <div className={`cards__more${props.savedMovies ? "_hidden" : ""}`}>
-        <button className="cards__button"> Ещё </button>
+      <div className={`cards__more cards__more${props.savedMovies ? "_increased" : ""}`}>
+        <button className={`cards__button cards__button${props.savedMovies ? "_hidden" : ""}`}> Ещё </button>
       </div>
     </>
   );

@@ -15,7 +15,7 @@ import ErrorWindow from "../ErrorWindow/ErrorWindow";
 function App() {
   return (
     <div className="root">
-      <div className="page">
+      <div className="root__page">
         <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Main />} />

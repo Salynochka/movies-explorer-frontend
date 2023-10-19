@@ -41,7 +41,6 @@
     margin: 134px 0 75px;
     border-width: 1px;
     border-color: white;
-    opacity: 60%;
 }
 
 .promo__button-text{
@@ -51,6 +50,8 @@
     color: white;
     text-decoration: none;
     text-align: center;
+    padding: 0;
+    opacity: 60%;
 }
 
 .promo__button:hover{
@@ -116,10 +117,6 @@
     .promo__picture-after{
         display: none;
     }
-
-    .promo__button{
-        margin-top: 92px;
-    }
 }
 
 @media screen and (max-width: 400px){
@@ -137,7 +134,7 @@
     }
 
     .promo__header{
-        margin-top: 38px;
+        margin-top: 45px;
         font-size: 30px;
         line-height: 38px;
         letter-spacing: -0.04em;
@@ -153,7 +150,7 @@
     }
 
     .promo__picture-before{
-        margin-top: 70px;
+        margin-top: 66px;
         width: 210px;
         height: 206px;
         display: block;

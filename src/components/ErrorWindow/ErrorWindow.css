@@ -21,10 +21,11 @@
 }
 
 .error__text{
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
     text-align: center;
+    margin-top: 0;
 }
 
 .error__back{
@@ -33,7 +34,7 @@
     font-weight: 400;
     line-height: 17px;
     text-align: center;
-    margin: 184px auto 60px;
+    margin: 163px auto 60px;
     text-decoration: none;
 }
 
@@ -64,10 +65,6 @@
 }
 
 @media screen and (max-width: 400px){
-    .error{
-        height: 100%;
-    }
-
     .error__text{
         font-size: 12px;
         line-height: 15px;

@@ -87,6 +87,27 @@ function MoviesCard(props) {
           </div>
         </div>
       </article>
+      <article className="card">
+        <div className="card__info">
+          <img
+            className="card__photo"
+            src="https://w.forfun.com/fetch/4f/4fa04bf7e7f6032ea073e8abdd5d7dca.jpeg"
+            alt="Страх и ненависть в Лас-Вегасе"
+            onClick={props.handleClick}
+          />
+          <div className="card__description">
+            <div className="card__section">
+              <h2 className="card__title">Страх и ненависть в Лас-Вегасе</h2>
+              <button
+                className="card__save-button"
+                type="button"
+                onClick={props.handleSaveClick}
+              />
+            </div>
+            <h2 className="card__duration">106 minutes</h2>
+          </div>
+        </div>
+      </article>
     </>
   );
 }

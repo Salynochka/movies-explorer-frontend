@@ -30,6 +30,7 @@
     text-align: center;
     color: white;
     margin: 90px 0 0;
+    letter-spacing: -0.04em;
 }
 
 .techs__text{
@@ -83,16 +84,17 @@
 @media screen and (max-width: 800px){
     .techs__container{
         max-width: 670px;
-        margin: 0 auto 0;
+        margin: 80px auto 0 50px;
     }
 
     .techs__theme{
         max-width: 670px;
         padding-top: 90px;
+        margin: 0 auto 0 50px;
     }
 
     .techs__header{
-        margin-top: 80px;
+        margin: 0 auto 0;
     }
 
     .techs__text{
@@ -129,7 +131,7 @@
 
     .techs__theme{
         max-width: 284px;
-        margin-top: 0;
+        margin: 0 auto 0 18px;
         padding: 0 0 28px;
         font-size: 18px;
         line-height: 22px;
@@ -150,7 +152,7 @@
     }
 
     .techs__technologies{
-        max-width: 200px;
+        max-width: 178px;
         margin: 50px auto 70px;
         justify-content: start;
     }
