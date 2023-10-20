@@ -11,7 +11,7 @@ function MoviesCards(props) {
         </div>
       </section>
       <div className={`cards__more cards__more${props.savedMovies ? "_increased" : ""}`}>
-        <button className={`cards__button cards__button${props.savedMovies ? "_hidden" : ""}`}> Ещё </button>
+        <button className={`cards__button cards__button${props.savedMovies ? "_hidden" : ""}`} type="button"> Ещё </button>
       </div>
     </>
   );

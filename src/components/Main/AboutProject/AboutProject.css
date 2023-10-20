@@ -128,7 +128,7 @@
 
     .project__container{
         max-width: 670px;
-        margin: 0 auto 0 50px;
+        margin: 0 50px 0;
     }
 
     .project__steps{
@@ -138,17 +138,17 @@
 
     .project__theme{
         max-width: 670px;
-        margin: 80px auto 0 50px;
+        margin: 80px 50px 0 ;
     }
 
     .project__weeks{
         max-width: 670px;
-        margin: 90px auto 0 50px;
+        margin: 90px 50px 0;
     }
 
     .project__parts{
         max-width: 670px;
-        margin-bottom: 80px;
+        margin: 14px 50px 80px;
     }
 
     .project__steps-text{
@@ -158,21 +158,20 @@
 
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 420px){
     .project{
-        padding: 0 0 71px;
+        padding: 18px 0 71px;
     }
 
     .project__container{
         max-width: 284px;
-        margin-top: 5px;
-        margin-left: 18px;
+        margin: 5px auto 0;
         flex-direction: column;
     }
 
     .project__steps{
         max-width: 284px;
-        margin-top: 24px;
+        margin: 24px 0 0;
     }
 
     .project__steps-header{
@@ -194,14 +193,12 @@
         font-family: Inter;
         font-size: 18px;
         line-height: 22px;
-        margin-top: 0;
-        margin-left: 18px;
+        margin: 0 auto 0;
     }
 
     .project__weeks{
         max-width: 284px;
-        margin-top: 60px;
-        margin-left: 18px;
+        margin: 60px auto 0;
         font-size: 11px;
         line-height: 13px;
     }

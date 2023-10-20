@@ -7,6 +7,7 @@
 @media screen and (max-width: 800px){
     .page{
         background-color: rgba(0, 0, 0, 0.8);
+        min-height: 100%;
     }
 }
 

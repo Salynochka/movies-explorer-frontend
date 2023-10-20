@@ -41,20 +41,34 @@
     color: white;
 }
 
-.card__save-button{
-    width: 16px;
-    height: 16px;
-    background: #313131;
-    border-radius: 16px;
-    padding: 0;
-    border: 2px solid white;
+.card__save{
+    position: relative;
 }
 
 .card__save-button:hover{
     cursor: pointer;
+    opacity: 0.7;
 }
 
-.card__save-button_active{
+.card__save-button{
+    background: #222222;
+    border: none;
+}
+
+.card__save-button::before{
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    padding: 0;
+    border: 2px solid white;
+    background: #313131;
+    right: -3px;
+    top: 0;
+}
+
+.card__save-button:checked::before{
     background: #2BE080;
 }
 

@@ -14,11 +14,9 @@ function MoviesCard(props) {
           <div className="card__description">
             <div className="card__section">
               <h2 className="card__title">Теорема Зеро</h2>
-              <button
-                className="card__save-button"
-                type="button"
-                onClick={props.handleSaveClick}
-              />
+              <form className="card__save" >
+                <input className="card__save-button" type="checkbox" name="radio"/>
+              </form>
             </div>
             <h2 className="card__duration">106 minutes</h2>
           </div>
@@ -35,11 +33,9 @@ function MoviesCard(props) {
           <div className="card__description">
             <div className="card__section">
               <h2 className="card__title">Симпсоны в кино</h2>
-              <button
-                className="card__save-button"
-                type="button"
-                onClick={props.handleSaveClick}
-              />
+              <form className="card__save" >
+                <input className="card__save-button" type="checkbox" name="radio"/>
+              </form>
             </div>
             <h2 className="card__duration">83 minutes</h2>
           </div>
@@ -56,11 +52,9 @@ function MoviesCard(props) {
           <div className="card__description">
             <div className="card__section">
               <h2 className="card__title">Никто</h2>
-              <button
-                className="card__save-button"
-                type="button"
-                onClick={props.handleSaveClick}
-              />
+              <form className="card__save" >
+                <input className="card__save-button" type="checkbox" name="radio"/>
+              </form>
             </div>
             <h2 className="card__duration">92 minutes</h2>
           </div>
@@ -77,11 +71,9 @@ function MoviesCard(props) {
           <div className="card__description">
             <div className="card__section">
               <h2 className="card__title">Оппенгеймер</h2>
-              <button
-                className="card__save-button"
-                type="button"
-                onClick={props.handleSaveClick}
-              />
+              <form className="card__save" >
+                <input className="card__save-button" type="checkbox" name="radio"/>
+              </form>
             </div>
             <h2 className="card__duration">180 minutes</h2>
           </div>
@@ -98,11 +90,9 @@ function MoviesCard(props) {
           <div className="card__description">
             <div className="card__section">
               <h2 className="card__title">Страх и ненависть в Лас-Вегасе</h2>
-              <button
-                className="card__save-button"
-                type="button"
-                onClick={props.handleSaveClick}
-              />
+              <form className="card__save" >
+                <input className="card__save-button" type="checkbox" name="radio"/>
+              </form>
             </div>
             <h2 className="card__duration">106 minutes</h2>
           </div>

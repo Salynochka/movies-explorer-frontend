@@ -3,24 +3,24 @@ import account from "../../../images/account.svg";
 import exit from "../../../images/exit.svg";
 import { Link } from "react-router-dom";
 
-function Navigation(props) {
+function Navigation({isOpen, onClose, isActive}) {
   return (
-    <section className="navigation navigation_hidden" isOpen={props.isopen}>
+    <section className={`navigation ${isOpen && "navigation_opened"}`}>
       <nav className="navigation__menu">
         <img
           className="navigation__exit"
           src={exit}
           alt="Выход"
-          onClick={props.closeNavigation}
+          onClick={onClose}
         />
         <div className="navigation__group">
-          <Link to="/" className="navigation__link navigation__link_active">
+          <Link to="/" className={`navigation__link ${isActive && "navigation__link_active"}`}>
             <p className="navigation__text">Главная</p>
           </Link>
-          <Link to="/movies" className="navigation__link navigation__link_active">
+          <Link to="/movies" className={`navigation__link ${isActive && "navigation__link_active"}`}>
             <p className="navigation__text">Фильмы</p>
           </Link>
-          <Link to="/saved-movies" className="navigation__link navigation__link_active">
+          <Link to="/saved-movies" className={`navigation__link ${isActive && "navigation__link_active"}`}>
             <p className="navigation__text">Сохраненные фильмы</p>
           </Link>
         </div>

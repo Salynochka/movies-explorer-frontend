@@ -8,11 +8,11 @@ function Header(props) {
   return (
     <header className={`header header__theme${props.logIn ? "-gray" : "-green"}`}>
       <div className="header__info">
-        <div className={`header__burger header__burger${props.logIn ? "_visible" : ""}`} onClick={props.handleOpenBurgerMenu}>
+        <button className={`header__burger header__burger${props.logIn ? "_visible" : ""}`} type="button" onClick={props.onBurgerMenu}>
           <span className="header__burger_line"></span>
           <span className="header__burger_line"></span>
           <span className="header__burger_line"></span>
-        </div>
+        </button>
         <Link to="/">
           <img className="header__logo" src={logo} alt="Логотип сайта" />
         </Link>

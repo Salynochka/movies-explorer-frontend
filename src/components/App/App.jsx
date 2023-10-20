@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import ErrorBoundary from "../ErrorBoudaries/ErrorBoundary";
 
@@ -13,12 +13,25 @@ import Navigation from "../Main/Navigation/Navigation";
 import ErrorWindow from "../ErrorWindow/ErrorWindow";
 
 function App() {
+  const [isOpenBurgerMenu, setOpenBurgerMenu] = useState(false);
+
+  const handleOpenBurgerMenu = () => {
+    setOpenBurgerMenu(true);
+  };
+
+  const handleCloseBurgerMenu = () => {
+    setOpenBurgerMenu(false);
+  };
+
   return (
     <div className="root">
       <div className="root__page">
         <ErrorBoundary>
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route
+              path="/"
+              element={<Main onBurgerMenu={handleOpenBurgerMenu} />}
+            />
             <Route path="/movies" element={<Movies />} />
             <Route path="/saved-movies" element={<SavedMovies />} />
             <Route path="/profile" element={<Profile />} />
@@ -26,7 +39,12 @@ function App() {
             <Route path="/signup" element={<Register />} />
             <Route path="*" element={<ErrorWindow />} />
           </Routes>
-          <Navigation />
+          {
+            <Navigation
+              isOpen={isOpenBurgerMenu}
+              onClose={handleCloseBurgerMenu}
+            />
+          }
         </ErrorBoundary>
       </div>
     </div>

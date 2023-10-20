@@ -105,21 +105,21 @@
     .portfolio__link{
         margin-right: 10px;
         margin-bottom: 10px;
+        max-width: 300px;
     }
 }
 
 @media screen and (max-width: 400px){
     .portfolio__theme{
         max-width: 292px;
-        margin-bottom: 40px;
         font-size: 14px;
         color: #A0A0A0;
-        margin-left: 15px;
+        margin: 0 auto 40px;
     }
     
     .portfolio__container{
         max-width: 292px;
-        margin: 40px auto 70px 15px;
+        margin: 40px auto 70px;
     }
 
     .portfolio__part{
