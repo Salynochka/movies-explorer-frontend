@@ -1,3 +1,7 @@
+.header{
+    margin: 0;
+}
+
 .header__theme-green{
     background-color: #073042;
     padding: 18px 0 18px;
@@ -181,7 +185,9 @@
 
     .header__info{
         max-width: 708px;
-        margin: 18px 30px 0;
+        margin: 0 30px 0;
+        padding-top: 18px;
+        padding-bottom: 18px;
     }
 
     .header__burger{
@@ -208,7 +214,7 @@
     }
 
 
-    .header__burger_line{
+    .header__line{
         width: 28px;
         height: 3px;
         background-color: white;
@@ -231,7 +237,8 @@
 
     .header__info{
         max-width: 292px;
-        margin: 18px auto 18px;
+        margin: 0 auto 0;
+        padding-bottom: 18px;
     }
 
     .header__burger_visible{
@@ -239,7 +246,7 @@
         align-items: flex-end;
     }
 
-    .header__burger_line{
+    .header__line{
         width: 22px;
         height: 3px;
         background-color: white;

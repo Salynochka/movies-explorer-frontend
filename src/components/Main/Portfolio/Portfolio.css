@@ -79,7 +79,7 @@
 
 @media screen and (max-width: 800px){
     .portfolio{
-        padding-bottom: 5px;
+        padding-bottom: 22px;
     }
 
     .portfolio__theme{
@@ -94,8 +94,8 @@
     
     .portfolio__container{
         max-width: 670px;
-        margin-left: 50px;
-        margin-bottom: 70px;
+        margin: 50px auto 70px;
+        padding: 0 50px 0;
     }
 
     .portfolio__title{
@@ -108,8 +108,14 @@
         max-width: 300px;
     }
 }
+@media screen and (max-width: 540px){
+    .portfolio__title{
+        max-width: 280px;
+    }
+}
 
-@media screen and (max-width: 400px){
+
+@media screen and (max-width: 420px){
     .portfolio__theme{
         max-width: 292px;
         font-size: 14px;
@@ -119,7 +125,8 @@
     
     .portfolio__container{
         max-width: 292px;
-        margin: 40px auto 70px;
+        margin: 40px 0 70px;
+        padding: 0 14px 0;
     }
 
     .portfolio__part{

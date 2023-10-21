@@ -68,7 +68,7 @@
 @media screen and (max-width: 400px){
     .search__info{
         max-width: 292px;
-        margin: 100px auto 41px;
+        margin: 80px auto 41px;
     }
 
     .search__input::placeholder{

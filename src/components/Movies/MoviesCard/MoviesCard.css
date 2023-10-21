@@ -52,19 +52,19 @@
 
 .card__save-button{
     background: #222222;
-    border: none;
+    height: 6px;
 }
 
 .card__save-button::before{
     content: '';
     position: absolute;
-    width: 16px;
-    height: 16px;
-    border-radius: 16px;
+    width: 13px;
+    height: 13px;
+    border-radius: 13px;
     padding: 0;
     border: 2px solid white;
     background: #313131;
-    right: -3px;
+    right: -1px;
     top: 0;
 }
 
@@ -81,7 +81,7 @@
     margin-top: 10px;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 900px){
     .card{
         margin-top: 0;
     }
@@ -94,6 +94,10 @@
     .card__photo{
         width: 339px;
         min-height: 190px;
+    }
+
+    .card__save-button::before{
+        right: 0px;
     }
 }
 

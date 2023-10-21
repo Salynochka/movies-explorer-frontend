@@ -52,7 +52,7 @@
     font-weight: 400;
     line-height: 22px;
     color: white;
-    margin: 26px 49px 0 0;
+    margin: 26px 30px 0 0;
 }
 
 .student__link{
@@ -139,28 +139,27 @@
     }
 }
 
-@media screen and (max-width: 550px){
+@media screen and (max-width: 530px){
     .student{
         padding: 0;
     }
     
     .student__container{
-        max-width: 460px;
+        max-width: 360px;
         flex-direction: column;
         margin: 60px auto 0;
-        padding-left: 18px;
     }
 
     .student__theme{
-        max-width: 460px;
+        max-width: 360px;
         padding: 70px 0 28px;
-        margin: 0 50px 0;
+        margin: 0 auto 0;
     }
 
     .student__description{
         max-width: 284px;
-        font-size: 12px;
-        line-height: 18px;
+        font-size: 11px;
+        line-height: 16px;
     }
 
     .student__name{
@@ -171,7 +170,7 @@
 
     .student__info{
         max-width: 284px;
-        margin: 0 50px 0;
+        margin: 0 auto 0;
     }
 
     .student__photo{
@@ -187,11 +186,6 @@
 
     .student__major{
         margin-top: 20px;
-        font-size: 11px;
-        line-height: 16px;
-    }
-
-    .student__description{
         font-size: 11px;
         line-height: 16px;
     }
@@ -214,5 +208,14 @@
     .student__info{
         max-width: 292px;
         margin: 0 auto 0;
+    }
+
+    .student__description{
+        max-width: 292px;
+        margin: 20px auto 0;
+    }
+
+    .student__link{
+        margin-top: 40px;
     }
 }

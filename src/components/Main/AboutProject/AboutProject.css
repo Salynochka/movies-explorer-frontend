@@ -189,7 +189,7 @@
 
     .project__theme{
         max-width: 284px;
-        padding: 70px 0 28px;
+        padding: 53px 0 28px;
         font-family: Inter;
         font-size: 18px;
         line-height: 22px;
@@ -198,7 +198,7 @@
 
     .project__weeks{
         max-width: 284px;
-        margin: 60px auto 0;
+        margin: 59px auto 0;
         font-size: 11px;
         line-height: 13px;
     }
