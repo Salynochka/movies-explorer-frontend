@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Profile(props) {
   return (
     <div class="profile">
-      <Header />
+      <Header onBurgerMenu={props.onBurgerMenu} isOpen={props.isOpen} />
       <main>
         <section className="profile__section">
           <h1 className="profile__title">Привет, {props.name}!</h1>

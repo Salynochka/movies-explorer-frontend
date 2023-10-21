@@ -8,7 +8,7 @@ import "./Movies.css";
 function Movies(props) {
   return (
     <div className="movies">
-      <Header />
+      <Header onBurgerMenu={props.onBurgerMenu} isOpen={props.isOpen} />
       <main>
         <SearchForm />
         <FilterCheckbox />

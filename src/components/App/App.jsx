@@ -32,9 +32,9 @@ function App() {
               path="/"
               element={<Main onBurgerMenu={handleOpenBurgerMenu} />}
             />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/saved-movies" element={<SavedMovies />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/movies" element={<Movies onBurgerMenu={handleOpenBurgerMenu} />} />
+            <Route path="/saved-movies" element={<SavedMovies onBurgerMenu={handleOpenBurgerMenu} />} />
+            <Route path="/profile" element={<Profile onBurgerMenu={handleOpenBurgerMenu} />} />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="*" element={<ErrorWindow />} />

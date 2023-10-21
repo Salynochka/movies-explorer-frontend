@@ -6,12 +6,10 @@ import account from "../../images/account.svg";
 function Header(props) {
   return (
     <header className="header">
-      <div className={`header__theme${props.logIn ? "-gray" : "-green"}`}>
+      <div className={`header__theme-gray`}>
         <div className="header__info">
           <button
-            className={`header__burger header__burger${
-              props.logIn ? "_visible" : ""
-            }`}
+            className={`header__burger header__burger_visible`}
             type="button"
             onClick={props.onBurgerMenu}
           >
@@ -23,9 +21,7 @@ function Header(props) {
             <img className="header__logo" src={logo} alt="Логотип сайта" />
           </Link>
           <nav
-            className={`header__navigation header__navigation${
-              props.logIn ? "_visible" : ""
-            }`}
+            className={`header__navigation`}
           >
             <Link to="/movies" className="header__films header__films_active">
               <p>Фильмы</p>
@@ -38,9 +34,7 @@ function Header(props) {
             </Link>
           </nav>
           <div
-            className={`header__account header__account${
-              props.logIn ? "_visible" : ""
-            }`}
+            className={`header__account`}
           >
             <Link to="/profile" className="header__name">
               <p> Аккаунт </p>
@@ -48,9 +42,7 @@ function Header(props) {
             </Link>
           </div>
           <div
-            className={`header__entrance-buttons header__entrance-buttons${
-              props.logIn ? "" : "_visible"
-            }`}
+            className={`header__entrance-buttons`}
           >
             <Link to="/signup" className="header__register">
               Регистрация
