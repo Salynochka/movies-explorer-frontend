@@ -1,0 +1,16 @@
+.preloader{
+    background: #202020;
+}
+
+.preloader__button{
+    width: 320px;
+    height: 36px;
+    border-radius: 6px;
+    border: 1px solid #424242;
+    color: white;
+    margin-top: 50px;
+    margin-bottom: 80px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}

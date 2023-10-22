@@ -1,0 +1,152 @@
+.profile{
+    background: #202020;
+    height: 100vh;
+}
+
+.profile__section{ 
+    background: #202020;
+}
+
+.profile__title{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 29px;
+    text-align: center;
+    color: white;
+    margin: 74px auto 0;
+    max-width: 410px;
+}
+
+.profile__info{
+    flex-direction: column;
+    max-width: 410px;
+    margin: 123px auto 0;
+}
+
+.profile__line{
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.profile__line:first-of-type{
+    border-bottom: 1px solid #424242;
+}
+
+.profile__heading{
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 13px;
+    text-align: left;
+    color: white;
+    padding-bottom: 16px;
+    margin: 0;
+}
+
+.profile__name{
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    text-align: right;
+    color: white;
+}
+
+.profile__email{
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    text-align: right;
+    color: white;
+}
+
+.profile__changing{
+    margin: 204px auto 0;
+    max-width: 410px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    align-items: center;
+}
+
+.profile__edit{
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    color: white;
+    background: none;
+    padding: 0;
+    border: none;
+}
+
+.profile__edit:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.profile__to-login{
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #EE3465;
+    text-decoration: none;
+}
+
+.profile__to-login:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 800px){
+    .profile{
+        height: 100%;
+    }
+
+    .profile__title{
+        margin-top: 240px;
+    }
+
+    .profile__info{
+        margin-top: 96px;
+    }
+
+    .profile__changing{
+        margin: 195px auto 269px;
+    }
+}
+
+@media screen and (max-width: 480px){
+    .profile__section{
+        height: 100%;
+    }
+    
+    .profile__title{
+        margin-top: 85px;
+        max-width: 260px;
+    }
+
+    .profile__info{
+        margin-top: 80px;
+        max-width: 260px;
+    }
+
+    .profile__line{
+        margin-bottom: 20px;
+    }
+
+    .profile__changing{
+        margin: 362px auto 0;
+        padding-bottom: 40px;
+    }
+
+    .profile__edit{
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .profile__to-login{
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

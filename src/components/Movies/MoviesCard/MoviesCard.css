@@ -1,0 +1,114 @@
+.card{
+    margin: 0 auto 0;
+    position: relative;
+}
+
+.card__info{
+    background: #222222;
+    width: 270px;
+    height: 218px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 16px 24px rgba(0, 0, 0, .05);
+}
+
+.card__photo{
+    width: 270px;
+    min-height: 151px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.card__description{
+    display: flex;
+    flex-direction: column;
+    margin: 14px 12px 14px;
+}
+
+.card__section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card__title{
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+    margin: 0;
+    color: white;
+}
+
+.card__save{
+    position: relative;
+}
+
+.card__save-button:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.card__save-button{
+    background: #222222;
+    height: 6px;
+}
+
+.card__save-button::before{
+    content: '';
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 13px;
+    padding: 0;
+    border: 2px solid white;
+    background: #313131;
+    right: -1px;
+    top: 0;
+}
+
+.card__save-button:checked::before{
+    background: #2BE080;
+}
+
+.card__duration{
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    text-align: left;
+    color: #8B8B8B;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 900px){
+    .card{
+        margin-top: 0;
+    }
+
+    .card__info{
+        width: 339px;
+        height: 257px;
+    }
+
+    .card__photo{
+        width: 339px;
+        min-height: 190px;
+    }
+
+    .card__save-button::before{
+        right: 0px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .card__info{
+        width: 300px;
+        height: 235px;
+    }
+
+    .card__photo{
+        width: 300px;
+        min-height: 168px;
+    }
+}
