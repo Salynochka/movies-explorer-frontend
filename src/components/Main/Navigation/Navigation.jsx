@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function Navigation({isOpen, onClose, isActive}) {
   return (
     <section className={`navigation ${isOpen && "navigation_opened"}`}>
+      <div className="navigation__cover">
       <nav className="navigation__menu">
         <img
           className="navigation__exit"
@@ -28,7 +29,7 @@ function Navigation({isOpen, onClose, isActive}) {
           <p className="navigation__account">Аккаунт</p>
           <img className="navigation__img" src={account} alt="Профиль" />
         </div>
-      </nav>
+      </nav></div>
     </section>
   );
 }
