@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function Profile(props) {
   return (
-    <div class="profile">
+    <div className="profile">
       <Header onBurgerMenu={props.onBurgerMenu} isOpen={props.isOpen} />
       <main>
         <section className="profile__section">
