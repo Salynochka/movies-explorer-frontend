@@ -26,9 +26,6 @@
     margin: 0 auto;
 }
 
-.register__form{
-}
-
 .register__input{
     border: none;
     padding: 0;
@@ -53,12 +50,12 @@
     width: 396px;
     height: 46px;
     border: none;
-    padding: 0;
+    padding-left: 15px;
     border-radius: 8px;
 }
 
 .register__item::placeholder{
-    padding-left: 15px;
+    padding-left: 0;
     font-size: 13px;
     font-weight: 400;
     line-height: 16px;

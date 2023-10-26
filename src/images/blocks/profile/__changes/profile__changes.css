@@ -1,0 +1,23 @@
+.profile__changes{
+    padding: 0;
+    margin: auto 0 auto 18px;
+    border: 0;
+    width: 24px;
+    height: 24px;
+    background: url(../../../images/edit_button.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.profile__changes:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px){
+    .profile__changes{
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+    }
+}

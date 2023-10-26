@@ -1,0 +1,16 @@
+.login__input{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: 358px;
+    margin-top: 40px;
+}
+
+@media screen and (max-width: 500px){
+    .login__input{
+        width: 238px;
+        margin-top: 38px;
+    }
+}

@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState} from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 
 function Register(props) {
+  /*const [isEmail, setEmail] = useState('');
+  const [isPassword, setPassword] = useState('');
+  const [isEmailError, setEmailError] = useState('');
+  const [isPasswordError, setPasswordError] = useState('');*/
+
+
   return (
     <main>
       <section className="register">
@@ -21,8 +27,8 @@ function Register(props) {
                 name="name"
                 placeholder="Имя"
                 minLength="2"
-                maxLength="40"
                 required
+                onChange={props.onNameChange}
               />
               <span className="register__form-error register__form-error_type_name name-error" />
               <h2 className="register__heading">E-mail</h2>
@@ -32,8 +38,8 @@ function Register(props) {
                 name="email"
                 placeholder="Email"
                 minLength="2"
-                maxLength="40"
                 required
+                onChange={props.onEmailChange}
               />
               <span className="register__form-error register__form-error_type_email email-error" />
               <h2 className="register__heading">Пароль</h2>
@@ -42,9 +48,9 @@ function Register(props) {
                 className="register__item register__item_type_password"
                 name="password"
                 placeholder="Пароль"
-                minLength="2"
-                maxLength="200"
+                minLength="8"
                 required
+                onChange={props.onPasswordChange}
               />
               <span className="register__form-error register__form-error_type_password password-error" />
             </fieldset>

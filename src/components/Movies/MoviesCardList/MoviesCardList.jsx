@@ -2,20 +2,27 @@ import "../MoviesCard/MoviesCard.css";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import "./MoviesCardList.css";
 
-function MoviesCards(props) {
+function MoviesCards({ movies, savedMovies }) {
   return (
     <section className="cards">
       <div className="cards__full">
-        <MoviesCard />
+        {movies.map((movie) => (
+          <MoviesCard
+            nameRU={movie.nameRU}
+            image={movie.image.url}
+            duration={movie.duration}
+            trailerLink={movie.trailerLink}
+            card={movie}
+            key={movie.id}
+          />
+        ))}
       </div>
       <div
-        className={`cards__more cards__more${
-          props.savedMovies ? "_increased" : ""
-        }`}
+        className={`cards__more cards__more${savedMovies ? "_increased" : ""}`}
       >
         <button
           className={`cards__button cards__button${
-            props.savedMovies ? "_hidden" : ""
+            savedMovies ? "_hidden" : ""
           }`}
           type="button"
         >
