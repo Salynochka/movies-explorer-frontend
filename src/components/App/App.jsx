@@ -22,7 +22,6 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import Navigation from "../Main/Navigation/Navigation";
 import ErrorWindow from "../ErrorWindow/ErrorWindow";
-import InfoPopup from "../InfoPopup/InfoPopup";
 
 function App() {
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ function App() {
   const [isOpenBurgerMenu, setOpenBurgerMenu] = useState(false);
 
   const [isSuccessful, setIsSuccessful] = useState(false);
-  const [isInfoPopupOpen, setInfoPopupOpen] = useState(false);
   const [isRegistration, setIsRegistration] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -88,14 +86,13 @@ function App() {
         setIsRegistration(true);
         setIsSuccessful(true);
         navigate("/signin", { replace: true });
+        alert("Регистрация прошла успешно")
       })
       .catch((err) => {
         setIsRegistration(false);
         setIsSuccessful(false);
         console.log(err);
-      })
-      .finally(() => {
-        setInfoPopupOpen(true);
+        alert("Произошла ошибка. Попробуйте ещё раз")
       });
   }
 
@@ -115,15 +112,13 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        alert("Произошла ошибка. Попробуйте ещё раз")
       })
       .finally(() => {
         setIsLoading(true);
       });
   }
 
-  function closeInfoPopup() {
-    setInfoPopupOpen(false);
-  }
 
   function checkActiveToken() {
     const jwt = localStorage.getItem("jwt");
@@ -272,6 +267,7 @@ function App() {
                   <Main
                     onBurgerMenu={handleOpenBurgerMenu}
                     isLoading={isLoading}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               />
@@ -285,7 +281,7 @@ function App() {
                     onBurgerMenu={handleOpenBurgerMenu}
                     isLoading={isLoading}
                     savedMovies={savedMovies}
-                    onButtonMovie={handleMovieSave}
+                    onButtonMovie={changeMovieStatus}
                   />
                 }
               />
@@ -296,7 +292,7 @@ function App() {
                     element={SavedMovies}
                     savedMovies={savedMovies}
                     onBurgerMenu={handleOpenBurgerMenu}
-                    onButtonMovie={handleMovieSave}
+                    onButtonMovie={changeMovieStatus}
                   />
                 }
               />
@@ -322,6 +318,7 @@ function App() {
                   <Register
                     handleSubmit={handleRegistration}
                     isSuccessful={isSuccessful}
+                    isRegistration={isRegistration}
                   />
                 }
               />
