@@ -18,31 +18,39 @@ class MainApi {
   }
 
   //Регистрация пользователя
-  async register(password, email, name) {
+  async register({name, email, password}) {
     return await fetch(`${this._mainUrl}/signup`, {
       method: "POST",
       headers: this._headers,
       credentials: "include",
       body: JSON.stringify({
-        password: password,
-        email: email,
         name: name,
+        email: email,
+        password: password,
       }),
     }).then((res) => this._checkStatus(res));
   }
 
   //Вход пользователя
-  async login(password, email) {
+  async login({email, password}) {
     return await fetch(`${this._mainUrl}/signin`, {
       method: "POST",
       headers: this._headers,
       credentials: "include",
       body: JSON.stringify({
-        password: password,
         email: email,
+        password: password,
       }),
     }).then((res) => this._checkStatus(res));
   }
+
+  async logout () {
+    return await fetch(`${this._mainUrl}/signout`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+    });
+  };
 
   //Получение данных о пользователе
   async getUserInfo() {
@@ -122,6 +130,7 @@ class MainApi {
 export const mainApi = new MainApi({
   mainUrl: "https://api.movies.weekend.nomoredomainsrocks.ru",
   headers: {
+    'Accept': 'application/json',
     "Content-Type": "application/json",
   },
 });
