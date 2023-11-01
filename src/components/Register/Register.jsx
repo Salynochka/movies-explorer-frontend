@@ -1,14 +1,21 @@
-import React, { useState} from "react";
+import React, { useEffect } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useFormValidation } from "../useValidation";
 
-function Register(props) {
-  /*const [isEmail, setEmail] = useState('');
-  const [isPassword, setPassword] = useState('');
-  const [isEmailError, setEmailError] = useState('');
-  const [isPasswordError, setPasswordError] = useState('');*/
+function Register({ handleSubmit}) {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormValidation();
 
+  function handleSubmited(e) {
+    e.preventDefault();
+    handleSubmit(values.password, values.email, values.name);
+  }
+
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
 
   return (
     <main>
@@ -18,7 +25,11 @@ function Register(props) {
             <img src={logo} alt="Логотип" />
           </Link>
           <h1 className="register__title">Добро пожаловать!</h1>
-          <form className="register__form" name="register">
+          <form
+            className="register__form"
+            name="register"
+            onSubmit={handleSubmited}
+          >
             <fieldset className="register__input">
               <h2 className="register__heading">Имя</h2>
               <input
@@ -28,9 +39,14 @@ function Register(props) {
                 placeholder="Имя"
                 minLength="2"
                 required
-                onChange={props.onNameChange}
+                onChange={handleChange}
+                value={values.name || ""}
+                autocomplete="on"
+                isValid={isValid.name}
               />
-              <span className="register__form-error register__form-error_type_name name-error" />
+              <span className="register__form-error register__form-error_type_name name-error">
+                {errors.name}
+              </span>
               <h2 className="register__heading">E-mail</h2>
               <input
                 type="text"
@@ -39,22 +55,37 @@ function Register(props) {
                 placeholder="Email"
                 minLength="2"
                 required
-                onChange={props.onEmailChange}
+                onChange={handleChange}
+                value={values.email || ""}
+                autocomplete="on"
+                pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
+                isValid={isValid.email}
               />
-              <span className="register__form-error register__form-error_type_email email-error" />
+              <span className="register__form-error register__form-error_type_email email-error">
+                {errors.email}
+              </span>
               <h2 className="register__heading">Пароль</h2>
               <input
-                type="text"
+                type="password"
                 className="register__item register__item_type_password"
                 name="password"
                 placeholder="Пароль"
                 minLength="8"
                 required
-                onChange={props.onPasswordChange}
+                onChange={handleChange}
+                value={values.password || ""}
+                autocomplete="on"
+                isValid={isValid.password}
               />
-              <span className="register__form-error register__form-error_type_password password-error" />
+              <span className="register__form-error register__form-error_type_password password-error">
+                {errors.password}
+              </span>
             </fieldset>
-            <button className="register__button" type="submit">
+            <button
+              className="register__button"
+              type="submit"
+              disabled={!isValid}
+            >
               Зарегистрироваться
             </button>
             <div className="register__ask">

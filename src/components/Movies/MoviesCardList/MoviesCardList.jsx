@@ -1,10 +1,12 @@
 import "../MoviesCard/MoviesCard.css";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import "./MoviesCardList.css";
+import Preloader from "../Preloader/Preloader";
 
-function MoviesCards({ movies, savedMovies }) {
+function MoviesCards({ movies, savedMovies, isLoading, onButtonMovie }) {
   return (
     <section className="cards">
+      {isLoading && <Preloader />}
       <div className="cards__full">
         {movies.map((movie) => (
           <MoviesCard
@@ -12,8 +14,9 @@ function MoviesCards({ movies, savedMovies }) {
             image={movie.image.url}
             duration={movie.duration}
             trailerLink={movie.trailerLink}
-            card={movie}
+            movie={movie}
             key={movie.id}
+            onButtonMovie={onButtonMovie}
           />
         ))}
       </div>

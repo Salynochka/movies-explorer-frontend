@@ -5,7 +5,13 @@ import ErrorBoundary from "../ErrorBoundary";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ProtectedRoute } from "../ProtectedRoute";
 
-import * as auth from "../../utils/Auth";
+import {
+  tabletVersion,
+  mobileVersion,
+  maxCards,
+  mediumCards,
+  minCards,
+} from "../../utils/constants";
 import { moviesApi } from "../../utils/MoviesApi";
 import { mainApi } from "../../utils/MainApi";
 import Main from "../Main/Main";
@@ -24,13 +30,44 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const [isOpenBurgerMenu, setOpenBurgerMenu] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
 
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isInfoPopupOpen, setInfoPopupOpen] = useState(false);
   const [isRegistration, setIsRegistration] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [movies, setMovies] = useState(
+    JSON.parse(localStorage.getItem("movies")) || []
+  );
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  const [amountCard, setAmountCard] = useState(4);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getUserInfo()
+        .then((res) => {
+          setCurrentUser(res);
+        })
+        .catch(console.error);
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (isLoggedIn) {
+      moviesApi
+        .getAllMoviesCards()
+        .then((movie) => {
+          localStorage.setItem("movies", JSON.stringify(movie));
+          setMovies([...movie]);
+        })
+        .catch(console.error);
+    }
+  }, [isLoggedIn]);
 
   const handleOpenBurgerMenu = () => {
     setOpenBurgerMenu(true);
@@ -44,9 +81,10 @@ function App() {
     if (!password || !email || !name) {
       return;
     }
-    auth
+    mainApi
       .register(password, email, name)
-      .then(() => {
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
         setIsRegistration(true);
         setIsSuccessful(true);
         navigate("/signin", { replace: true });
@@ -61,22 +99,25 @@ function App() {
       });
   }
 
-  function handleLogin(password, email, name) {
+  function handleLogin(password, email) {
     if (!password || !email) {
       return;
     }
-    auth
-      .login(password, email, name)
+    setIsLoading(true);
+    mainApi
+      .login(password, email)
       .then((res) => {
         if (res) {
           localStorage.setItem("jwt", res.token);
-          setEmail(email);
-          setName(name);
-          navigate("/", { replace: true });
+          navigate("/movies", { replace: true });
+          setIsLoggedIn(true);
         }
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(true);
       });
   }
 
@@ -87,58 +128,118 @@ function App() {
   function checkActiveToken() {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
-      auth
-        .checkToken(jwt)
+      mainApi
+        .getUserInfo(jwt)
         .then((res) => {
-          if (res) {
-            setIsLoggedIn(true);
-            setEmail(res.data.email);
-            setName(res.data.name);
-            navigate("/", { replace: true });
-          }
+          setIsLoggedIn(true);
+          setCurrentUser(res);
+          navigate("/movies", { replace: true });
         })
         .catch((err) => {
           setIsLoggedIn(false);
           console.log(err);
+          navigate("/signin");
         });
+    } else {
+      setTimeout(() => {
+        //  setPreloader(false);
+      }, 600);
     }
   }
-  /*
-  function handleUpdateUser(data) {
-    api
-      .editProfile(data)
+
+  useEffect(() => {
+    checkActiveToken();
+  }, [isLoggedIn]);
+
+  function handleUpdateUser(email, name) {
+    mainApi
+      .editUserInfo(email, name)
       .then((res) => {
         setCurrentUser(res);
-        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+  }
+
+  useEffect(() => {
+    function changeLengthOfMovies() {
+      if (window.innerWidth > tabletVersion) {
+        setAmountCard(maxCards);
+      } else if (window.innerWidth > mobileVersion) {
+        setAmountCard(mediumCards);
+      } else {
+        setAmountCard(minCards);
+      }
+    }
+
+    changeLengthOfMovies();
+    window.addEventListener("resize", changeLengthOfMovies);
+
+    return () => window.removeEventListener("resize", changeLengthOfMovies);
+  }, [amountCard]);
+
+  function handleMovieSave(movie) {
+    mainApi
+      .saveMovie(movie)
+      .then((movie) => {
+        setSavedMovies([movie, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+  }
+
+  function handleMovieUnsave(movie) {
+    mainApi
+      .unsaveMovie(movie._id)
+      .then(() => {
+        setSavedMovies((movies) => movies.filter((i) => i._id !== movie._id));
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+  }
+
+    // Добавление/удаление из сохраненных
+    function changeMovieStatus(movieId, isSaved) {
+      if (!isSaved) {
+        return handleMovieSave(movieId);
+      } else {
+        return handleMovieUnsave(movieId);
+      }
+    }
+
+  function handleSignOut() {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser({});
+    navigate("/", { replace: true });
+  }
+
+  /*
+
+  // Добавление/удаление в/из избранного
+  function handleChangeStatus(movie) {
+    // Проверка наличия лайка на этой карточке
+    const isLiked = movie.likes.some((i) => i === currentUser._id);
+    // Получаем обновлённые данные карточки
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((i) => (i._id === card._id ? newCard : i))
+        );
       })
       .catch((err) => console.error(`Ошибка: ${err}`));
-  }*/
-
-  const [searchString, setSearchString] = useState(
-    localStorage.getItem("searchString") || ""
-  );
-
-  const [movies, setMovies] = useState(
-    JSON.parse(localStorage.getItem("movies")) || []
-  );
-  const [filteredMovies, setFilteredMovies] = useState(movies);
-
-  const [isShort, setIsShort] = useState(
-    localStorage.getItem("isShort") || false
-  );
-
-  function searchChange(evt) {
-    const value = evt.target.value;
-    setSearchString(value);
-    localStorage.setItem("searchString", value);
   }
 
   useEffect(() => {
     if (movies.length === 0)
-      moviesApi.getCards().then((res) => {
+      moviesApi.getMovies().then((res) => {
         if (res) {
           localStorage.setItem(
-            "films",
+            "movies",
             JSON.stringify([
               {
                 duration: res.duration,
@@ -157,51 +258,7 @@ function App() {
             image: res.image,
           },
         ]);
-      });
-  }, []);
-
-  useEffect(() => {
-    mainApi
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch(console.error);
-  }, []);
-
-  useEffect(() => {
-    const filteredMovies = movies.filter(
-      (movie) => movie.includes(searchString) && movie.isShort === isShort
-    );
-    setFilteredMovies(filteredMovies);
-    setIsShort(true);
-  }, [searchString, isShort]);
-
-  useEffect(() => {
-    checkActiveToken();
-  }, []);
-
-  function handleSignOut() {
-    localStorage.removeItem("jwt");
-    setEmail("");
-    navigate("/signin", { replace: true });
-  }
-
-  /*
-  function handleSavedCard(movie) {
-    // Проверка сохранения на этой карточке
-    // const isSaved = movie.saved ?  :;
-
-    // Получаем обновлённые данные карточки
-    moviesApi
-      .changeCardStatus(movie._id, isSaved)
-      .then((savedMovie) => {
-        setMovies((state) =>
-          state.map((i) => (i._id === movie._id ? savedMovie : i))
-        );
-      })
-      .catch((err) => console.error(`Ошибка: ${err}`));
-  }*/
+      });*/
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -211,7 +268,12 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={<Main onBurgerMenu={handleOpenBurgerMenu} />}
+                element={
+                  <Main
+                    onBurgerMenu={handleOpenBurgerMenu}
+                    isLoading={isLoading}
+                  />
+                }
               />
               <Route
                 path="/movies"
@@ -219,11 +281,11 @@ function App() {
                   <ProtectedRoute
                     element={Movies}
                     isLoggedIn={isLoggedIn}
-                    movies={filteredMovies}
+                    movies={movies}
                     onBurgerMenu={handleOpenBurgerMenu}
-                    isShort={isShort}
-                    searchString={searchString}
-                    searchChange={searchChange}
+                    isLoading={isLoading}
+                    savedMovies={savedMovies}
+                    onButtonMovie={handleMovieSave}
                   />
                 }
               />
@@ -232,7 +294,9 @@ function App() {
                 element={
                   <ProtectedRoute
                     element={SavedMovies}
+                    savedMovies={savedMovies}
                     onBurgerMenu={handleOpenBurgerMenu}
+                    onButtonMovie={handleMovieSave}
                   />
                 }
               />
@@ -243,8 +307,8 @@ function App() {
                     element={Profile}
                     onBurgerMenu={handleOpenBurgerMenu}
                     onExit={handleSignOut}
-                    name={name}
-                    email={email}
+                    handleSubmit={handleUpdateUser}
+                    isOpen={isOpenBurgerMenu}
                   />
                 }
               />
@@ -253,7 +317,7 @@ function App() {
                 element={<Login handleSubmit={handleLogin} />}
               />
               <Route
-                path="/signup"
+                path="signup"
                 element={
                   <Register
                     handleSubmit={handleRegistration}
@@ -266,12 +330,6 @@ function App() {
             <Navigation
               isOpen={isOpenBurgerMenu}
               onClose={handleCloseBurgerMenu}
-            />
-            <InfoPopup
-              onClose={closeInfoPopup}
-              isOpen={isInfoPopupOpen}
-              isSuccessful={isSuccessful}
-              isRegistration={isRegistration}
             />
           </ErrorBoundary>
         </div>
