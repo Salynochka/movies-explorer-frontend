@@ -56,7 +56,7 @@ class MainApi {
   async getUserInfo() {
     return await fetch(`${this._mainUrl}/users/me`, {
       headers: {
-        Authorization: this._getToken(),
+        "Authorization": this._getToken(),
         "Content-Type": "application/json",
       },
       credentials: "include",
@@ -69,7 +69,7 @@ class MainApi {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this._getToken(),
+        "Authorization": this._getToken(),
       },
       credentials: "include",
       body: JSON.stringify({
@@ -85,7 +85,7 @@ class MainApi {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this._getToken(),
+        "Authorization": this._getToken(),
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));
@@ -97,7 +97,7 @@ class MainApi {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: this._getToken(),
+        "Authorization": this._getToken(),
       },
       credentials: "include",
       body: JSON.stringify({
@@ -106,11 +106,11 @@ class MainApi {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: `https://api.nomoreparties.co/${data.image.url}`,
+        image: `api.movies.weekend.nomoredomainsrocks.ru/${data.image.url}`,
         trailerLink: data.trailerLink,
         nameRU: data.nameRU,
         nameEN: data.nameEN,
-        thumbnail: `https://api.nomoreparties.co/${data.thumbnail.url}`,
+        thumbnail: `https://api.movies.weekend.nomoredomainsrocks.ru/${data.thumbnail.url}`,
         movieId: data.id,
       }),
     }).then((res) => this._checkStatus(res));
@@ -130,7 +130,6 @@ class MainApi {
 export const mainApi = new MainApi({
   mainUrl: "https://api.movies.weekend.nomoredomainsrocks.ru",
   headers: {
-    'Accept': 'application/json',
     "Content-Type": "application/json",
   },
 });
