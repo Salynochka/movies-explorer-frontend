@@ -75,34 +75,34 @@ function App() {
     setOpenBurgerMenu(false);
   };
 
-  function handleRegistration(password, email, name) {
+  function handleRegistration({ name, email, password }) {
     if (!password || !email || !name) {
       return;
     }
     mainApi
-      .register(password, email, name)
+      .register({ name, email, password })
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsRegistration(true);
         setIsSuccessful(true);
         navigate("/signin", { replace: true });
-        alert("Регистрация прошла успешно")
+        alert("Регистрация прошла успешно");
       })
       .catch((err) => {
         setIsRegistration(false);
         setIsSuccessful(false);
         console.log(err);
-        alert("Произошла ошибка. Попробуйте ещё раз")
+        alert("Произошла ошибка. Попробуйте ещё раз");
       });
   }
 
-  function handleLogin(password, email) {
+  function handleLogin({ email, password }) {
     if (!password || !email) {
       return;
     }
     setIsLoading(true);
     mainApi
-      .login(password, email)
+      .login({ email, password })
       .then((res) => {
         if (res) {
           localStorage.setItem("jwt", res.token);
@@ -112,13 +112,12 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        alert("Произошла ошибка. Попробуйте ещё раз")
+        alert("Произошла ошибка. Попробуйте ещё раз");
       })
       .finally(() => {
         setIsLoading(true);
       });
   }
-
 
   function checkActiveToken() {
     const jwt = localStorage.getItem("jwt");
@@ -146,9 +145,9 @@ function App() {
     checkActiveToken();
   }, [isLoggedIn]);
 
-  function handleUpdateUser(email, name) {
+  function handleUpdateUser({ email, name }) {
     mainApi
-      .editUserInfo(email, name)
+      .editUserInfo({ email, name })
       .then((res) => {
         setCurrentUser(res);
       })
@@ -196,17 +195,30 @@ function App() {
       });
   }
 
-    // Добавление/удаление из сохраненных
-    function changeMovieStatus(movieId, isSaved) {
-      if (!isSaved) {
-        return handleMovieSave(movieId);
-      } else {
-        return handleMovieUnsave(movieId);
-      }
+  // Добавление/удаление из сохраненных
+  function changeMovieStatus(movieId, isSaved) {
+    if (!isSaved) {
+      return handleMovieSave(movieId);
+    } else {
+      return handleMovieUnsave(movieId);
     }
+  }
+
+  function logoutRequest() {
+    mainApi.logout().then((data) => {
+      if (data) {
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("movies");
+        setIsLoggedIn(false);
+        navigate("/");
+      } else {
+        return;
+      }
+    });
+  }
 
   function handleSignOut() {
-    localStorage.removeItem("jwt");
+    logoutRequest();
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate("/", { replace: true });
