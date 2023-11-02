@@ -75,12 +75,12 @@ function App() {
     setOpenBurgerMenu(false);
   };
 
-  function handleRegistration({ name, email, password }) {
+  function handleRegistration(name, email, password) {
     if (!password || !email || !name) {
       return;
     }
     mainApi
-      .register({ name, email, password })
+      .register(name, email, password)
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsRegistration(true);
@@ -96,13 +96,13 @@ function App() {
       });
   }
 
-  function handleLogin({ email, password }) {
+  function handleLogin(email, password) {
     if (!password || !email) {
       return;
     }
     setIsLoading(true);
     mainApi
-      .login({ email, password })
+      .login(email, password)
       .then((res) => {
         if (res) {
           localStorage.setItem("jwt", res.token);
