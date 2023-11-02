@@ -10,7 +10,7 @@ function Register({ handleSubmit}) {
 
   function handleSubmited(e) {
     e.preventDefault();
-    handleSubmit(values.password, values.email, values.name);
+    handleSubmit(values.name, values.email, values.password);
   }
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function Register({ handleSubmit}) {
               </span>
               <h2 className="register__heading">E-mail</h2>
               <input
-                type="text"
+                type="email"
                 className="register__item register__item_type_email"
                 name="email"
                 placeholder="Email"
