@@ -18,7 +18,7 @@ class MainApi {
   }
 
   //Регистрация пользователя
-  async register({name, email, password}) {
+  async register(name, email, password) {
     return await fetch(`${this._mainUrl}/signup`, {
       method: "POST",
       headers: this._headers,
@@ -32,7 +32,7 @@ class MainApi {
   }
 
   //Вход пользователя
-  async login({email, password}) {
+  async login(email, password) {
     return await fetch(`${this._mainUrl}/signin`, {
       method: "POST",
       headers: this._headers,
