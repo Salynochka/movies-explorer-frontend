@@ -10,7 +10,7 @@ function Login({ handleSubmit }) {
 
   function handleSubmited(e) {
     e.preventDefault();
-    handleSubmit(values.password, values.email);
+    handleSubmit(values.email, values.password);
   }
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function Login({ handleSubmit }) {
             <fieldset className="login__input">
               <h2 className="login__heading">E-mail</h2>
               <input
-                type="text"
+                type="email"
                 className="login__item login__item_type_email"
                 name="email"
                 placeholder="Email"
