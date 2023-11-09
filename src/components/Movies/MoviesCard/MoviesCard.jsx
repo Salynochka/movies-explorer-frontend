@@ -1,17 +1,18 @@
 import "./MoviesCard.css";
 
 function MoviesCard({ nameRU, image, duration, trailerLink, onButtonMovie }) {
-  function durationHours(){
+  
+  function durationHours(duration){
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
-    return (hours > 0) ? `${hours} ч ${minutes} м`: `${minutes} м`
+    return (hours > 0) ? `${hours}ч ${minutes}м`: `${minutes}м`
   }
 
   return (
     <>
       <article className="card">
         <div className="card__info">
-          <a href={`https://api.nomoreparties.co/${trailerLink}`}>
+          <a href={`${trailerLink}`}>
             <img
               className="card__photo"
               src={`https://api.nomoreparties.co/${image}`}
@@ -30,7 +31,7 @@ function MoviesCard({ nameRU, image, duration, trailerLink, onButtonMovie }) {
                 />
               </form>
             </div>
-            <h2 className="card__duration">{durationHours}</h2>
+            <h2 className="card__duration">{durationHours(duration)}</h2>
           </div>
         </div>
       </article>

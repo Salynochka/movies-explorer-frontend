@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
@@ -6,7 +6,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./Movies.css";
 
-function Movies({ movies, savedMovies, isLoading, onButtonMovie, onBurgerMenu, isOpen }) {
+function Movies({ movies, isLoading, onButtonMovie, onBurgerMenu, isOpen, search, loggedIn}) {
   const [searchString, setSearchString] = useState(
     localStorage.getItem("searchString") || ""
   );
@@ -14,38 +14,37 @@ function Movies({ movies, savedMovies, isLoading, onButtonMovie, onBurgerMenu, i
   const [isShort, setIsShort] = useState(
     JSON.parse(localStorage.getItem("isShort")) || false
   );
-
-  function searchChange(evt) {
+  
+  const searchChange = useCallback((evt) => {
     const value = evt.target.value;
     setSearchString(value);
     localStorage.setItem("searchString", value);
-  }
+  }, [isShort, movies]);
 
   function switchCheckbox(e) {
     const value = e.target.checked;
     setIsShort(value);
     localStorage.setItem("isShort", value);
-  }
+  } 
 
   function filter(movies) {
     return movies.filter((movie) =>
       isShort
-        ? movie.name.includes(searchString) && movie.isShort
-        : movies.name.includes(searchString)
+      ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) && movie.duration<52
+      : (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase()))
     );
   }
 
   return (
     <div className="movies">
-      <Header onBurgerMenu={onBurgerMenu} isOpen={isOpen} />
+      <Header onBurgerMenu={onBurgerMenu} isOpen={isOpen} loggedIn={loggedIn}/>
       <main>
-        <SearchForm searchString={searchString} searchChange={searchChange} />
+        <SearchForm searchString={searchString} searchChange={searchChange} search={search}/>
         <FilterCheckbox switchCheckbox={switchCheckbox} isShort={isShort} />
         <MoviesCardList
           movies={filter(movies)}
           isLoading={isLoading}
           onButtonMovie={onButtonMovie}
-          savedMovie={savedMovies}
         />
       </main>
       <Footer />
