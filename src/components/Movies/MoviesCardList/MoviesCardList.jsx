@@ -37,6 +37,18 @@ function MoviesCards({ movies, savedMovies, isLoading, onButtonMovie }) {
     }
   }, [windowWidth])
 
+  const renderCards = useCallback(
+    (count) => {
+      if (count >= findMovies.length) {
+        setIsEndedCards(true);
+      } else {
+        setIsEndedCards(false);
+      }
+      setRenderedMovies(findMovies.slice(0, count));
+    },
+    [findMovies]
+  );
+
   useEffect(() => {
     changeLengthOfMovies();
     renderCards(amountCard);
@@ -49,27 +61,11 @@ function MoviesCards({ movies, savedMovies, isLoading, onButtonMovie }) {
     renderCards(full);
   };
 
-  const renderCards = useCallback(
-    (count) => {
-      if (count >= findMovies.length) {
-        setIsEndedCards(true);
-      } else {
-        setIsEndedCards(false);
-      }
-      setRenderedMovies(findMovies.slice(0, count));
-    },
-    [findMovies]
-  );
-/*
-  function getSavedMovie (savedMovies, card) {
-    return savedMovies.find((savedMovie) => savedMovie.movieId === card.id);
-  };*/
-
   return (
     <section className="cards">
       {isLoading && <Preloader />}
       <div className="cards__full">
-        {movies.map((movie) => (
+        {movies && movies.map((movie) => (
           <MoviesCard
             nameRU={movie.nameRU}
             image={movie.image.url}

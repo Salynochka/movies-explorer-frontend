@@ -7,12 +7,12 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 
 function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormValidation({ name: currentUser.name, email: currentUser.email });
-  const {setValues} = useForm();
+  const { values, handleChange, errors, isValid, resetForm, setValid } =
+    useFormValidation();
+  const { setValues } = useForm();
   const [isInputDisabled, setIsInputDisabled] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(false);
+  const [isShowSaveButton, setIsShowSaveButton] = useState(false);
   const [isClickedEditButton, setIsClickedEditButton] = useState(false);
   //const [isUserData, setIsUserData] = useState({ name: "", email: "" });
 
@@ -22,26 +22,31 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
 
   useEffect(() => {
     resetForm(false);
-    setValues(currentUser);
+    setValues({ name: currentUser.name, email: currentUser.email });
   }, [currentUser, resetForm, setValues]);
 
   useEffect(() => {
-    if (currentUser.name !== values.name || currentUser.email !== values.email) {
-      setIsSaveButtonDisabled(false);
-    } else {
-      setIsSaveButtonDisabled(true);
+    if (
+      currentUser.name !== values.name ||
+      currentUser.email !== values.email
+    ) { setValid(false);
     }
-  }, [values, currentUser]);
+  }, [values, currentUser, setValid]);
 
   function onSubmit(e) {
     e.preventDefault();
     setIsButtonDisabled(true);
-    handleSubmit()
+    handleSubmit({ name: values.name, email: values.email });
+    if (!errors) {
+      setIsShowSaveButton(false);
+    } else {
+      setIsShowSaveButton(true);
+    }
   }
 
   function handleEditProfile() {
     setIsInputDisabled(false);
-    setIsButtonDisabled(true);
+    setIsShowSaveButton(true);
     setIsClickedEditButton(true);
   }
 
@@ -118,10 +123,10 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
               </Link>
               <button
                 className={`profile__save-button${
-                  isClickedEditButton ? "_visible" : ""
+                  isShowSaveButton ? "_visible" : ""
                 }`}
                 type="submit"
-                disabled={!values.isValid || isSaveButtonDisabled}
+                disabled={!isValid}
               >
                 Сохранить
               </button>
@@ -134,3 +139,4 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
 }
 
 export default Profile;
+

@@ -48,6 +48,10 @@ function SavedMovies({ movies, isLoading, savedMovies, onBurgerMenu, isOpen, onB
       : (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase()))
     );
   }
+/*
+  function getSavedMovies (savedMovies, card) {
+    return savedMovies.find((savedMovie) => savedMovie.movieId === card.id);
+  };*/
 
   return (
     <div className="saved-movies">
@@ -56,10 +60,10 @@ function SavedMovies({ movies, isLoading, savedMovies, onBurgerMenu, isOpen, onB
         <SearchForm searchString={searchString} searchChange={searchChange} />
         <FilterCheckbox switchCheckbox={switchCheckbox} isShort={isShort} />
         <MoviesCardList
-          movies={filter(movies)}
+          movies={movies}
           onButtonMovie={onButtonMovie}
           isLoading={isLoading}
-          savedMovies={savedMovies}
+          savedMovies={filter(savedMovies)}
         />
       </main>
       <Footer />

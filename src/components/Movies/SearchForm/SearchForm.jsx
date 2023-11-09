@@ -7,7 +7,7 @@ function SearchForm({ search, searchString, searchChange }) {
       <div className="search__info">
         <form className="search__form" onSubmit={search}>
           <input className="search__input" placeholder="Фильм" name="search__input" onChange={searchChange} value={searchString}/>
-          <button className="search__button" type="button"/>
+          <button className="search__button" type="submit"/>
         </form>
       </div>
     </div>

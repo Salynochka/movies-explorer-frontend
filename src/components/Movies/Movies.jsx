@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
@@ -15,11 +15,11 @@ function Movies({ movies, isLoading, onButtonMovie, onBurgerMenu, isOpen, search
     JSON.parse(localStorage.getItem("isShort")) || false
   );
   
-  const searchChange = useCallback((evt) => {
+  function searchChange (evt) {
     const value = evt.target.value;
     setSearchString(value);
     localStorage.setItem("searchString", value);
-  }, [isShort, movies]);
+  }
 
   function switchCheckbox(e) {
     const value = e.target.checked;

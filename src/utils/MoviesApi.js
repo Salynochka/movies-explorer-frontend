@@ -5,8 +5,8 @@ class MoviesApi {
   }
 
   //Получение фильмов с сервера
-  async getAllMoviesCards() {
-    return await fetch(`${this._mainUrl}`, {
+  getAllMoviesCards() {
+    return fetch(`${this._mainUrl}`, {
       headers: this.headers,
     }).then((res) => this._checkStatus(res));
   }

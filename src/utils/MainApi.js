@@ -12,12 +12,12 @@ class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  async getToken(token) {
-    return await fetch(`${this._mainUrl}/users/me`, {
+  getToken = (token) => {
+    return fetch(`${this._mainUrl}/users/me`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
       credentials: "include",
     })
@@ -25,10 +25,14 @@ class MainApi {
   }
 
   //Регистрация пользователя
-  async register(name, email, password) {
-    return await fetch(`${this._mainUrl}/signup`, {
+  register = (name, email, password) =>{
+    return fetch(`${this._mainUrl}/signup`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('jwt')}`
+      },
       credentials: "include",
       body: JSON.stringify({
         name,
@@ -39,53 +43,48 @@ class MainApi {
   }
 
   //Вход пользователя
-  async login(email, password) {
-    return await fetch(`${this._mainUrl}/signin`, {
+  login = (email, password) => {
+    return fetch(`${this._mainUrl}/signin`, {
       method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: this._headers,
       credentials: "include",
       body: JSON.stringify({
-        email: email,
-        password: password,
+        email,
+        password,
       }),
     })
       .then((res) => this._checkStatus(res))
-   /*   .then((data) => {
-          localStorage.setItem("jwt", data.token);
-         return data;
-      });*/
   }
 
   // Выход с сайта
-  async logout() {
-    return await fetch(`${this._mainUrl}/signout`, {
+  logout() {
+    return fetch(`${this._mainUrl}/signout`, {
       method: "POST",
       credentials: "include",
       headers: this._headers,
     });
   }
 
-  //Получение данных о пользователе
+  // Получение данных о пользователе
   getUserInfo() {
     return fetch(`${this._mainUrl}/users/me`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+        'Accept': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('jwt')}`
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));
   }
 
   //Редактирование данных пользователя
-  async editUserInfo(name, email) {
-    return await fetch(`${this._mainUrl}/users/me`, {
+  editUserInfo(name, email) {
+    return fetch(`${this._mainUrl}/users/me`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`
       },
       credentials: "include",
       body: JSON.stringify({
@@ -96,24 +95,24 @@ class MainApi {
   }
 
   //Получение сохраненных фильмов пользователя
-  async getUserSavedMovies() {
-    return await fetch(`${this._mainUrl}/movies`, {
+  getUserSavedMovies() {
+    return fetch(`${this._mainUrl}/movies`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));
   }
 
   //Добавление фильма на сервер
-  async saveMovie(data) {
-    return await fetch(`${this._mainUrl}/movies`, {
+  saveMovie(data) {
+    return fetch(`${this._mainUrl}/movies`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`
       },
       credentials: "include",
       body: JSON.stringify({
@@ -122,11 +121,11 @@ class MainApi {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: `https://api.movies.weekend.nomoredomainsrocks.ru/${data.image.url}`,
+        image: `https://api.movies.weekend.nomoredomainsrocks.ru/${data.image}`,
         trailerLink: data.trailerLink,
         nameRU: data.nameRU,
         nameEN: data.nameEN,
-        thumbnail: `https://api.movies.weekend.nomoredomainsrocks.ru/${data.thumbnail.url}`,
+        thumbnail: `https://api.movies.weekend.nomoredomainsrocks.ru/${data.thumbnail}`,
         movieId: data.id,
         owner: data.owner,
       }),
@@ -134,12 +133,12 @@ class MainApi {
   }
 
   //Удаление из сохраненных фильмов
-  async unsaveMovie(movieId) {
-    return await fetch(`${this._mainUrl}/movies/${movieId}`, {
+  unsaveMovie(movieId) {
+    return fetch(`${this._mainUrl}/movies/${movieId}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));
