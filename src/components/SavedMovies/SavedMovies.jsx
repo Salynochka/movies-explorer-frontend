@@ -6,21 +6,21 @@ import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./SavedMovies.css";
 
-function SavedMovies({ isLoading, getSavedMovies, savedMovies, onBurgerMenu, isOpen, onButtonMovie, loggedIn }) {
+function SavedMovies({ isLoading, getSavedMovies, savedMovies, setSavedMovies, onBurgerMenu, isOpen, loggedIn }) {
   const [searchString, setSearchString] = useState(
     localStorage.getItem("searchString") || ""
   );
   const [isShortSaved, setIsShortSaved] = useState(
     JSON.parse(localStorage.getItem("isShort")) || false
   );
-
+/*
   const [findSavedMovies, setFindSavedMovies] = useState(
     JSON.parse(localStorage.getItem("findMovies")) || []
-  );
-
+  );*/
+/*
   const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
-  );
+  );*/
 
   // const [filteredMovies, setFilteredMovies] = useState(savedMovies); 
 
@@ -39,67 +39,77 @@ function SavedMovies({ isLoading, getSavedMovies, savedMovies, onBurgerMenu, isO
   const filterSaved = useCallback(() => {
     let finded;
     if (!searchString) {
-      finded = movies;
-      setFindSavedMovies(finded)
+      finded = savedMovies;
+      setSavedMovies(finded)
       localStorage.setItem("findSavedMovies", JSON.stringify(finded));
     } else {
-    const finded = movies.filter((m) =>
+    const finded = savedMovies.filter((m) =>
       m.nameRU.toLowerCase().includes(searchString.toLowerCase())
     );
-    setFindSavedMovies(finded);
+    setSavedMovies(finded);
     localStorage.setItem("findSavedMovies", JSON.stringify(finded));
     }
     
     if (isShortSaved) {
       const filtered = finded.filter((m) => m.duration <= 52);
-      setFindSavedMovies(filtered);
+      setSavedMovies(filtered);
       localStorage.setItem("findSavedMovies", JSON.stringify(filtered));
     }
-  }, [isShortSaved, movies, searchString]);
+  }, [isShortSaved, savedMovies, searchString]);
 
-  useEffect(() => {
-    getSavedMovies();
+  /*useEffect(() => {
     if ('isShortSaved' in localStorage) {
       setIsShortSaved(JSON.parse(localStorage.getItem('isShortSaved')));
     }
   }, [getSavedMovies]);
-
+*/
   useEffect(() => {
-    filterSaved();
-  }, [filterSaved]);
+  //  getSavedMovies();
+    filterSaved(savedMovies);
+  }, []);
   
-
-
-  useEffect(() => {
+/*  useEffect(() => {
     loggedIn &&
       localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
-  }, [savedMovies, loggedIn]);
+  }, [savedMovies, loggedIn]);*/
 /*
   function filterDuration (movies) {
     return movies.filter((movie) => movie.duration < 52);
   };*/
 
-  function filter(movies) {
-    return movies.filter((movie) =>
+  function filter(savedMovies) {
+    return savedMovies.filter((movie) =>
     isShortSaved
       ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) && movie.duration<52
       : (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase()))
     );
   }
 
-  function getSavedMovies (savedMovies, card) {
-    return savedMovies.find((savedMovie) => savedMovie.movieId === card.id);
+  function handleSearch (savedMovies, movie) {
+  //  getSavedMovies();
+    return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
   };
+
+  //function handleSearch() {
+  //  if (loggedIn) {
+  //    if (localStorage.getItem("savedMovies")) {
+  //      setMovies(JSON.parse(localStorage.getItem("savedMovies")));
+  //    } else {
+  //      getSavedMovies()
+  //    }
+  //  }
+  //}
 
   return (
     <div className="saved-movies">
       <Header onBurgerMenu={onBurgerMenu} isOpen={isOpen} loggedIn={loggedIn}/>
       <main>
-        <SearchForm searchString={searchString} searchChange={searchChange} />
+        <SearchForm searchString={searchString} searchChange={searchChange} search={handleSearch}/>
         <FilterCheckbox switchCheckbox={toggleCheckbox} isShort={isShortSaved} />
         <MoviesCardList
           movies={filter(savedMovies)}
-          onButtonMovie={onButtonMovie}
+          savedMovies={savedMovies}
+          setSavedMovies={setSavedMovies}
           isLoading={isLoading}
         />
       </main>

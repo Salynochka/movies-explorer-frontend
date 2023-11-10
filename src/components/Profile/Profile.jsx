@@ -19,8 +19,8 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
   }, [resetForm]);
 
   useEffect(() => {
-      setValues(currentUser);
-      setIsValid(true);
+    setValues(currentUser);
+    setIsValid(true);
   }, [currentUser, resetForm, setValues]);
 
   useEffect(() => {
@@ -73,7 +73,6 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     name="name"
                     placeholder="Имя"
                     minLength="2"
-                    required
                     onChange={handleChange}
                     value={values.name || ""}
                     autocomplete="on"
@@ -92,7 +91,6 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     placeholder="Email"
                     minLength="2"
                     maxLength="40"
-                    required
                     onChange={handleChange}
                     value={values.email || ""}
                     autocomplete="on"
@@ -106,16 +104,27 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
               </fieldset>
             </div>
             <div className="profile__changing">
-              <button
-                className={`profile__edit${
-                  isClickedEditButton ? "" : "_visible"
-                }`}
-                type="button"
-                disabled={isButtonDisabled}
-                onClick={handleEditProfile}
-              >
-                Редактировать
-              </button>
+              {isShowSaveButton ? (
+                <button
+                  className="profile__save-button"
+                  type="submit"
+                  disabled={
+                    (values.name === currentUser.name ||
+                      values.email === currentUser.email)
+                  }
+                >
+                  Сохранить
+                </button>
+              ) : (
+                <button
+                  className="profile__edit"
+                  type="button"
+                  disabled={isButtonDisabled}
+                  onClick={handleEditProfile}
+                >
+                  Редактировать
+                </button>
+              )}
               <Link
                 to="/"
                 className={`profile__to-login${
@@ -125,19 +134,6 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
               >
                 Выйти из аккаунта
               </Link>
-              <button
-                className={`profile__save-button${
-                  isShowSaveButton ? "_visible" : ""
-                }`}
-                type="submit"
-                disabled={
-                  !isValid ||
-                  (values.name === currentUser.name &&
-                    values.email === currentUser.email)
-                }
-              >
-                Сохранить
-              </button>
             </div>
           </form>
         </section>

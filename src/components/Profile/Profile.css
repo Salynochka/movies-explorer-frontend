@@ -88,12 +88,12 @@
     row-gap: 16px;
     align-items: center;
 }
-
+/*
 .profile__edit{
     display: none;
-}
+}*/
 
-.profile__edit_visible{
+.profile__edit{
     display: flex;
     visibility: visible;
     opacity: 1;
@@ -106,12 +106,12 @@
     border: none;
 }
 
-.profile__edit_visible:hover{
+.profile__edit:hover{
     cursor: pointer;
     opacity: 0.7;
 }
 
-.profile__edit_visible:disabled{
+.profile__edit:disabled{
     opacity: 0.3;
 }
 
@@ -134,12 +134,12 @@
     cursor: pointer;
     opacity: 0.7;
 }
-
+/*
 .profile__save-button{
     display: none;
-}
+}*/
 
-.profile__save-button_visible{
+.profile__save-button{
     visibility: visible;
     opacity: 1;
     width: 396px;
@@ -154,12 +154,12 @@
     padding: 0;
 }
 
-.profile__save-button_visible:disabled{
+.profile__save-button:disabled{
     color: #C2C2C2;
     background-color: #F8F8F8;
 }
 
-.profile__save-button_visible:hover{
+.profile__save-button:hover{
     cursor: pointer;
     opacity: 1;
 }

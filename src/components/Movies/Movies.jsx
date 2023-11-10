@@ -39,10 +39,6 @@ function Movies({
   const [amountCard, setAmountCard] = useState(0);
   const [addedCards, setAddedCards] = useState(0);
   const [isEndedCards, setIsEndedCards] = useState(false);
-  // const [renderedMovies, setRenderedMovies] = useState([]);
-  const [findMovies, setFindMovies] = useState(
-    JSON.parse(localStorage.getItem("findMovies")) || []
-  );
 
   function searchChange(evt) {
     const value = evt.target.value;
@@ -108,10 +104,10 @@ function Movies({
   useEffect(() => {
     changeLengthOfMovies();
     renderMovies(amountCard);
-  }, [windowWidth]);
+  }, [windowWidth, loggedIn]);
 
   useEffect(() => {
-    getSavedMovies();
+  //  getSavedMovies();
     filter(movies);
   }, []);
 

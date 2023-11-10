@@ -32,7 +32,7 @@ function App() {
   /* const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
   );*/
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
   const [isPass, setIsPass] = useState(false);
 
   // Получение информации o пользователе и сохраненных фильмов
@@ -49,19 +49,24 @@ function App() {
         });
   }, [isLoggedIn]);
 
-  const getSavedMovies = useCallback(() => {
-    if ("savedMovies" in localStorage) {
-      setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
-    } else {
+  function getSavedMovies () {
+   // if ("savedMovies" in localStorage) {
+   //   localStorage.getItem("savedMovies");
+   // } else {
+    isLoggedIn &&
       mainApi
         .getUserSavedMovies()
         .then((movies) => {
           setSavedMovies(movies);
-          localStorage.setItem("savedMovies", JSON.stringify(movies.data));
+          localStorage.setItem("savedMovies", JSON.stringify(movies));
         })
         .catch((error) => console.log(error));
-    }
-  }, [savedMovies]);
+  //  }
+  }
+
+  useEffect(()=>{
+    getSavedMovies()
+  }, [savedMovies, isLoggedIn])
 
   // Функция открытия бургерного меню
   const handleOpenBurgerMenu = () => {
@@ -105,12 +110,14 @@ function App() {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
+        localStorage.setItem("loggedIn", true);
         setCurrentUser(res);
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
         console.log(err);
         setIsPass(false);
+        setIsLoggedIn(false);
         alert("Произошла ошибка. Попробуйте ещё раз");
         navigate("/signin", { replace: true });
       })
@@ -186,7 +193,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="root__page">
-          <ErrorBoundary>
+          <ErrorBoundary fallback={<div>Something went wrong</div>}>
             <Routes>
               <Route
                 path="/"

@@ -20,18 +20,15 @@ function MoviesCards({ movies, moviesFilter, handleMoreMovies, isEndedCards, sav
         ))}
       </div>
       <div
-        className={`cards__more cards__more${savedMovies ? "_increased" : ""}`}
+        className="cards__more"
       >
         <button
-          className={`cards__button cards__button${
-            savedMovies ? "_hidden" : ""
-          }`}
+          className="cards__button"
           type="button"
           onClick={handleMoreMovies}
           disabled={isEndedCards || !moviesFilter.length}
         >
-          {" "}
-          Ещё{" "}
+          Ещё
         </button>
       </div>
     </section>

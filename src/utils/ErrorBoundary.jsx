@@ -1,15 +1,19 @@
 import React from "react";
 
-function ErrorBoundary (props) {
-  if (props.error) {
-    return (
-      <div className="error-screen">
-        <h2>An error has occured</h2>
-        <h4>{props.error.message}</h4>
-      </div>
-    )
-  } else {
-    return <React.Fragment>{props.children}</React.Fragment>
+class ErrorBoundary extends React.Component {
+  state = {
+      error: null,
+  };
+  static getDerivedStateFromError(error) {
+      return { error };
+  }
+  render() {
+      const { error } = this.state;
+
+      if (error) {
+          return <this.props.ErrorComponent error={error} />;
+      }
+      return this.props.children;
   }
 }
 
