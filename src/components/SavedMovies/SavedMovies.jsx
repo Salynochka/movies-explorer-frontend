@@ -15,7 +15,7 @@ function SavedMovies({ movies, isLoading, savedMovies, onBurgerMenu, isOpen, onB
     JSON.parse(localStorage.getItem("isShort")) || false
   );
 
-  const [filteredMovies, setFilteredMovies] = useState(savedMovies); 
+  // const [filteredMovies, setFilteredMovies] = useState(savedMovies); 
 
   function searchChange(evt) {
     const value = evt.target.value;
@@ -28,7 +28,7 @@ function SavedMovies({ movies, isLoading, savedMovies, onBurgerMenu, isOpen, onB
     setIsShort(value);
     localStorage.setItem("isShort", value);
   }
-
+/*
   useEffect(() => {
     const moviesList = filter (savedMovies, searchString);
     setFilteredMovies(isShort ? 
@@ -39,7 +39,7 @@ function SavedMovies({ movies, isLoading, savedMovies, onBurgerMenu, isOpen, onB
 
   function filterDuration (movies) {
     return movies.filter((movie) => movie.duration < 52);
-  };
+  };*/
 
   function filter(movies) {
     return movies.filter((movie) =>
@@ -60,10 +60,9 @@ function SavedMovies({ movies, isLoading, savedMovies, onBurgerMenu, isOpen, onB
         <SearchForm searchString={searchString} searchChange={searchChange} />
         <FilterCheckbox switchCheckbox={switchCheckbox} isShort={isShort} />
         <MoviesCardList
-          movies={movies}
+          movies={filter(movies)}
           onButtonMovie={onButtonMovie}
           isLoading={isLoading}
-          savedMovies={filter(savedMovies)}
         />
       </main>
       <Footer />

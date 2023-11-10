@@ -6,7 +6,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./Movies.css";
 
-function Movies({ movies, isLoading, onButtonMovie, onBurgerMenu, isOpen, search, loggedIn}) {
+function Movies({ movies, isLoading, onBurgerMenu, search, loggedIn, savedMovies, setSavedMovies, isSaved, setIsSaved}) {
   const [searchString, setSearchString] = useState(
     localStorage.getItem("searchString") || ""
   );
@@ -14,7 +14,7 @@ function Movies({ movies, isLoading, onButtonMovie, onBurgerMenu, isOpen, search
   const [isShort, setIsShort] = useState(
     JSON.parse(localStorage.getItem("isShort")) || false
   );
-  
+
   function searchChange (evt) {
     const value = evt.target.value;
     setSearchString(value);
@@ -35,16 +35,24 @@ function Movies({ movies, isLoading, onButtonMovie, onBurgerMenu, isOpen, search
     );
   }
 
+  function searching(evt){
+    evt.preventDefault();
+    filter(movies);
+  }
+
   return (
     <div className="movies">
-      <Header onBurgerMenu={onBurgerMenu} isOpen={isOpen} loggedIn={loggedIn}/>
+      <Header onBurgerMenu={onBurgerMenu} loggedIn={loggedIn}/>
       <main>
-        <SearchForm searchString={searchString} searchChange={searchChange} search={search}/>
+        <SearchForm searchString={searchString} searchChange={searchChange} search={searching}/>
         <FilterCheckbox switchCheckbox={switchCheckbox} isShort={isShort} />
         <MoviesCardList
           movies={filter(movies)}
           isLoading={isLoading}
-          onButtonMovie={onButtonMovie}
+          savedMovies={savedMovies}
+          setSavedMovies={setSavedMovies}
+          isSaved={isSaved}
+          setIsSaved={setIsSaved}
         />
       </main>
       <Footer />

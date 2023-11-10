@@ -3,7 +3,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import "./MoviesCardList.css";
 import Preloader from "../Preloader/Preloader";
-import useWindowSize from "../../../utils/useWindowSize.js";
+import useWindowSize from "../../../utils/useWindowSize.jsx";
 import {
   largeVersion,
   mediumVersion,
@@ -12,14 +12,14 @@ import {
   moreCardsWidthMedium,
   moreCardsWidthMin,
   addedCardsMax,
-  addedCardsMin
+  addedCardsMin,
 } from "../../../utils/constants.js";
 
-function MoviesCards({ movies, savedMovies, isLoading, onButtonMovie }) {
+function MoviesCards({ movies, savedMovies, isLoading, isSaved, setIsSaved, setSavedMovies }) {
   const [amountCard, setAmountCard] = useState(0);
   const [addedCards, setAddedCards] = useState(0);
   const [isEndedCards, setIsEndedCards] = useState(false);
-  const [renderedMovie, setRenderedMovies] = useState([]);
+  const [renderedMovies, setRenderedMovies] = useState([]);
   const [findMovies, setFindMovies] = useState([]);
 
   const windowWidth = useWindowSize();
@@ -31,11 +31,11 @@ function MoviesCards({ movies, savedMovies, isLoading, onButtonMovie }) {
     } else if (windowWidth >= mediumVersion && windowWidth < largeVersion) {
       setAmountCard(moreCardsWidthMedium);
       setAddedCards(addedCardsMin);
-    } else if (windowWidth >= minVersion && windowWidth < mediumVersion){
+    } else if (windowWidth >= minVersion && windowWidth < mediumVersion) {
       setAmountCard(moreCardsWidthMin);
-      setAddedCards(addedCardsMin)
+      setAddedCards(addedCardsMin);
     }
-  }, [windowWidth])
+  }, [windowWidth]);
 
   const renderCards = useCallback(
     (count) => {
@@ -44,36 +44,35 @@ function MoviesCards({ movies, savedMovies, isLoading, onButtonMovie }) {
       } else {
         setIsEndedCards(false);
       }
-      setRenderedMovies(findMovies.slice(0, count));
+      setFindMovies(findMovies.slice(0, count));
     },
-    [findMovies]
+    [renderedMovies]
   );
 
   useEffect(() => {
     changeLengthOfMovies();
     renderCards(amountCard);
-  }, [changeLengthOfMovies, renderCards]);
+  }, [changeLengthOfMovies, renderCards, amountCard]);
 
   function handleMoreMovies() {
     let full = 0;
     full = +amountCard + addedCards;
     setAmountCard(full);
     renderCards(full);
-  };
+  }
 
   return (
     <section className="cards">
       {isLoading && <Preloader />}
       <div className="cards__full">
-        {movies && movies.map((movie) => (
+        {renderedMovies.map((movie) => (
           <MoviesCard
-            nameRU={movie.nameRU}
-            image={movie.image.url}
-            duration={movie.duration}
-            trailerLink={movie.trailerLink}
-            movie={renderedMovie}
+            isSaved={isSaved}
+            setIsSaved={setIsSaved}
+            movie={movie}
             key={movie.id}
-            onButtonMovie={onButtonMovie}
+            savedMovies={savedMovies}
+            setSavedMovies={setSavedMovies}
           />
         ))}
       </div>
@@ -97,4 +96,3 @@ function MoviesCards({ movies, savedMovies, isLoading, onButtonMovie }) {
 }
 
 export default MoviesCards;
-

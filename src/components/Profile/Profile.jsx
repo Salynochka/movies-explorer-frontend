@@ -5,38 +5,39 @@ import { Link } from "react-router-dom";
 import { useFormValidation, useForm } from "../../utils/useValidation";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
+function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm, setValid } =
-    useFormValidation();
+  const { values, handleChange, errors, isValid, resetForm, setIsValid } =
+    useFormValidation({ name: "", email: "" });
   const { setValues } = useForm();
-  const [isInputDisabled, setIsInputDisabled] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isShowSaveButton, setIsShowSaveButton] = useState(false);
   const [isClickedEditButton, setIsClickedEditButton] = useState(false);
-  //const [isUserData, setIsUserData] = useState({ name: "", email: "" });
 
   useEffect(() => {
     resetForm();
   }, [resetForm]);
 
   useEffect(() => {
-    resetForm(false);
-    setValues({ name: currentUser.name, email: currentUser.email });
+    if (currentUser) {
+      setValues(currentUser);
+      setIsValid(true);
+    }
   }, [currentUser, resetForm, setValues]);
 
   useEffect(() => {
     if (
       currentUser.name !== values.name ||
       currentUser.email !== values.email
-    ) { setValid(false);
+    ) {
+      setIsValid(false);
     }
-  }, [values, currentUser, setValid]);
+  }, [values, currentUser, setIsValid]);
 
-  function onSubmit(e) {
-    e.preventDefault();
+  function onSubmit(evt) {
+    evt.preventDefault();
     setIsButtonDisabled(true);
-    handleSubmit({ name: values.name, email: values.email });
+    handleSubmit(values);
     if (!errors) {
       setIsShowSaveButton(false);
     } else {
@@ -44,8 +45,15 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
     }
   }
 
-  function handleEditProfile() {
-    setIsInputDisabled(false);
+  useEffect(() => {
+    if (isPass) {
+      setIsShowSaveButton(false);
+      alert("Данные успешно изменены");
+    }
+  }, [isPass]);
+
+  function handleEditProfile(evt) {
+    evt.preventDefault();
     setIsShowSaveButton(true);
     setIsClickedEditButton(true);
   }
@@ -72,7 +80,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
                     value={values.name || ""}
                     autocomplete="on"
                     isValid={isValid.name}
-                    disabled={isInputDisabled}
+                    disabled={!isShowSaveButton}
                   />
                 </div>
                 <span className="profile__item-error">
@@ -93,7 +101,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
                     autocomplete="on"
                     pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
                     isValid={isValid.profile__email}
-                    disabled={isInputDisabled}
+                    disabled={!isShowSaveButton}
                   />
                 </div>
                 <span className="profile__item-error">
@@ -126,7 +134,11 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
                   isShowSaveButton ? "_visible" : ""
                 }`}
                 type="submit"
-                disabled={!isValid}
+                disabled={
+                  !isValid ||
+                  (values.name === currentUser.name &&
+                    values.email === currentUser.email)
+                }
               >
                 Сохранить
               </button>
@@ -139,4 +151,3 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
 }
 
 export default Profile;
-

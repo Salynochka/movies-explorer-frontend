@@ -8,3 +8,6 @@ export const moreCardsWidthMin = 5;
 
 export const addedCardsMax = 5;
 export const addedCardsMin = 2;
+
+export const moviesSite = 'https://api.nomoreparties.co/beatfilm-movies'
+export const mainSite = 'https://api.movies.weekend.nomoredomainsrocks.ru'

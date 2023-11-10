@@ -34,6 +34,8 @@ function App() {
     JSON.parse(localStorage.getItem("movies")) || []
   );
   const [savedMovies, setSavedMovies] = useState([]);
+  const [isPass, setIsPass] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   // Получение информации o пользователе и сохраненных фильмов
   useEffect(() => {
@@ -41,7 +43,7 @@ function App() {
       mainApi
         .getUserInfo()
         .then((res) => {
-          setCurrentUser(res);
+          setCurrentUser({ name: res.name, email: res.email });
         })
         .catch((error) => {
           console.log(`${error}`);
@@ -59,24 +61,19 @@ function App() {
   }, [isLoggedIn]);
 
   // Получение фильмов
-  function handleSearch() {
-    if (isLoggedIn) {
-      if (localStorage.getItem('movies')) {
-        setMovies(JSON.parse(localStorage.getItem('movies')));
-      } else {
-    moviesApi
-      .getAllMoviesCards()
-      .then((movies) => {
-        localStorage.setItem("movies", JSON.stringify(movies));
-        setMovies([...movies]);
-      })
-      .catch(console.error);
-    }}
-  }
-  
   useEffect(() => {
-    handleSearch()
+    if (isLoggedIn) {
+        moviesApi
+          .getAllMoviesCards()
+          .then((movies) => {
+            localStorage.setItem("movies", JSON.stringify(movies));
+            setMovies(movies);
+          })
+          .catch(console.error);
+      
+    }
   }, [isLoggedIn]);
+
 
   // Функция открытия бургерного меню
   const handleOpenBurgerMenu = () => {
@@ -97,14 +94,15 @@ function App() {
     mainApi
       .register(name, email, password)
       .then((res) => {
-        handleLogin(name, email);
+        handleLogin(email, password);
         //   setIsRegistration(true);
-        //   setCurrentUser(res.data);
+        setCurrentUser(res.data);
       })
       .catch((err) => {
         //   setIsRegistration(false);
         console.log(err);
         alert("Произошла ошибка. Попробуйте ещё раз");
+        setIsPass(false);
       })
       .finally(() => {
         setIsLoading(false);
@@ -117,14 +115,14 @@ function App() {
     mainApi
       .login(email, password)
       .then((res) => {
-        //  getUserInfo();
-        //  getSavedMovies();
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
+        setCurrentUser(res);
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
         console.log(err);
+        setIsPass(false);
         alert("Произошла ошибка. Попробуйте ещё раз");
         navigate("/signin", { replace: true });
       })
@@ -157,19 +155,21 @@ function App() {
   }, []);
 
   // Обновление информации о пользователе
-  function handleUpdateUser(name, email) {
+  function handleUpdateUser(user) {
     setIsLoading(true);
     mainApi
-      .editUserInfo(name, email)
-      .then((res) => {
+      .editUserInfo(user)
+      .then(() => {
         setCurrentUser({
           ...currentUser,
-          name: res.name,
-          email: res.email,
+          name: user.name,
+          email: user.email,
         });
+        setIsPass(true)
         alert("Данные профиля успешно изменены");
       })
       .catch((err) => {
+        setIsPass(false);
         console.error(`Ошибка: ${err}`);
         alert("Произошла ошибка. Попробуйте ещё раз");
       })
@@ -178,39 +178,58 @@ function App() {
       });
   }
 
-  // Функция сохранения карточки фильма
-  function handleMovieSave(movie) {
+ /* // Функция сохранения карточки фильма
+  function handleMovieSave(
+    movie
+  ) {
+    if (isSaved) {
+      handleMovieUnsave(movie.id);
+    } else {
     mainApi
       .saveMovie(movie)
       .then((newMovie) => {
-        setSavedMovies([...savedMovies, newMovie]);
+        setSavedMovies([newMovie, ...savedMovies ]);
+        setIsSaved(true);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
+        setIsSaved(false);
       });
   }
+}*/
 
-  // Функция удаления из сохраненных
+  useEffect(() => {
+    isLoggedIn &&
+      localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+  }, [savedMovies, isLoggedIn]);
+
+ /* // Функция удаления из сохраненных
   function handleMovieUnsave(movie) {
     mainApi
       .unsaveMovie(movie)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter((i) => i._id !== movie._id);
+        const movieId = movie.movieId || movie.id;
+        const updatedSavedMovies = savedMovies.filter(
+          (m) => m._id !== movieId
+        );
         setSavedMovies(updatedSavedMovies);
+        setIsSaved(false);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
-  }
-
+  }*/
+/*
   // Добавление/удаление из сохраненных
-  function changeMovieStatus(movie, isSaved) {
-    if (!isSaved) {
-      handleMovieSave(movie);
+  function changeMovieStatus(movie) {
+    const movieId = movie.movieId || movie.id;
+    const savedCard = savedMovies.find((m) => m.movieId === movieId);
+    if (savedCard && savedCard._id) {
+      handleMovieUnsave(savedCard);
     } else {
-      handleMovieUnsave(savedMovies.find((m) => m.movieId === movie.id));
+      handleMovieSave(movie);
     }
-  }
+  }*/
 
   function logoutRequest() {
     mainApi.logout().then((data) => {
@@ -233,7 +252,7 @@ function App() {
   }
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser }}>
+    <CurrentUserContext.Provider value={ currentUser }>
       <div className="root">
         <div className="root__page">
           <ErrorBoundary>
@@ -259,9 +278,10 @@ function App() {
                     movies={movies}
                     onBurgerMenu={handleOpenBurgerMenu}
                     isLoading={isLoading}
-                    onButtonMovie={changeMovieStatus}
-                    search={handleSearch}
-                    //    getSavedMovies={getSavedMovies}
+                    savedMovies={savedMovies}
+                    setSavedMovies={setSavedMovies}
+                    isSaved={isSaved}
+                    setIsSaved={setIsSaved}
                   />
                 }
               />
@@ -270,14 +290,10 @@ function App() {
                 element={
                   <ProtectedRoute
                     element={SavedMovies}
-                    movies={movies}
-                    savedMovies={savedMovies}
-                    //  getSavedMovies={getSavedMovies}
+                    movies={savedMovies}
                     onBurgerMenu={handleOpenBurgerMenu}
-                    onButtonMovie={changeMovieStatus}
                     loggedIn={isLoggedIn}
                     isLoggedIn={isLoggedIn}
-                    search={handleSearch}
                   />
                 }
               />
@@ -292,6 +308,7 @@ function App() {
                     isOpen={isOpenBurgerMenu}
                     isLoggedIn={isLoggedIn}
                     loggedIn={isLoggedIn}
+                    isPass={isPass}
                   />
                 }
               />
