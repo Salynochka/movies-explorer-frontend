@@ -6,7 +6,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./Movies.css";
 
-function Movies({ movies, savedMovies, isLoading, onButtonMovie, onBurgerMenu, isOpen }) {
+function Movies({ movies, isLoading, onBurgerMenu, search, loggedIn, savedMovies, setSavedMovies, isSaved, setIsSaved}) {
   const [searchString, setSearchString] = useState(
     localStorage.getItem("searchString") || ""
   );
@@ -15,7 +15,7 @@ function Movies({ movies, savedMovies, isLoading, onButtonMovie, onBurgerMenu, i
     JSON.parse(localStorage.getItem("isShort")) || false
   );
 
-  function searchChange(evt) {
+  function searchChange (evt) {
     const value = evt.target.value;
     setSearchString(value);
     localStorage.setItem("searchString", value);
@@ -25,27 +25,34 @@ function Movies({ movies, savedMovies, isLoading, onButtonMovie, onBurgerMenu, i
     const value = e.target.checked;
     setIsShort(value);
     localStorage.setItem("isShort", value);
-  }
+  } 
 
   function filter(movies) {
     return movies.filter((movie) =>
       isShort
-        ? movie.name.includes(searchString) && movie.isShort
-        : movies.name.includes(searchString)
+      ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) && movie.duration<52
+      : (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase()))
     );
+  }
+
+  function searching(evt){
+    evt.preventDefault();
+    filter(movies);
   }
 
   return (
     <div className="movies">
-      <Header onBurgerMenu={onBurgerMenu} isOpen={isOpen} />
+      <Header onBurgerMenu={onBurgerMenu} loggedIn={loggedIn}/>
       <main>
-        <SearchForm searchString={searchString} searchChange={searchChange} />
+        <SearchForm searchString={searchString} searchChange={searchChange} search={searching}/>
         <FilterCheckbox switchCheckbox={switchCheckbox} isShort={isShort} />
         <MoviesCardList
           movies={filter(movies)}
           isLoading={isLoading}
-          onButtonMovie={onButtonMovie}
-          savedMovie={savedMovies}
+          savedMovies={savedMovies}
+          setSavedMovies={setSavedMovies}
+          isSaved={isSaved}
+          setIsSaved={setIsSaved}
         />
       </main>
       <Footer />

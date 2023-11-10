@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import { useFormValidation } from "../useValidation";
+import { useFormValidation } from "../../utils/useValidation";
 
 function Register({ handleSubmit}) {
   const { values, handleChange, errors, isValid, resetForm } =

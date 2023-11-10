@@ -1,3 +1,5 @@
+import {moviesSite} from "./constants"
+
 class MoviesApi {
   constructor({ mainUrl, headers }) {
     this._mainUrl = mainUrl;
@@ -5,8 +7,8 @@ class MoviesApi {
   }
 
   //Получение фильмов с сервера
-  async getAllMoviesCards() {
-    return await fetch(`${this._mainUrl}`, {
+  getAllMoviesCards() {
+    return fetch(`${this._mainUrl}`, {
       headers: this.headers,
     }).then((res) => this._checkStatus(res));
   }
@@ -21,7 +23,7 @@ class MoviesApi {
 }
 
 export const moviesApi = new MoviesApi({
-  mainUrl: "https://api.nomoreparties.co/beatfilm-movies",
+  mainUrl: moviesSite,
   headers: {
     "Content-Type": "application/json",
   },

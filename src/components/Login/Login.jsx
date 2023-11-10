@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import { useFormValidation } from "../useValidation";
+import { useFormValidation } from "../../utils/useValidation";
 
-function Login({ handleSubmit }) {
+function Login({ handleSubmit, isLoggedIn }) {
+  const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } =
     useFormValidation();
 
@@ -12,6 +14,12 @@ function Login({ handleSubmit }) {
     e.preventDefault();
     handleSubmit(values.email, values.password);
   }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/movies');
+    }
+  }, []);
 
   useEffect(() => {
     resetForm();

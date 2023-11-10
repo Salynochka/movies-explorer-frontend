@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import "./SearchForm.css";
 
-function SearchForm({ searchString, searchChange }) {
+function SearchForm({ search, searchString, searchChange }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!searchString) {
+      alert('Нужно ввести ключевое слово');
+      return;
+    } else {
+      search(searchString);
+    }
+  };
+
   return (
     <div className="search">
       <div className="search__info">
-        <form className="search__form">
-          <input className="search__input" placeholder="Фильм" name="search__input" onChange={searchChange} value={searchString}/>
-          <button className="search__button" type="button"/>
+        <form className="search__form" onSubmit={handleSubmit}>
+          <input
+            className="search__input"
+            type="text"
+            placeholder="Фильм"
+            name="search"
+            onChange={searchChange}
+            value={searchString}
+          />
+          <button className="search__button" type="submit"/>
         </form>
       </div>
     </div>

@@ -8,12 +8,13 @@ import Portfolio from "./Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 import "./Main.css";
 
-function Main(props) {
+function Main({onBurgerMenu, isOpen, loggedIn}) {
   return (
     <div className="page">
       <Header 
-        onBurgerMenu={props.onBurgerMenu}
-        isOpen={props.isOpen}
+        onBurgerMenu={onBurgerMenu}
+        isOpen={isOpen}
+        loggedIn={loggedIn}
       />
       <main>
         <Promo />
