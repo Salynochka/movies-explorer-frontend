@@ -19,7 +19,7 @@ function Login({ handleSubmit, isLoggedIn }) {
     if (isLoggedIn) {
       navigate('/movies');
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     resetForm();

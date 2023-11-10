@@ -71,7 +71,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     type="text"
                     className="profile__item"
                     name="name"
-                    placeholder="Имя"
+                    placeholder={`${currentUser.name}`}
                     minLength="2"
                     onChange={handleChange}
                     value={values.name || ""}
@@ -88,7 +88,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     type="email"
                     className="profile__item"
                     name="email"
-                    placeholder="Email"
+                    placeholder={`${currentUser.email}`}
                     minLength="2"
                     maxLength="40"
                     onChange={handleChange}

@@ -90,7 +90,7 @@ function Movies({
       setAmountCard(moreCardsWidthMin);
       setAddedCards(addedCardsMin);
     }
-  }, [windowWidth]);
+  }, [windowWidth, loggedIn]);
 
   function renderMovies(count) {
     if (count >= movies.length) {

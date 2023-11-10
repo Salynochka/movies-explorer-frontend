@@ -10,26 +10,30 @@ function MoviesCard({ movie, savedMovies, setSavedMovies }) {
     const minutes = duration % 60;
     return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
   }
-
+/*
   function onCardClick(movie, isSaved) {
     if (isSaved) {
-      handleMovieUnsave(movie._id);//savedMovies.find((m) => m.movieId === movie.id));
+      handleMovieUnsave(movie._id); //savedMovies.find((m) => m.movieId === movie.id));
     } else {
       handleMovieSave(movie);
     }
-  }
+  }*/
 
-  function handleMovieSave() {
-    mainApi
-      .saveMovie(movie)
-      .then((newMovie) => {
-        setSavedMovies([newMovie, ...savedMovies]);
-        setIsSaved(true);
-      })
-      .catch((err) => {
-        console.error(`Ошибка: ${err}`);
-        setIsSaved(false);
-      });
+  function handleMovieSave(movie) {
+    if (isSaved) {
+      handleMovieUnsave(movie.id);
+    } else {
+      mainApi
+        .saveMovie(movie)
+        .then((newMovie) => {
+          setSavedMovies([newMovie, ...savedMovies]);
+          setIsSaved(true);
+        })
+        .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+          setIsSaved(false);
+        });
+    }
   }
 
   // Функция удаления из сохраненных
@@ -67,7 +71,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies }) {
                   type="checkbox"
                   name="radio"
                   checked={isSaved}
-                  onChange={onCardClick}
+                  onChange={handleMovieSave}
                 />
               </form>
             </div>
