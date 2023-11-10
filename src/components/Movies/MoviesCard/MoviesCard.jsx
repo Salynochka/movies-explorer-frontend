@@ -4,11 +4,10 @@ import { mainApi } from "../../../utils/MainApi";
 
 function MoviesCard({
   movie,
-  isSaved,
-  setIsSaved,
   savedMovies,
   setSavedMovies,
 }) {
+  const [isSaved, setIsSaved] = useState(false);
 
   function durationHours(duration) {
     const hours = Math.floor(duration / 60);
@@ -72,10 +71,8 @@ function MoviesCard({
                   className="card__save-button"
                   type="checkbox"
                   name="radio"
-                //  checked={handleMovieUnsave}
-                //  onChange={handleMovieSave}
-                  isSaved={false}
-                  onClick={onCardClick}
+                  checked={isSaved}
+                  onChange={onCardClick}
                 />
               </form>
             </div>

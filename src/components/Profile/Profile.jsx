@@ -19,10 +19,8 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
   }, [resetForm]);
 
   useEffect(() => {
-    if (currentUser) {
       setValues(currentUser);
       setIsValid(true);
-    }
   }, [currentUser, resetForm, setValues]);
 
   useEffect(() => {
@@ -79,7 +77,6 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     onChange={handleChange}
                     value={values.name || ""}
                     autocomplete="on"
-                    isValid={isValid.name}
                     disabled={!isShowSaveButton}
                   />
                 </div>
@@ -100,7 +97,6 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     value={values.email || ""}
                     autocomplete="on"
                     pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
-                    isValid={isValid.profile__email}
                     disabled={!isShowSaveButton}
                   />
                 </div>
