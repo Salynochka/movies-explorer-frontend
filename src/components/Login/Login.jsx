@@ -19,7 +19,7 @@ function Login({ handleSubmit, isLoggedIn }) {
     if (isLoggedIn) {
       navigate('/movies');
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     resetForm();
@@ -46,7 +46,7 @@ function Login({ handleSubmit, isLoggedIn }) {
                 required
                 onChange={handleChange}
                 value={values.email || ""}
-                autocomplete="on"
+                autoComplete="on"
                 pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
               />
               <span className="login__form-error login__form-error_type_email email-error">
@@ -64,7 +64,7 @@ function Login({ handleSubmit, isLoggedIn }) {
                 required
                 onChange={handleChange}
                 value={values.password || ""}
-                autocomplete="on"
+                autoComplete="on"
               />
               <span className="login__form-error login__form-error_type_password password-error">
                 {errors.password}

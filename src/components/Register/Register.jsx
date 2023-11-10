@@ -41,7 +41,7 @@ function Register({ handleSubmit}) {
                 required
                 onChange={handleChange}
                 value={values.name || ""}
-                autocomplete="on"
+                autoComplete="on"
                 isValid={isValid.name}
               />
               <span className="register__form-error register__form-error_type_name name-error">
@@ -57,7 +57,7 @@ function Register({ handleSubmit}) {
                 required
                 onChange={handleChange}
                 value={values.email || ""}
-                autocomplete="on"
+                autoComplete="on"
                 pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
                 isValid={isValid.email}
               />

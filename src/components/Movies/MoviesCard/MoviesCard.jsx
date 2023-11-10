@@ -2,30 +2,27 @@ import "./MoviesCard.css";
 import React, { useState } from "react";
 import { mainApi } from "../../../utils/MainApi";
 
-function MoviesCard({
-  movie,
-  isSaved,
-  setIsSaved,
-  savedMovies,
-  setSavedMovies,
-}) {
+function MoviesCard({ movie, savedMovies, setSavedMovies }) {
+  const [isSaved, setIsSaved] = useState(false);
 
   function durationHours(duration) {
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
     return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
   }
-
-  function onCardClick() {
+/*
+  function onCardClick(movie, isSaved) {
     if (isSaved) {
-      handleMovieUnsave(savedMovies.find((m) => m.movieId === movie.id));
+      handleMovieUnsave(movie._id); //savedMovies.find((m) => m.movieId === movie.id));
     } else {
       handleMovieSave(movie);
     }
-  }
+  }*/
 
   function handleMovieSave(movie) {
-
+    if (isSaved) {
+      handleMovieUnsave(movie.id);
+    } else {
       mainApi
         .saveMovie(movie)
         .then((newMovie) => {
@@ -36,12 +33,13 @@ function MoviesCard({
           console.error(`Ошибка: ${err}`);
           setIsSaved(false);
         });
+    }
   }
 
   // Функция удаления из сохраненных
-  function handleMovieUnsave(movie) {
+  function handleMovieUnsave(id) {
     mainApi
-      .unsaveMovie(movie)
+      .unsaveMovie(id)
       .then(() => {
         const movieId = movie.movieId || movie.id;
         const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
@@ -72,10 +70,8 @@ function MoviesCard({
                   className="card__save-button"
                   type="checkbox"
                   name="radio"
-                //  checked={handleMovieUnsave}
-                //  onChange={handleMovieSave}
-                  isSaved={false}
-                  onClick={onCardClick}
+                  checked={isSaved}
+                  onChange={handleMovieSave}
                 />
               </form>
             </div>

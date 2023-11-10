@@ -120,16 +120,16 @@ class MainApi {
       credentials: "include",
       body: JSON.stringify({
         country: movie.country,
+        description: movie.description,
         director: movie.director,
         duration: movie.duration,
-        year: movie.year,
-        description: movie.description,
         image: `${this._mainUrl}${movie.image.url}`,
-        trailerLink: movie.trailerLink,
-        nameRU: movie.nameRU,
-        nameEN: movie.nameEN,
-        thumbnail: `${this._mainUrl}${movie.image.formats.thumbnail.url}`,
         movieId: movie.id,
+        nameEN: movie.nameEN,
+        nameRU: movie.nameRU,
+        thumbnail: `${this._mainUrl}${movie.image.formats.thumbnail.url}`,
+        trailerLink: movie.trailerLink,
+        year: movie.year,
       }),
     }).then((res) => this._checkStatus(res));
   }

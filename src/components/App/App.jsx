@@ -1,11 +1,10 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import ErrorBoundary from "../../utils/ErrorBoundary";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ProtectedRoute } from "../../utils/ProtectedRoute";
 
-import { moviesApi } from "../../utils/MoviesApi";
 import { mainApi } from "../../utils/MainApi";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -30,12 +29,11 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [movies, setMovies] = useState(
+  /* const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
-  );
-  const [savedMovies, setSavedMovies] = useState([]);
+  );*/
+  const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
   const [isPass, setIsPass] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
 
   // Получение информации o пользователе и сохраненных фильмов
   useEffect(() => {
@@ -49,7 +47,12 @@ function App() {
           console.log(`${error}`);
           alert("Неудачный вход. Авторизуйтесь заново.");
         });
+  }, [isLoggedIn]);
 
+  function getSavedMovies () {
+   // if ("savedMovies" in localStorage) {
+   //   localStorage.getItem("savedMovies");
+   // } else {
     isLoggedIn &&
       mainApi
         .getUserSavedMovies()
@@ -58,22 +61,12 @@ function App() {
           localStorage.setItem("savedMovies", JSON.stringify(movies));
         })
         .catch((error) => console.log(error));
-  }, [isLoggedIn]);
+  //  }
+  }
 
-  // Получение фильмов
-  useEffect(() => {
-    if (isLoggedIn) {
-        moviesApi
-          .getAllMoviesCards()
-          .then((movies) => {
-            localStorage.setItem("movies", JSON.stringify(movies));
-            setMovies(movies);
-          })
-          .catch(console.error);
-      
-    }
-  }, [isLoggedIn]);
-
+  useEffect(()=>{
+    getSavedMovies()
+  }, [savedMovies, isLoggedIn])
 
   // Функция открытия бургерного меню
   const handleOpenBurgerMenu = () => {
@@ -117,12 +110,14 @@ function App() {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
+        localStorage.setItem("loggedIn", true);
         setCurrentUser(res);
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
         console.log(err);
         setIsPass(false);
+        setIsLoggedIn(false);
         alert("Произошла ошибка. Попробуйте ещё раз");
         navigate("/signin", { replace: true });
       })
@@ -165,7 +160,7 @@ function App() {
           name: user.name,
           email: user.email,
         });
-        setIsPass(true)
+        setIsPass(true);
         alert("Данные профиля успешно изменены");
       })
       .catch((err) => {
@@ -178,72 +173,6 @@ function App() {
       });
   }
 
- /* // Функция сохранения карточки фильма
-  function handleMovieSave(
-    movie
-  ) {
-    if (isSaved) {
-      handleMovieUnsave(movie.id);
-    } else {
-    mainApi
-      .saveMovie(movie)
-      .then((newMovie) => {
-        setSavedMovies([newMovie, ...savedMovies ]);
-        setIsSaved(true);
-      })
-      .catch((err) => {
-        console.error(`Ошибка: ${err}`);
-        setIsSaved(false);
-      });
-  }
-}*/
-
-  useEffect(() => {
-    isLoggedIn &&
-      localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
-  }, [savedMovies, isLoggedIn]);
-
- /* // Функция удаления из сохраненных
-  function handleMovieUnsave(movie) {
-    mainApi
-      .unsaveMovie(movie)
-      .then(() => {
-        const movieId = movie.movieId || movie.id;
-        const updatedSavedMovies = savedMovies.filter(
-          (m) => m._id !== movieId
-        );
-        setSavedMovies(updatedSavedMovies);
-        setIsSaved(false);
-      })
-      .catch((err) => {
-        console.error(`Ошибка: ${err}`);
-      });
-  }*/
-/*
-  // Добавление/удаление из сохраненных
-  function changeMovieStatus(movie) {
-    const movieId = movie.movieId || movie.id;
-    const savedCard = savedMovies.find((m) => m.movieId === movieId);
-    if (savedCard && savedCard._id) {
-      handleMovieUnsave(savedCard);
-    } else {
-      handleMovieSave(movie);
-    }
-  }*/
-
-  function logoutRequest() {
-    mainApi.logout().then((data) => {
-      if (data) {
-        localStorage.clear();
-        setCurrentUser({});
-        setIsLoggedIn(false);
-        navigate("/");
-      } else {
-        return;
-      }
-    });
-  }
-
   function handleSignOut() {
     logoutRequest();
     setIsLoggedIn(false);
@@ -251,11 +180,20 @@ function App() {
     navigate("/", { replace: true });
   }
 
+  function logoutRequest() {
+    mainApi.logout().then(() => {
+      localStorage.clear();
+      setCurrentUser({});
+      setIsLoggedIn(false);
+      navigate("/");
+    });
+  }
+
   return (
-    <CurrentUserContext.Provider value={ currentUser }>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="root__page">
-          <ErrorBoundary>
+          <ErrorBoundary fallback={<div>Something went wrong</div>}>
             <Routes>
               <Route
                 path="/"
@@ -275,13 +213,13 @@ function App() {
                     element={Movies}
                     loggedIn={isLoggedIn}
                     isLoggedIn={isLoggedIn}
-                    movies={movies}
+                    //  movies={movies}
                     onBurgerMenu={handleOpenBurgerMenu}
                     isLoading={isLoading}
                     savedMovies={savedMovies}
                     setSavedMovies={setSavedMovies}
-                    isSaved={isSaved}
-                    setIsSaved={setIsSaved}
+                    getSavedMovies={getSavedMovies}
+                    //  search={handleSearch}
                   />
                 }
               />
@@ -290,10 +228,13 @@ function App() {
                 element={
                   <ProtectedRoute
                     element={SavedMovies}
-                    movies={savedMovies}
+                    //movies={movies}
                     onBurgerMenu={handleOpenBurgerMenu}
                     loggedIn={isLoggedIn}
                     isLoggedIn={isLoggedIn}
+                    getSavedMovies={getSavedMovies}
+                    isLoading={isLoading}
+                    savedMovies={savedMovies}
                   />
                 }
               />
