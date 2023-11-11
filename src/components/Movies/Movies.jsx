@@ -16,11 +16,11 @@ import {
   moreCardsWidthMin,
   addedCardsMax,
   addedCardsMin,
+  shortMovie
 } from "../../utils/constants.js";
 
 function Movies({
   onBurgerMenu,
-  getSavedMovies,
   loggedIn,
   savedMovies,
   isLoading,
@@ -35,10 +35,13 @@ function Movies({
   const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
   );
+  const [filteredMovies, setFilteredMovies] = useState(movies);
 
   const [amountCard, setAmountCard] = useState(0);
   const [addedCards, setAddedCards] = useState(0);
   const [isEndedCards, setIsEndedCards] = useState(false);
+
+  const isSavedPage = false;
 
   function searchChange(evt) {
     const value = evt.target.value;
@@ -46,19 +49,26 @@ function Movies({
     localStorage.setItem("searchString", value);
   }
 
-  function toggleCheckbox(e) {
-    const value = e.target.checked;
+  function toggleCheckbox(evt) {
+    const value = evt.target.checked;
     setIsShort(value);
     localStorage.setItem("isShort", value);
   }
 
-  function filter(movies) {
+  const filter = (movies) => {
     return movies.filter((movie) =>
       isShort
-      ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) && movie.duration<52
-      : (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase()))
+        ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+            movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) &&
+          movie.duration < shortMovie
+        : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+          movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
     );
-  }
+  };
+
+  useEffect(() => {
+    setFilteredMovies(filter(movies));
+  }, [searchString, isShort]);
 
   // Получение фильмов
   function handleSearch() {
@@ -78,7 +88,7 @@ function Movies({
   }
 
   const windowWidth = useWindowSize();
-  // Изменение количества отображаемых карточек
+  // Изменение количества отображаемых и добавляемых карточек
   const changeLengthOfMovies = useCallback(() => {
     if (windowWidth >= largeVersion) {
       setAmountCard(moreCardsWidthMax);
@@ -90,7 +100,7 @@ function Movies({
       setAmountCard(moreCardsWidthMin);
       setAddedCards(addedCardsMin);
     }
-  }, [windowWidth, loggedIn]);
+  }, [windowWidth]);
 
   function renderMovies(count) {
     if (count >= movies.length) {
@@ -98,18 +108,13 @@ function Movies({
     } else {
       setIsEndedCards(false);
     }
-    setMovies(movies.slice(0, count));
+    setFilteredMovies(movies.slice(0, count));
   }
 
   useEffect(() => {
     changeLengthOfMovies();
     renderMovies(amountCard);
   }, [windowWidth, loggedIn]);
-
-  useEffect(() => {
-  //  getSavedMovies();
-    filter(movies);
-  }, []);
 
   useEffect(() => {
     handleSearch();
@@ -124,7 +129,11 @@ function Movies({
 
   return (
     <div className="movies">
-      <Header onBurgerMenu={onBurgerMenu} loggedIn={loggedIn} />
+      <Header
+        onBurgerMenu={onBurgerMenu}
+        isSavedPage={isSavedPage}
+        loggedIn={loggedIn}
+      />
       <main>
         <SearchForm
           searchString={searchString}
@@ -133,13 +142,14 @@ function Movies({
         />
         <FilterCheckbox switchCheckbox={toggleCheckbox} isShort={isShort} />
         <MoviesCardList
-          movies={filter(movies)}
+          movies={filteredMovies}
           isLoading={isLoading}
           savedMovies={savedMovies}
           setSavedMovies={setSavedMovies}
           handleMoreMovies={handleMoreMovies}
           isEndedCards={isEndedCards}
           moviesFilter={movies}
+          isSavedPage={isSavedPage}
         />
       </main>
       <Footer />

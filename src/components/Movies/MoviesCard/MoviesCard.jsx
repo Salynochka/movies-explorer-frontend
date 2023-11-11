@@ -1,8 +1,10 @@
 import "./MoviesCard.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// import { useLocation } from 'react-router-dom';
 import { mainApi } from "../../../utils/MainApi";
 
-function MoviesCard({ movie, savedMovies, setSavedMovies }) {
+function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
+//  const location = useLocation();
   const [isSaved, setIsSaved] = useState(false);
 
   function durationHours(duration) {
@@ -10,14 +12,15 @@ function MoviesCard({ movie, savedMovies, setSavedMovies }) {
     const minutes = duration % 60;
     return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
   }
-/*
-  function onCardClick(movie, isSaved) {
+
+  function onCardClick() {
     if (isSaved) {
-      handleMovieUnsave(movie._id); //savedMovies.find((m) => m.movieId === movie.id));
+      handleMovieUnsave(movie.id); //savedMovies.find((m) => m.movieId === movie.id));
     } else {
       handleMovieSave(movie);
     }
-  }*/
+    setIsSaved(!isSaved);
+  }
 
   function handleMovieSave(movie) {
     if (isSaved) {
@@ -26,8 +29,10 @@ function MoviesCard({ movie, savedMovies, setSavedMovies }) {
       mainApi
         .saveMovie(movie)
         .then((newMovie) => {
-          setSavedMovies([newMovie, ...savedMovies]);
+          setSavedMovies([...savedMovies, newMovie]);
           setIsSaved(true);
+          console.log(movie)
+          localStorage.setItem('savedMovie', JSON.stringify(movie))
         })
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -35,21 +40,44 @@ function MoviesCard({ movie, savedMovies, setSavedMovies }) {
         });
     }
   }
+/*
+  function handleDeleteMovie() {
+    if (location.pathname === '/saved-movies') {
+      const savedMovie = savedMovies.find(
+        (m) => m.movieId === movie.movieId
+      );
+      return handleMovieUnsave(savedMovie._id);
+    } 
+    if (location.pathname === '/movies') {
+      const savedMovie = savedMovies.find(
+        (m) => m.movieId === movie.id
+        );
+      return handleMovieUnsave(savedMovie._id);
+    }
+  }*/
 
   // Функция удаления из сохраненных
-  function handleMovieUnsave(id) {
+  function handleMovieUnsave(movieId) {
     mainApi
-      .unsaveMovie(id)
+      .unsaveMovie(movieId)
       .then(() => {
-        const movieId = movie.movieId || movie.id;
-        const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
-        setSavedMovies(updatedSavedMovies);
+      //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
         setIsSaved(false);
+        setSavedMovies((films) => films.filter((movie) => movie._id !== movieId));
+      //  localStorage.removeItem(movie.id);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
   }
+
+  useEffect(() => {
+    // Проверяем, сохранена ли карточка при загрузке компонента
+    const saved = localStorage.getItem('savedMovie');
+    if (saved) {
+      setIsSaved(true);
+    }
+  }, [movie.id]);
 
   return (
     <>
@@ -58,7 +86,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies }) {
           <a href={`${movie.trailerLink}`}>
             <img
               className="card__photo"
-              src={`https://api.nomoreparties.co/${movie.image.url}`}
+              src={isSavedPage ? `${movie.image}` : `https://api.nomoreparties.co/${movie.image.url}`}
               alt={`${movie.nameRU}`}
             />
           </a>
@@ -71,7 +99,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies }) {
                   type="checkbox"
                   name="radio"
                   checked={isSaved}
-                  onChange={handleMovieSave}
+                  onChange={onCardClick}
                 />
               </form>
             </div>

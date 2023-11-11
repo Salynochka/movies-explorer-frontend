@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import ErrorBoundary from "../../utils/ErrorBoundary";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
@@ -22,16 +22,11 @@ function App() {
 
   const [isOpenBurgerMenu, setOpenBurgerMenu] = useState(false);
 
-  // const [isRegistration, setIsRegistration] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(
     JSON.parse(localStorage.getItem("isLoggedIn")) || false
   );
 
   const [isLoading, setIsLoading] = useState(false);
-
-  /* const [movies, setMovies] = useState(
-    JSON.parse(localStorage.getItem("movies")) || []
-  );*/
   const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
   const [isPass, setIsPass] = useState(false);
 
@@ -66,7 +61,7 @@ function App() {
 
   useEffect(()=>{
     getSavedMovies()
-  }, [savedMovies, isLoggedIn])
+  }, [isLoggedIn])
 
   // Функция открытия бургерного меню
   const handleOpenBurgerMenu = () => {
@@ -147,18 +142,18 @@ function App() {
     } else {
       setIsLoading(false);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   // Обновление информации о пользователе
   function handleUpdateUser(user) {
     setIsLoading(true);
     mainApi
       .editUserInfo(user)
-      .then(() => {
+      .then((res) => {
         setCurrentUser({
           ...currentUser,
-          name: user.name,
-          email: user.email,
+          name: res.name,
+          email: res.email,
         });
         setIsPass(true);
         alert("Данные профиля успешно изменены");
@@ -213,13 +208,11 @@ function App() {
                     element={Movies}
                     loggedIn={isLoggedIn}
                     isLoggedIn={isLoggedIn}
-                    //  movies={movies}
                     onBurgerMenu={handleOpenBurgerMenu}
                     isLoading={isLoading}
                     savedMovies={savedMovies}
                     setSavedMovies={setSavedMovies}
                     getSavedMovies={getSavedMovies}
-                    //  search={handleSearch}
                   />
                 }
               />
@@ -228,7 +221,6 @@ function App() {
                 element={
                   <ProtectedRoute
                     element={SavedMovies}
-                    //movies={movies}
                     onBurgerMenu={handleOpenBurgerMenu}
                     loggedIn={isLoggedIn}
                     isLoggedIn={isLoggedIn}

@@ -7,7 +7,7 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 
 function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm, setIsValid } =
+  const { values, handleChange, errors, resetForm, setIsValid } =
     useFormValidation({ name: "", email: "" });
   const { setValues } = useForm();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -71,13 +71,13 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     type="text"
                     className="profile__item"
                     name="name"
-                    placeholder={`${currentUser.name}`}
+                    placeholder="Имя"
                     minLength="2"
                     onChange={handleChange}
                     value={values.name || ""}
-                    autocomplete="on"
+                    autoComplete="on"
                     disabled={!isShowSaveButton}
-                  />
+                  ></input>
                 </div>
                 <span className="profile__item-error">
                   {errors.profile__name}
@@ -88,12 +88,12 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     type="email"
                     className="profile__item"
                     name="email"
-                    placeholder={`${currentUser.email}`}
+                    placeholder="E-mail"
                     minLength="2"
                     maxLength="40"
                     onChange={handleChange}
                     value={values.email || ""}
-                    autocomplete="on"
+                    autoComplete="on"
                     pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
                     disabled={!isShowSaveButton}
                   />

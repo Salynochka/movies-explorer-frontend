@@ -1,28 +1,29 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import FilterCheckbox from "../Movies/FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./SavedMovies.css";
+import { shortMovie } from "../../utils/constants.js";
 
-function SavedMovies({ isLoading, getSavedMovies, savedMovies, setSavedMovies, onBurgerMenu, isOpen, loggedIn }) {
+function SavedMovies({
+  isLoading,
+  savedMovies,
+  setSavedMovies,
+  onBurgerMenu,
+  loggedIn,
+}) {
   const [searchString, setSearchString] = useState(
     localStorage.getItem("searchString") || ""
   );
   const [isShortSaved, setIsShortSaved] = useState(
-    JSON.parse(localStorage.getItem("isShort")) || false
+    JSON.parse(localStorage.getItem("isShortSaved")) || false
   );
-/*
-  const [findSavedMovies, setFindSavedMovies] = useState(
-    JSON.parse(localStorage.getItem("findMovies")) || []
-  );*/
-/*
-  const [movies, setMovies] = useState(
-    JSON.parse(localStorage.getItem("movies")) || []
-  );*/
 
-  // const [filteredMovies, setFilteredMovies] = useState(savedMovies); 
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
+
+  const isSavedPage = true;
 
   function searchChange(evt) {
     const value = evt.target.value;
@@ -30,87 +31,68 @@ function SavedMovies({ isLoading, getSavedMovies, savedMovies, setSavedMovies, o
     localStorage.setItem("searchString", value);
   }
 
-  function toggleCheckbox(e) {
-    const value = e.target.checked;
+  function toggleCheckbox(evt) {
+    const value = evt.target.checked;
     setIsShortSaved(value);
-    localStorage.setItem("isShort", value);
+    localStorage.setItem("isShortSaved", value);
   }
 
-  const filterSaved = useCallback(() => {
-    let finded;
-    if (!searchString) {
-      finded = savedMovies;
-      setSavedMovies(finded)
-      localStorage.setItem("findSavedMovies", JSON.stringify(finded));
-    } else {
-    const finded = savedMovies.filter((m) =>
-      m.nameRU.toLowerCase().includes(searchString.toLowerCase())
+  const filter = (savedMovies) => {
+    return savedMovies.filter((movie) =>
+      isShortSaved
+        ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+            movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) &&
+          movie.duration < shortMovie
+        : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+          movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
     );
-    setSavedMovies(finded);
-    localStorage.setItem("findSavedMovies", JSON.stringify(finded));
-    }
-    
-    if (isShortSaved) {
-      const filtered = finded.filter((m) => m.duration <= 52);
-      setSavedMovies(filtered);
-      localStorage.setItem("findSavedMovies", JSON.stringify(filtered));
-    }
-  }, [isShortSaved, savedMovies, searchString]);
+  }
 
-  /*useEffect(() => {
-    if ('isShortSaved' in localStorage) {
-      setIsShortSaved(JSON.parse(localStorage.getItem('isShortSaved')));
-    }
-  }, [getSavedMovies]);
-*/
   useEffect(() => {
-  //  getSavedMovies();
-    filterSaved(savedMovies);
-  }, []);
-  
-/*  useEffect(() => {
+    setFilteredSavedMovies(filter(savedMovies));
+  }, [searchString, isShortSaved]);
+/*
+  useEffect(() => {
     loggedIn &&
       localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
   }, [savedMovies, loggedIn]);*/
-/*
-  function filterDuration (movies) {
-    return movies.filter((movie) => movie.duration < 52);
-  };*/
 
-  function filter(savedMovies) {
-    return savedMovies.filter((movie) =>
-    isShortSaved
-      ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) && movie.duration<52
-      : (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase()))
-    );
+  useEffect(() => {
+    setFilteredSavedMovies(filter(savedMovies));
+  }, [searchString, isShortSaved]);
+
+  function handleSearch(savedMovies) {
+    //  getSavedMovies();
+    return savedMovies;
   }
 
-  function handleSearch (savedMovies, movie) {
-  //  getSavedMovies();
-    return savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
-  };
-
-  //function handleSearch() {
-  //  if (loggedIn) {
-  //    if (localStorage.getItem("savedMovies")) {
-  //      setMovies(JSON.parse(localStorage.getItem("savedMovies")));
-  //    } else {
-  //      getSavedMovies()
-  //    }
-  //  }
-  //}
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
   return (
     <div className="saved-movies">
-      <Header onBurgerMenu={onBurgerMenu} isOpen={isOpen} loggedIn={loggedIn}/>
+      <Header
+        onBurgerMenu={onBurgerMenu}
+        isSavedPage={isSavedPage}
+        loggedIn={loggedIn}
+      />
       <main>
-        <SearchForm searchString={searchString} searchChange={searchChange} search={handleSearch}/>
-        <FilterCheckbox switchCheckbox={toggleCheckbox} isShort={isShortSaved} />
+        <SearchForm
+          searchString={searchString}
+          searchChange={searchChange}
+          search={handleSearch}
+        />
+        <FilterCheckbox
+          switchCheckbox={toggleCheckbox}
+          isShort={isShortSaved}
+        />
         <MoviesCardList
-          movies={filter(savedMovies)}
+          movies={filteredSavedMovies}
           savedMovies={savedMovies}
           setSavedMovies={setSavedMovies}
           isLoading={isLoading}
+          isSavedPage={isSavedPage}
         />
       </main>
       <Footer />
