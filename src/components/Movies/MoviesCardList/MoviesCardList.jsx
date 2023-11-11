@@ -4,8 +4,16 @@ import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import "./MoviesCardList.css";
 import Preloader from "../Preloader/Preloader";
 
-function MoviesCards({ movies, moviesFilter, handleMoreMovies, isEndedCards, savedMovies, isLoading, setSavedMovies }) {
-
+function MoviesCards({
+  movies,
+//  moviesFilter,
+  isSavedPage,
+  handleMoreMovies,
+  isEndedCards,
+  savedMovies,
+  isLoading,
+  setSavedMovies,
+}) {
   return (
     <section className="cards">
       {isLoading && <Preloader />}
@@ -16,20 +24,23 @@ function MoviesCards({ movies, moviesFilter, handleMoreMovies, isEndedCards, sav
             key={movie.id || movie.movieId}
             savedMovies={savedMovies}
             setSavedMovies={setSavedMovies}
+            isSavedPage={isSavedPage}
           />
         ))}
       </div>
-      <div
-        className="cards__more"
-      >
-        <button
-          className="cards__button"
-          type="button"
-          onClick={handleMoreMovies}
-          disabled={isEndedCards || !moviesFilter.length}
-        >
-          Ещё
-        </button>
+      <div className="cards__more">
+        {isSavedPage ? (
+          ""
+        ) : (
+          <button
+            className="cards__button"
+            type="button"
+            onClick={handleMoreMovies}
+            disabled={isEndedCards}
+          >
+            Ещё
+          </button>
+        )}
       </div>
     </section>
   );

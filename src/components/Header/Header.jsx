@@ -3,7 +3,7 @@ import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import account from "../../images/account.svg";
 
-function Header({ loggedIn, onBurgerMenu }) {
+function Header({ loggedIn, onBurgerMenu, isSavedPage }) {
   return (
     <header className="header">
       <div className={`header__theme${loggedIn ? "-gray" : "-green"}`}>
@@ -27,12 +27,12 @@ function Header({ loggedIn, onBurgerMenu }) {
               loggedIn ? "_visible" : ""
             }`}
           >
-            <Link to="/movies" className="header__films header__films_active">
+            <Link to="/movies" className={isSavedPage ? `header__films` : `header__films header__films_active`}>
               <p>Фильмы</p>
             </Link>
             <Link
               to="/saved-movies"
-              className="header__saved-films header__saved-films_active"
+              className={isSavedPage ? `header__saved-films header__saved-films_active` : `header__films`}
             >
               <p>Сохраненные фильмы</p>
             </Link>
