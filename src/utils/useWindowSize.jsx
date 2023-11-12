@@ -1,7 +1,14 @@
 import { useLayoutEffect, useState } from 'react';
 
+function getWindowSize() {
+  const {
+    innerWidth: width
+  } = window;
+  return {width};
+}
+
 function useWindowSize() {
-  const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState(getWindowSize());
   useLayoutEffect(() => {
     function updateSize() {
       setWidth(window.innerWidth);

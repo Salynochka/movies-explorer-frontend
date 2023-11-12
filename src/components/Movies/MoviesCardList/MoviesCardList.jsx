@@ -13,6 +13,7 @@ function MoviesCards({
   isLoading,
   setSavedMovies,
   isNotFoundMovies,
+  amountCard
 }) {
   return (
     <section className="cards">
@@ -22,10 +23,10 @@ function MoviesCards({
       ) : (
         <>
           <div className="cards__full">
-            {movies.map((movie) => (
+            {movies.slice(0, amountCard).map((movie) => (
               <MoviesCard
                 movie={movie}
-                key={movie.id || movie.movieId}
+                key={movie.id || movie._id}
                 savedMovies={savedMovies}
                 setSavedMovies={setSavedMovies}
                 isSavedPage={isSavedPage}

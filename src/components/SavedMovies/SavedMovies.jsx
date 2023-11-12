@@ -121,6 +121,7 @@ function SavedMovies({
         />
         <MoviesCardList
           movies={filteredSavedMovies}
+       //   moviesFilter={filteredSavedMovies}
           savedMovies={savedMovies}
           setSavedMovies={setSavedMovies}
           isLoading={isLoading}

@@ -17,7 +17,7 @@ import {
   MORE_CARD_WIDTH_MIN,
   ADDED_CARDS_MAX,
   ADDED_CARDS_MIN,
-  SHORT_MOVIE
+  SHORT_MOVIE,
 } from "../../utils/constants.js";
 
 function Movies({
@@ -33,9 +33,9 @@ function Movies({
   const [isShort, setIsShort] = useState(
     JSON.parse(localStorage.getItem("isShort")) || false
   );
-  const [movies, setMovies] = useState(
-    localStorage.getItem("movies") || []
-  );
+
+  const [movies, setMovies] = useState(localStorage.getItem("movies") || []);
+  // Отфильтрованные карточки
   const [filteredMovies, setFilteredMovies] = useState(movies);
 
   const [amountCard, setAmountCard] = useState(0);
@@ -58,21 +58,12 @@ function Movies({
     localStorage.setItem("isShort", value);
   }
 
- /* useEffect(() => {
-   // setFilteredMovies(filter(movies));
-
-  }, [searchString, isShort]);*/
-
-  useEffect(()=>{
-    filter(movies);
-    getSavedMovies()
-    if (filteredMovies.length === 0) {
-      setIsEndedCards(true);
-    }
-  }, [searchString, isShort])
+  useEffect(() => {
+    loggedIn && localStorage.setItem("movies", JSON.stringify(movies));
+  }, [movies, loggedIn]);
 
   const filter = (movies) => {
-    setIsNotFoundMovies(false)
+    setIsNotFoundMovies(false);
     const filteredMoviesList = movies.filter((movie) =>
       isShort
         ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
@@ -81,53 +72,68 @@ function Movies({
         : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
           movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
     );
-    localStorage.setItem("filteredMovies", JSON.stringify(filteredMoviesList));
-    setFilteredMovies(filteredMoviesList);
-    return filteredMoviesList
+      localStorage.setItem("filteredMovies", filteredMoviesList);
+      setFilteredMovies(filteredMoviesList);
+      return filteredMoviesList
   };
 
+  useEffect(() => {
+    setFilteredMovies(filter(movies));
+    getSavedMovies();
+    if (filteredMovies.length === 0) {
+      setIsEndedCards(true);
+    }
+  }, [searchString, isShort]);
+
   // Получение фильмов
-  function handleSearch() {
-    if (loggedIn) {
-      if (localStorage.getItem("movies")) {
-        setMovies(localStorage.getItem("movies"));
-      }  else {
+  function handleSearch(movies) {
+    getMovies()
+    return movies;
+  }
+
+  function getMovies(){
+    if (localStorage.getItem("movies")) {
+      setMovies(localStorage.getItem("movies"));
+    } else {
+      loggedIn &&
         moviesApi
           .getAllMoviesCards()
           .then((movies) => {
-
-            localStorage.setItem("movies", JSON.stringify(movies));
-            setMovies(movies);
+            if (movies.length === 0) {
+              setIsNotFoundMovies(true);
+            }
+            setFilteredMovies(
+              localStorage.setItem("movies", movies)
+            );
           })
           .catch(console.error);
-      }
     }
   }
+
+  useEffect(() => {
+    getMovies();
+  }, [searchString]);
 
   useEffect(() => {
     if (searchString) {
       setFilteredMovies(searchString);
     }
   }, [searchString, isShort]);
-/*
-  useEffect(() => {
-    handleSearch();
-  }, [searchString]);*/
 
-  function getSavedMovies () {
+  function getSavedMovies() {
     // if ("savedMovies" in localStorage) {
     //   localStorage.getItem("savedMovies");
     // } else {
-      loggedIn &&
-       mainApi
-         .getUserSavedMovies()
-         .then((movies) => {
-           setSavedMovies(movies);
-           localStorage.setItem("savedMovies", JSON.stringify(movies));
-         })
-         .catch((error) => console.log(error));
-   //  }
-   }
+    loggedIn &&
+      mainApi
+        .getUserSavedMovies()
+        .then((movies) => {
+          setSavedMovies(movies);
+          localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+        })
+        .catch((error) => console.log(error));
+    //  }
+  }
 
   const windowWidth = useWindowSize();
   // Изменение количества отображаемых и добавляемых карточек
@@ -145,12 +151,11 @@ function Movies({
   }, [windowWidth]);
 
   function renderMovies(count) {
-    if (count >= movies.length) {
+    if (count >= filteredMovies.length) {
       setIsEndedCards(true);
     } else {
       setIsEndedCards(false);
     }
-    setMovies(filteredMovies.slice(0, count));
   }
 
   useEffect(() => {
@@ -159,11 +164,17 @@ function Movies({
   }, [windowWidth, loggedIn]);
 
   function handleMoreMovies() {
-    let full = 0;
-    full = +amountCard + addedCards;
-    setAmountCard(full);
-    renderMovies(full);
+    setAmountCard(amountCard + addedCards);
+    // let full = 0;
+    // full = +amountCard + addedCards;
+    // setAmountCard(full);
+    // renderMovies(full);
   }
+
+  /*
+  useEffect(() => {
+    handleSearch();
+  }, [searchString]);*/
 
   return (
     <div className="movies">
@@ -180,8 +191,7 @@ function Movies({
         />
         <FilterCheckbox switchCheckbox={toggleCheckbox} isShort={isShort} />
         <MoviesCardList
-          movies={movies}
-          moviesFilter={filteredMovies}
+          movies={filteredMovies}
           isLoading={isLoading}
           savedMovies={savedMovies}
           setSavedMovies={setSavedMovies}
@@ -189,6 +199,7 @@ function Movies({
           isEndedCards={isEndedCards}
           isSavedPage={isSavedPage}
           isNotFoundMovies={isNotFoundMovies}
+          amountCard={amountCard}
         />
       </main>
       <Footer />
