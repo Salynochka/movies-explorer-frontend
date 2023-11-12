@@ -27,7 +27,9 @@ function App() {
   );
 
   const [isLoading, setIsLoading] = useState(false);
-  const [savedMovies, setSavedMovies] = useState(JSON.parse(localStorage.getItem("savedMovies")) || []);
+  const [savedMovies, setSavedMovies] = useState(
+    JSON.parse(localStorage.getItem("savedMovies")) || []
+  );
   const [isPass, setIsPass] = useState(false);
 
   // Получение информации o пользователе и сохраненных фильмов
@@ -37,31 +39,15 @@ function App() {
         .getUserInfo()
         .then((res) => {
           setCurrentUser({ name: res.name, email: res.email });
+          setIsLoggedIn(true);
         })
         .catch((error) => {
           console.log(`${error}`);
+          localStorage.clear();
+          setIsLoggedIn(false);
           alert("Неудачный вход. Авторизуйтесь заново.");
         });
   }, [isLoggedIn]);
-
-  function getSavedMovies () {
-   // if ("savedMovies" in localStorage) {
-   //   localStorage.getItem("savedMovies");
-   // } else {
-    isLoggedIn &&
-      mainApi
-        .getUserSavedMovies()
-        .then((movies) => {
-          setSavedMovies(movies);
-          localStorage.setItem("savedMovies", JSON.stringify(movies));
-        })
-        .catch((error) => console.log(error));
-  //  }
-  }
-
-  useEffect(()=>{
-    getSavedMovies()
-  }, [isLoggedIn])
 
   // Функция открытия бургерного меню
   const handleOpenBurgerMenu = () => {
@@ -113,6 +99,7 @@ function App() {
         console.log(err);
         setIsPass(false);
         setIsLoggedIn(false);
+        localStorage.removeItem("loggedIn");
         alert("Произошла ошибка. Попробуйте ещё раз");
         navigate("/signin", { replace: true });
       })
@@ -138,6 +125,8 @@ function App() {
         .catch(() => {
           localStorage.removeItem("jwt");
           setIsLoading(false);
+          setIsLoggedIn(false);
+          localStorage.removeItem("loggedIn");
         });
     } else {
       setIsLoading(false);
@@ -145,10 +134,10 @@ function App() {
   }, [isLoggedIn]);
 
   // Обновление информации о пользователе
-  function handleUpdateUser(user) {
+  function handleUpdateUser({ name, email }) {
     setIsLoading(true);
     mainApi
-      .editUserInfo(user)
+      .editUserInfo({name, email})
       .then((res) => {
         setCurrentUser({
           ...currentUser,
@@ -169,19 +158,18 @@ function App() {
   }
 
   function handleSignOut() {
-    logoutRequest();
-    setIsLoggedIn(false);
-    setCurrentUser({});
-    navigate("/", { replace: true });
-  }
-
-  function logoutRequest() {
-    mainApi.logout().then(() => {
-      localStorage.clear();
-      setCurrentUser({});
-      setIsLoggedIn(false);
-      navigate("/");
-    });
+    mainApi
+      .logout()
+      .then(() => {
+        localStorage.clear();
+        setCurrentUser({});
+        setIsLoggedIn(false);
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+        alert("Произошла ошибка. Попробуйте ещё раз");
+      });
   }
 
   return (
@@ -212,7 +200,7 @@ function App() {
                     isLoading={isLoading}
                     savedMovies={savedMovies}
                     setSavedMovies={setSavedMovies}
-                    getSavedMovies={getSavedMovies}
+                    //    getSavedMovies={getSavedMovies}
                   />
                 }
               />
@@ -224,7 +212,7 @@ function App() {
                     onBurgerMenu={handleOpenBurgerMenu}
                     loggedIn={isLoggedIn}
                     isLoggedIn={isLoggedIn}
-                    getSavedMovies={getSavedMovies}
+                    //    getSavedMovies={getSavedMovies}
                     isLoading={isLoading}
                     savedMovies={savedMovies}
                   />

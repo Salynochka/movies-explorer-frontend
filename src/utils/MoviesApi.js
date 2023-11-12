@@ -1,4 +1,4 @@
-import {moviesSite} from "./constants"
+import {MOVIES_SITE} from "./constants"
 
 class MoviesApi {
   constructor({ mainUrl, headers }) {
@@ -23,7 +23,7 @@ class MoviesApi {
 }
 
 export const moviesApi = new MoviesApi({
-  mainUrl: moviesSite,
+  mainUrl: MOVIES_SITE,
   headers: {
     "Content-Type": "application/json",
   },

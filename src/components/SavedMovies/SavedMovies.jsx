@@ -5,7 +5,8 @@ import FilterCheckbox from "../Movies/FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./SavedMovies.css";
-import { shortMovie } from "../../utils/constants.js";
+import { SHORT_MOVIE } from "../../utils/constants.js";
+import { mainApi } from "../../utils/MainApi";
 
 function SavedMovies({
   isLoading,
@@ -14,8 +15,8 @@ function SavedMovies({
   onBurgerMenu,
   loggedIn,
 }) {
-  const [searchString, setSearchString] = useState(
-    localStorage.getItem("searchString") || ""
+  const [searchSavedString, setSearchSavedString] = useState(
+    localStorage.getItem("searchSavedString") || ""
   );
   const [isShortSaved, setIsShortSaved] = useState(
     JSON.parse(localStorage.getItem("isShortSaved")) || false
@@ -23,12 +24,14 @@ function SavedMovies({
 
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
 
+  const [isNotFoundSavedMovies, setIsNotFoundSavedMovies] = useState(false);
+
   const isSavedPage = true;
 
   function searchChange(evt) {
     const value = evt.target.value;
-    setSearchString(value);
-    localStorage.setItem("searchString", value);
+    setSearchSavedString(value);
+    localStorage.setItem("searchSavedString", value);
   }
 
   function toggleCheckbox(evt) {
@@ -37,38 +40,67 @@ function SavedMovies({
     localStorage.setItem("isShortSaved", value);
   }
 
-  const filter = (savedMovies) => {
-    return savedMovies.filter((movie) =>
-      isShortSaved
-        ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
-            movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) &&
-          movie.duration < shortMovie
-        : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
-          movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
-    );
+  function getSavedMovies() {
+    // if ("savedMovies" in localStorage) {
+    //   localStorage.getItem("savedMovies");
+    // } else {
+    loggedIn &&
+      mainApi
+        .getUserSavedMovies()
+        .then((movies) => {
+          setSavedMovies(movies);
+          localStorage.setItem("savedMovies", JSON.stringify(movies));
+        })
+        .catch((error) => console.log(error));
+    //  }
   }
 
   useEffect(() => {
+    getSavedMovies();
+  }, [loggedIn]);
+
+  const filter = (savedMovies) => {
+    setIsNotFoundSavedMovies(false);
+    return savedMovies.filter((movie) =>
+      isShortSaved
+        ? (movie.nameRU
+            .toLowerCase()
+            .includes(searchSavedString.toLowerCase()) ||
+            movie.nameEN
+              .toLowerCase()
+              .includes(searchSavedString.toLowerCase())) &&
+          movie.duration < SHORT_MOVIE
+        : movie.nameRU
+            .toLowerCase()
+            .includes(searchSavedString.toLowerCase()) ||
+          movie.nameEN.toLowerCase().includes(searchSavedString.toLowerCase())
+    );
+  };
+
+  useEffect(() => {
     setFilteredSavedMovies(filter(savedMovies));
-  }, [searchString, isShortSaved]);
-/*
+    if (filteredSavedMovies.length === 0) {
+      setIsNotFoundSavedMovies(true);
+    }
+  }, [searchSavedString, isShortSaved]);
+  
   useEffect(() => {
     loggedIn &&
       localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
-  }, [savedMovies, loggedIn]);*/
-
+  }, [savedMovies, loggedIn]);
+/*
   useEffect(() => {
     setFilteredSavedMovies(filter(savedMovies));
-  }, [searchString, isShortSaved]);
+  }, [searchSavedString, isShortSaved]);*/
 
   function handleSearch(savedMovies) {
-    //  getSavedMovies();
+    getSavedMovies();
     return savedMovies;
   }
-
+  /*
   useEffect(() => {
     handleSearch();
-  }, []);
+  }, []);*/
 
   return (
     <div className="saved-movies">
@@ -79,7 +111,7 @@ function SavedMovies({
       />
       <main>
         <SearchForm
-          searchString={searchString}
+          searchString={searchSavedString}
           searchChange={searchChange}
           search={handleSearch}
         />
@@ -93,6 +125,7 @@ function SavedMovies({
           setSavedMovies={setSavedMovies}
           isLoading={isLoading}
           isSavedPage={isSavedPage}
+          isNotFoundMovies={isNotFoundSavedMovies}
         />
       </main>
       <Footer />

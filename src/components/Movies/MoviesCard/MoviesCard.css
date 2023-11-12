@@ -39,6 +39,10 @@
     text-align: left;
     margin: 0;
     color: white;
+    padding-right: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .card__save{
@@ -70,6 +74,19 @@
 
 .card__save-button:checked::before{
     background: #2BE080;
+}
+
+.card__unsave{
+    width: 10px;
+    height: 8px;
+    position: absolute;
+    bottom: 40px;
+    right: 13px;
+}
+
+.card__unsave:hover{
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 .card__duration{

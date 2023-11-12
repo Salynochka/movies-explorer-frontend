@@ -8,15 +8,15 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, resetForm, setIsValid } =
-    useFormValidation({ name: "", email: "" });
+    useFormValidation({ name: currentUser.name, email: currentUser.email });
   const { setValues } = useForm();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isShowSaveButton, setIsShowSaveButton] = useState(false);
   const [isClickedEditButton, setIsClickedEditButton] = useState(false);
 
   useEffect(() => {
-    resetForm();
-  }, [resetForm]);
+    resetForm({ email: currentUser.email, name: currentUser.name }, {}, false);
+  }, [currentUser, resetForm]);
 
   useEffect(() => {
     setValues(currentUser);
@@ -35,7 +35,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
   function onSubmit(evt) {
     evt.preventDefault();
     setIsButtonDisabled(true);
-    handleSubmit(values);
+    handleSubmit({ name: values.name, email: values.email });
     if (!errors) {
       setIsShowSaveButton(false);
     } else {
@@ -46,7 +46,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
   useEffect(() => {
     if (isPass) {
       setIsShowSaveButton(false);
-      alert("Данные успешно изменены");
+      setIsClickedEditButton(false);
     }
   }, [isPass]);
 
@@ -73,15 +73,14 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     name="name"
                     placeholder="Имя"
                     minLength="2"
+                    maxLength="30"
                     onChange={handleChange}
                     value={values.name || ""}
                     autoComplete="on"
                     disabled={!isShowSaveButton}
-                  ></input>
+                  />
                 </div>
-                <span className="profile__item-error">
-                  {errors.profile__name}
-                </span>
+                <span className="profile__item-error">{errors.name}</span>
                 <div className="profile__line">
                   <h2 className="profile__heading">E-mail</h2>
                   <input
@@ -98,9 +97,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     disabled={!isShowSaveButton}
                   />
                 </div>
-                <span className="profile__item-error">
-                  {errors.profile__email}
-                </span>
+                <span className="profile__item-error">{errors.email}</span>
               </fieldset>
             </div>
             <div className="profile__changing">
@@ -109,31 +106,33 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                   className="profile__save-button"
                   type="submit"
                   disabled={
-                    (values.name === currentUser.name ||
-                      values.email === currentUser.email)
+                    values.name === currentUser.name ||
+                    values.email === currentUser.email
                   }
                 >
                   Сохранить
                 </button>
               ) : (
-                <button
-                  className="profile__edit"
-                  type="button"
-                  disabled={isButtonDisabled}
-                  onClick={handleEditProfile}
-                >
-                  Редактировать
-                </button>
+                <>
+                  <button
+                    className="profile__edit"
+                    type="button"
+                    disabled={isButtonDisabled}
+                    onClick={handleEditProfile}
+                  >
+                    Редактировать
+                  </button>
+                  <Link
+                    to="/"
+                    className={`profile__to-login${
+                      isClickedEditButton ? "" : "_visible"
+                    }`}
+                    onClick={onExit}
+                  >
+                    Выйти из аккаунта
+                  </Link>
+                </>
               )}
-              <Link
-                to="/"
-                className={`profile__to-login${
-                  isClickedEditButton ? "" : "_visible"
-                }`}
-                onClick={onExit}
-              >
-                Выйти из аккаунта
-              </Link>
             </div>
           </form>
         </section>

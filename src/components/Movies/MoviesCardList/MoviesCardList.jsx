@@ -6,42 +6,47 @@ import Preloader from "../Preloader/Preloader";
 
 function MoviesCards({
   movies,
-//  moviesFilter,
   isSavedPage,
   handleMoreMovies,
   isEndedCards,
   savedMovies,
   isLoading,
   setSavedMovies,
+  isNotFoundMovies,
 }) {
   return (
     <section className="cards">
       {isLoading && <Preloader />}
-      <div className="cards__full">
-        {movies.map((movie) => (
-          <MoviesCard
-            movie={movie}
-            key={movie.id || movie.movieId}
-            savedMovies={savedMovies}
-            setSavedMovies={setSavedMovies}
-            isSavedPage={isSavedPage}
-          />
-        ))}
-      </div>
-      <div className="cards__more">
-        {isSavedPage ? (
-          ""
-        ) : (
-          <button
-            className="cards__button"
-            type="button"
-            onClick={handleMoreMovies}
-            disabled={isEndedCards}
-          >
-            Ещё
-          </button>
-        )}
-      </div>
+      {isNotFoundMovies ? (
+        <p className="cards_not-found">Ничего не найдено</p>
+      ) : (
+        <>
+          <div className="cards__full">
+            {movies.map((movie) => (
+              <MoviesCard
+                movie={movie}
+                key={movie.id || movie.movieId}
+                savedMovies={savedMovies}
+                setSavedMovies={setSavedMovies}
+                isSavedPage={isSavedPage}
+              />
+            ))}
+          </div>
+          <div className="cards__more">
+            {(isSavedPage || isEndedCards) ? (
+              ""
+            ) : (
+              <button
+                className="cards__button"
+                type="button"
+                onClick={handleMoreMovies}
+              >
+                Ещё
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </section>
   );
 }

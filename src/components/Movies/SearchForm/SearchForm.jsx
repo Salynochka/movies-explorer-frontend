@@ -2,6 +2,7 @@ import React from "react";
 import "./SearchForm.css";
 
 function SearchForm({ search, searchString, searchChange }) {
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -9,7 +10,7 @@ function SearchForm({ search, searchString, searchChange }) {
       alert('Нужно ввести ключевое слово');
       return;
     } else {
-      search(searchString);
+      return search();
     }
   };
 

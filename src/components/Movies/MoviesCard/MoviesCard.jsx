@@ -1,10 +1,14 @@
 import "./MoviesCard.css";
 import React, { useState, useEffect } from "react";
-// import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { mainApi } from "../../../utils/MainApi";
+import exitCard from "../../../images/exitImage.svg";
 
 function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
-//  const location = useLocation();
+  const location = useLocation();
+  const isSavedButton = location.pathname === "/movies";
+  const isDeleteButton = location.pathname === "/saved-movies";
+
   const [isSaved, setIsSaved] = useState(false);
 
   function durationHours(duration) {
@@ -15,7 +19,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
 
   function onCardClick() {
     if (isSaved) {
-      handleMovieUnsave(movie.id); //savedMovies.find((m) => m.movieId === movie.id));
+      handleDeleteMovie(movie.id); //savedMovies.find((m) => m.movieId === movie.id));
     } else {
       handleMovieSave(movie);
     }
@@ -31,8 +35,8 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
         .then((newMovie) => {
           setSavedMovies([...savedMovies, newMovie]);
           setIsSaved(true);
-          console.log(movie)
-          localStorage.setItem('savedMovie', JSON.stringify(movie))
+          console.log(movie);
+          localStorage.setItem("savedMovie", JSON.stringify(movie));
         })
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -40,7 +44,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
         });
     }
   }
-/*
+  
   function handleDeleteMovie() {
     if (location.pathname === '/saved-movies') {
       const savedMovie = savedMovies.find(
@@ -54,17 +58,19 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
         );
       return handleMovieUnsave(savedMovie._id);
     }
-  }*/
+  }
 
   // Функция удаления из сохраненных
   function handleMovieUnsave(movieId) {
     mainApi
       .unsaveMovie(movieId)
       .then(() => {
-      //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
+        //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
         setIsSaved(false);
-        setSavedMovies((films) => films.filter((movie) => movie._id !== movieId));
-      //  localStorage.removeItem(movie.id);
+        setSavedMovies((films) =>
+          films.filter((movie) => movie._id !== movieId)
+        );
+        //  localStorage.removeItem(movie.id);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -73,7 +79,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
 
   useEffect(() => {
     // Проверяем, сохранена ли карточка при загрузке компонента
-    const saved = localStorage.getItem('savedMovie');
+    const saved = localStorage.getItem("savedMovie");
     if (saved) {
       setIsSaved(true);
     }
@@ -86,22 +92,36 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
           <a href={`${movie.trailerLink}`}>
             <img
               className="card__photo"
-              src={isSavedPage ? `${movie.image}` : `https://api.nomoreparties.co/${movie.image.url}`}
+              src={
+                isSavedPage
+                  ? `${movie.image}`
+                  : `https://api.nomoreparties.co/${movie.image.url}`
+              }
               alt={`${movie.nameRU}`}
             />
           </a>
           <div className="card__description">
             <div className="card__section">
               <h2 className="card__title">{`${movie.nameRU}`}</h2>
-              <form className="card__save">
-                <input
-                  className="card__save-button"
-                  type="checkbox"
-                  name="radio"
-                  checked={isSaved}
-                  onChange={onCardClick}
+              {isSavedButton && (
+                <form className="card__save">
+                  <input
+                    className="card__save-button"
+                    type="checkbox"
+                    name="radio"
+                    checked={isSaved}
+                    onChange={onCardClick}
+                  />
+                </form>
+              )}
+              {isDeleteButton && (
+                <img
+                  onClick={() => handleMovieUnsave(movie._id)}
+                  className="card__unsave"
+                  src={exitCard}
+                  alt="Удаление"
                 />
-              </form>
+              )}
             </div>
             <h2 className="card__duration">{durationHours(movie.duration)}</h2>
           </div>

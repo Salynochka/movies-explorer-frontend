@@ -20,7 +20,7 @@
 .profile__info{
     flex-direction: column;
     max-width: 410px;
-    margin: 123px auto 0;
+    margin: 110px auto 0;
 }
 
 .profile__input{
@@ -29,7 +29,7 @@
 }
 
 .profile__line{
-    margin-bottom: 16px;
+    margin-top: 16px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -50,9 +50,6 @@
 }
 
 .profile__item{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
     font-size: 11px;
     font-weight: 400;
     line-height: 13px;
@@ -62,7 +59,6 @@
     width: 122px;
     height: 14px;
     border: none;
-    padding-right: 15px;
 }
 
 .profile__item-error{

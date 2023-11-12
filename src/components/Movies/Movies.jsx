@@ -7,16 +7,17 @@ import Footer from "../Footer/Footer";
 import "./Movies.css";
 import useWindowSize from "../../utils/useWindowSize.jsx";
 import { moviesApi } from "../../utils/MoviesApi.js";
+import { mainApi } from "../../utils/MainApi";
 import {
-  largeVersion,
-  mediumVersion,
-  minVersion,
-  moreCardsWidthMax,
-  moreCardsWidthMedium,
-  moreCardsWidthMin,
-  addedCardsMax,
-  addedCardsMin,
-  shortMovie
+  LARGE_VERSION,
+  MEDIUM_VERSION,
+  MIN_VERSION,
+  MORE_CARD_WIDTH_MAX,
+  MORE_CARD_WIDTH_MEDIUM,
+  MORE_CARD_WIDTH_MIN,
+  ADDED_CARDS_MAX,
+  ADDED_CARDS_MIN,
+  SHORT_MOVIE
 } from "../../utils/constants.js";
 
 function Movies({
@@ -33,13 +34,15 @@ function Movies({
     JSON.parse(localStorage.getItem("isShort")) || false
   );
   const [movies, setMovies] = useState(
-    JSON.parse(localStorage.getItem("movies")) || []
+    localStorage.getItem("movies") || []
   );
   const [filteredMovies, setFilteredMovies] = useState(movies);
 
   const [amountCard, setAmountCard] = useState(0);
   const [addedCards, setAddedCards] = useState(0);
   const [isEndedCards, setIsEndedCards] = useState(false);
+
+  const [isNotFoundMovies, setIsNotFoundMovies] = useState(false);
 
   const isSavedPage = false;
 
@@ -55,30 +58,44 @@ function Movies({
     localStorage.setItem("isShort", value);
   }
 
+ /* useEffect(() => {
+   // setFilteredMovies(filter(movies));
+
+  }, [searchString, isShort]);*/
+
+  useEffect(()=>{
+    filter(movies);
+    getSavedMovies()
+    if (filteredMovies.length === 0) {
+      setIsEndedCards(true);
+    }
+  }, [searchString, isShort])
+
   const filter = (movies) => {
-    return movies.filter((movie) =>
+    setIsNotFoundMovies(false)
+    const filteredMoviesList = movies.filter((movie) =>
       isShort
         ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
             movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) &&
-          movie.duration < shortMovie
+          movie.duration < SHORT_MOVIE
         : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
           movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
     );
+    localStorage.setItem("filteredMovies", JSON.stringify(filteredMoviesList));
+    setFilteredMovies(filteredMoviesList);
+    return filteredMoviesList
   };
-
-  useEffect(() => {
-    setFilteredMovies(filter(movies));
-  }, [searchString, isShort]);
 
   // Получение фильмов
   function handleSearch() {
     if (loggedIn) {
       if (localStorage.getItem("movies")) {
-        setMovies(JSON.parse(localStorage.getItem("movies")));
-      } else {
+        setMovies(localStorage.getItem("movies"));
+      }  else {
         moviesApi
           .getAllMoviesCards()
           .then((movies) => {
+
             localStorage.setItem("movies", JSON.stringify(movies));
             setMovies(movies);
           })
@@ -87,18 +104,43 @@ function Movies({
     }
   }
 
+  useEffect(() => {
+    if (searchString) {
+      setFilteredMovies(searchString);
+    }
+  }, [searchString, isShort]);
+/*
+  useEffect(() => {
+    handleSearch();
+  }, [searchString]);*/
+
+  function getSavedMovies () {
+    // if ("savedMovies" in localStorage) {
+    //   localStorage.getItem("savedMovies");
+    // } else {
+      loggedIn &&
+       mainApi
+         .getUserSavedMovies()
+         .then((movies) => {
+           setSavedMovies(movies);
+           localStorage.setItem("savedMovies", JSON.stringify(movies));
+         })
+         .catch((error) => console.log(error));
+   //  }
+   }
+
   const windowWidth = useWindowSize();
   // Изменение количества отображаемых и добавляемых карточек
   const changeLengthOfMovies = useCallback(() => {
-    if (windowWidth >= largeVersion) {
-      setAmountCard(moreCardsWidthMax);
-      setAddedCards(addedCardsMax);
-    } else if (windowWidth >= mediumVersion && windowWidth < largeVersion) {
-      setAmountCard(moreCardsWidthMedium);
-      setAddedCards(addedCardsMin);
-    } else if (windowWidth >= minVersion && windowWidth < mediumVersion) {
-      setAmountCard(moreCardsWidthMin);
-      setAddedCards(addedCardsMin);
+    if (windowWidth >= LARGE_VERSION) {
+      setAmountCard(MORE_CARD_WIDTH_MAX);
+      setAddedCards(ADDED_CARDS_MAX);
+    } else if (windowWidth >= MEDIUM_VERSION && windowWidth < LARGE_VERSION) {
+      setAmountCard(MORE_CARD_WIDTH_MEDIUM);
+      setAddedCards(ADDED_CARDS_MIN);
+    } else if (windowWidth >= MIN_VERSION && windowWidth < MEDIUM_VERSION) {
+      setAmountCard(MORE_CARD_WIDTH_MIN);
+      setAddedCards(ADDED_CARDS_MIN);
     }
   }, [windowWidth]);
 
@@ -108,17 +150,13 @@ function Movies({
     } else {
       setIsEndedCards(false);
     }
-    setFilteredMovies(movies.slice(0, count));
+    setMovies(filteredMovies.slice(0, count));
   }
 
   useEffect(() => {
     changeLengthOfMovies();
     renderMovies(amountCard);
   }, [windowWidth, loggedIn]);
-
-  useEffect(() => {
-    handleSearch();
-  }, []);
 
   function handleMoreMovies() {
     let full = 0;
@@ -142,14 +180,15 @@ function Movies({
         />
         <FilterCheckbox switchCheckbox={toggleCheckbox} isShort={isShort} />
         <MoviesCardList
-          movies={filteredMovies}
+          movies={movies}
+          moviesFilter={filteredMovies}
           isLoading={isLoading}
           savedMovies={savedMovies}
           setSavedMovies={setSavedMovies}
           handleMoreMovies={handleMoreMovies}
           isEndedCards={isEndedCards}
-          moviesFilter={movies}
           isSavedPage={isSavedPage}
+          isNotFoundMovies={isNotFoundMovies}
         />
       </main>
       <Footer />

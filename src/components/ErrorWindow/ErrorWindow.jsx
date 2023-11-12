@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./ErrorWindow.css";
 
-function ErrorWindow(props) {
-  const backPath = useNavigate()
+function ErrorWindow() {
+  const navigate = useNavigate()
 
-  function navigatedBack(){
-    backPath(-2)
+  function navigatedBack() {
+    navigate(-1, { replace: true });
   }
 
   return (

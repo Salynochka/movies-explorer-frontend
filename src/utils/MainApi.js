@@ -1,4 +1,4 @@
-import {mainSite} from "./constants"
+import { MAIN_SITE } from "./constants";
 
 class MainApi {
   constructor({ mainUrl, headers }) {
@@ -18,22 +18,21 @@ class MainApi {
     return fetch(`${this._mainUrl}/users/me`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         authorization: `Bearer ${token}`,
       },
       credentials: "include",
-    })
-      .then((res) => this._checkStatus(res))
-  }
+    }).then((res) => this._checkStatus(res));
+  };
 
   //Регистрация пользователя
-  register = (name, email, password) =>{
+  register = (name, email, password) => {
     return fetch(`${this._mainUrl}/signup`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('jwt')}`
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       credentials: "include",
       body: JSON.stringify({
@@ -42,7 +41,7 @@ class MainApi {
         password,
       }),
     }).then((res) => this._checkStatus(res));
-  }
+  };
 
   //Вход пользователя
   login = (email, password) => {
@@ -54,27 +53,28 @@ class MainApi {
         email,
         password,
       }),
-    })
-      .then((res) => this._checkStatus(res))
-  }
+    }).then((res) => this._checkStatus(res));
+  };
 
   // Выход с сайта
   logout() {
     return fetch(`${this._mainUrl}/signout`, {
       method: "POST",
       credentials: "include",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     });
   }
 
   // Получение данных о пользователе
   getUserInfo() {
-    const jwt = localStorage.getItem('jwt');
     return fetch(`${this._mainUrl}/users/me`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${jwt}`,
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));
@@ -85,24 +85,24 @@ class MainApi {
     return fetch(`${this._mainUrl}/users/me`, {
       method: "PATCH",
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('jwt')}`
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       credentials: "include",
       body: JSON.stringify({
         name: data.name,
-        email: data.email
+        email: data.email,
       }),
     }).then((res) => this._checkStatus(res));
   }
 
   //Получение сохраненных фильмов пользователя
   getUserSavedMovies() {
-    const jwt = localStorage.getItem('jwt');
+    const jwt = localStorage.getItem("jwt");
     return fetch(`${this._mainUrl}/movies`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         authorization: `Bearer ${jwt}`,
       },
       credentials: "include",
@@ -114,8 +114,8 @@ class MainApi {
     return fetch(`${this._mainUrl}/movies`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('jwt')}`
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       credentials: "include",
       body: JSON.stringify({
@@ -139,8 +139,8 @@ class MainApi {
     return fetch(`${this._mainUrl}/movies/${movieId}`, {
       method: "DELETE",
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem('jwt')}`
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));
@@ -148,8 +148,8 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-  mainUrl: mainSite,
+  mainUrl: MAIN_SITE,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
