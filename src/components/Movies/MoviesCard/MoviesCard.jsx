@@ -6,11 +6,10 @@ import exitCard from "../../../images/exitImage.svg";
 
 function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
   const location = useLocation();
-  const isSavedButton = location.pathname === "/movies";
-  const isDeleteButton = location.pathname === "/saved-movies";
+  const isMoviesPage = location.pathname === "/movies";
+  const isSavedMoviesPage = location.pathname === "/saved-movies";
 
   const [isSaved, setIsSaved] = useState(false);
-  const [newSavedMovies, setNewSavedMovies] = useState([]); // Все сохраненные карточки, не отфильтрованные поиском
 
   function durationHours(duration) {
     const hours = Math.floor(duration / 60);
@@ -19,8 +18,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
   }
 
   function onCardClick(movie) {
-    const movieId = movie.movieId || movie.id;
-    const savedMovie = savedMovies.find(i => i.movieId === movieId);
+    const savedMovie = savedMovies.find(i => i.movieId === (movie.movieId || movie.id));
     if (isSaved) {
       handleMovieUnsave(savedMovie); //savedMovies.find((m) => m.movieId === movie.id));
     } else {
@@ -31,7 +29,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
 
   function handleMovieSave(movie) {
     if (isSaved) {
-      handleMovieUnsave(movie.id);
+      handleMovieUnsave(movie.movieId);
     } else {
       mainApi
         .saveMovie(movie)
@@ -46,31 +44,17 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
         });
     }
   }
-  /*
-  function handleDeleteMovie() {
-    if (location.pathname === '/saved-movies') {
-      const savedMovie = savedMovies.find(
-        (m) => m.movieId === movie.movieId
-      );
-      return handleMovieUnsave(savedMovie._id);
-    } 
-    if (location.pathname === '/movies') {
-      const savedMovie = savedMovies.find(
-        (m) => m.movieId === movie.id
-        );
-      return handleMovieUnsave(savedMovie._id);
-    }
-  }*/
 
   // Функция удаления из сохраненных
   function handleMovieUnsave(movie) {
     mainApi
-      .unsaveMovie(movie._id)
+      .unsaveMovie(movie.movieId)
       .then(() => {
+        const updatedSavedMovies = savedMovies.filter((i) => i.movieId !== movie.movieId)
         //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
         setIsSaved(false);
-        setSavedMovies((movies) =>
-          movies.filter((savedMovie) => movie._id !== savedMovie._id)
+        setSavedMovies(updatedSavedMovies
+   //       movies.filter((savedMovie) => movie._id !== savedMovie._id)
         );
         //  localStorage.removeItem(movie.id);
       })
@@ -85,7 +69,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
     if (saved) {
       setIsSaved(true);
     }
-  }, [movie.id]);
+  }, [movie.movieId]);
 
   return (
     <>
@@ -105,7 +89,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
           <div className="card__description">
             <div className="card__section">
               <h2 className="card__title">{`${movie.nameRU}`}</h2>
-              {isSavedButton && (
+              {isMoviesPage && (
                 <form className="card__save">
                   <input
                     className="card__save-button"
@@ -116,7 +100,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
                   />
                 </form>
               )}
-              {isDeleteButton && (
+              {isSavedMoviesPage && (
                 <img
                   onClick={() => handleMovieUnsave(movie)}
                   className="card__unsave"

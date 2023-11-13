@@ -15,6 +15,7 @@ function MoviesCards({
   isNotFoundMovies,
   amountCard
 }) {
+
   return (
     <section className="cards">
       {isLoading && <Preloader />}
@@ -26,7 +27,7 @@ function MoviesCards({
             {movies.slice(0, amountCard).map((movie) => (
               <MoviesCard
                 movie={movie}
-                key={movie.id || movie._id}
+                key={movie._id || movie.movieId}
                 savedMovies={savedMovies}
                 setSavedMovies={setSavedMovies}
                 isSavedPage={isSavedPage}

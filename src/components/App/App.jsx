@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import ErrorBoundary from "../../utils/ErrorBoundary";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ProtectedRoute } from "../../utils/ProtectedRoute";
 
@@ -176,7 +175,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="root__page">
-          <ErrorBoundary fallback={<div>Something went wrong</div>}>
             <Routes>
               <Route
                 path="/"
@@ -255,7 +253,6 @@ function App() {
               isOpen={isOpenBurgerMenu}
               onClose={handleCloseBurgerMenu}
             />
-          </ErrorBoundary>
         </div>
       </div>
     </CurrentUserContext.Provider>

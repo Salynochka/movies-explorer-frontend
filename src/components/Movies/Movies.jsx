@@ -17,7 +17,7 @@ import {
   MORE_CARD_WIDTH_MIN,
   ADDED_CARDS_MAX,
   ADDED_CARDS_MIN,
-  SHORT_MOVIE,
+  SHORT_MOVIE
 } from "../../utils/constants.js";
 
 function Movies({
@@ -34,7 +34,7 @@ function Movies({
     JSON.parse(localStorage.getItem("isShort")) || false
   );
 
-  const [movies, setMovies] = useState(localStorage.getItem("movies") || []);
+  const [movies, setMovies] = useState([]);
   // Отфильтрованные карточки
   const [filteredMovies, setFilteredMovies] = useState(movies);
 
@@ -58,13 +58,16 @@ function Movies({
     localStorage.setItem("isShort", value);
   }
 
-  useEffect(() => {
-    loggedIn && localStorage.setItem("movies", JSON.stringify(movies));
-  }, [movies, loggedIn]);
+  useEffect(()=>{
+    filter(movies);
+    if (movies.length === 0) {
+      setIsEndedCards(true);
+    }
+  }, [searchString, isShort])
 
   const filter = (movies) => {
-    setIsNotFoundMovies(false);
-    const filteredMoviesList = movies.filter((movie) =>
+    setIsNotFoundMovies(false)
+    return movies.filter((movie) =>
       isShort
         ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
             movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) &&
@@ -72,47 +75,29 @@ function Movies({
         : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
           movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
     );
-      localStorage.setItem("filteredMovies", filteredMoviesList);
-      setFilteredMovies(filteredMoviesList);
-      return filteredMoviesList
+  //  localStorage.setItem("filteredMovies", JSON.stringify(filteredMoviesList));
+  //  setFilteredMovies(filteredMoviesList);
+  //  return filteredMoviesList
   };
 
-  useEffect(() => {
-    setFilteredMovies(filter(movies));
-    getSavedMovies();
-    if (filteredMovies.length === 0) {
-      setIsEndedCards(true);
-    }
-  }, [searchString, isShort]);
-
   // Получение фильмов
-  function handleSearch(movies) {
-    getMovies()
-    return movies;
-  }
-
-  function getMovies(){
-    if (localStorage.getItem("movies")) {
-      setMovies(localStorage.getItem("movies"));
-    } else {
-      loggedIn &&
+  function handleSearch() {
+    if (loggedIn) {
+      if (localStorage.getItem("movies")) {
+        setMovies(localStorage.getItem("movies"));
+      }  else {
         moviesApi
           .getAllMoviesCards()
           .then((movies) => {
-            if (movies.length === 0) {
-              setIsNotFoundMovies(true);
+            if (movies.length === 0){
+              setIsNotFoundMovies(true)
             }
-            setFilteredMovies(
-              localStorage.setItem("movies", movies)
-            );
+            setMovies(localStorage.setItem("movies", JSON.stringify(movies)));
           })
           .catch(console.error);
+      }
     }
   }
-
-  useEffect(() => {
-    getMovies();
-  }, [searchString]);
 
   useEffect(() => {
     if (searchString) {
@@ -120,20 +105,9 @@ function Movies({
     }
   }, [searchString, isShort]);
 
-  function getSavedMovies() {
-    // if ("savedMovies" in localStorage) {
-    //   localStorage.getItem("savedMovies");
-    // } else {
-    loggedIn &&
-      mainApi
-        .getUserSavedMovies()
-        .then((movies) => {
-          setSavedMovies(movies);
-          localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
-        })
-        .catch((error) => console.log(error));
-    //  }
-  }
+  useEffect(() => {
+    handleSearch();
+  }, [loggedIn]);
 
   const windowWidth = useWindowSize();
   // Изменение количества отображаемых и добавляемых карточек
@@ -164,17 +138,12 @@ function Movies({
   }, [windowWidth, loggedIn]);
 
   function handleMoreMovies() {
-    setAmountCard(amountCard + addedCards);
-    // let full = 0;
-    // full = +amountCard + addedCards;
-    // setAmountCard(full);
-    // renderMovies(full);
+   // let full = 0;
+   // full = +amountCard + addedCards;
+   // setAmountCard(full);
+   // renderMovies(full);
+   setAmountCard(amountCard + addedCards)
   }
-
-  /*
-  useEffect(() => {
-    handleSearch();
-  }, [searchString]);*/
 
   return (
     <div className="movies">
