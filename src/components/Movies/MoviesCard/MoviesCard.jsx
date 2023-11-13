@@ -18,11 +18,10 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
     const minutes = duration % 60;
     return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
   }
-
-  function onCardClick(movie) {
-    const savedMovie = savedMovies.find(i => i.movieId === (movie.movieId || movie._id));
+  
+  function onCardClick() {
     if (isSaved) {
-      handleMovieUnsave(savedMovie); //savedMovies.find((m) => m.movieId === movie.id));
+      handleMovieUnsave(savedMovies.find((m) => m.movieId === movie.id));
     } else {
       handleMovieSave(movie);
     }
@@ -39,7 +38,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
         .then((newMovie) => {
           setSavedMovies([...savedMovies, newMovie]);
           setIsSaved(true);
-         // localStorage.setItem("savedMovie", JSON.stringify(movie));
+        //  localStorage.setItem("savedMovie", JSON.stringify(movie));
         })
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -51,12 +50,17 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
   // Функция удаления из сохраненных
   function handleMovieUnsave(movie) {
     mainApi
-      .unsaveMovie(movie.movieId)
+      .unsaveMovie(movie)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter((i) => i.movieId !== movie.movieId)  //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
+        const updatedSavedMovies = savedMovies.filter(
+          (i) => i.movieId !== movie.movieId
+        ); //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
         setIsSaved(false);
-        setSavedMovies(updatedSavedMovies);                                                //movies.filter((savedMovie) => movie._id !== savedMovie._id)
-        // localStorage.removeItem(movie.movieId);
+        setSavedMovies(updatedSavedMovies); //movies.filter((savedMovie) => movie._id !== savedMovie._id)
+        localStorage.setItem(
+          "filteredSavedMovies",
+          JSON.stringify(updatedSavedMovies)
+        );
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -90,21 +94,19 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
             <div className="card__section">
               <h2 className="card__title">{`${movie.nameRU}`}</h2>
               {isMoviesPage && (
-                <form className="card__save">
-                  <input
-                    className="card__save-button"
-                    type="checkbox"
-                    name="radio"
-                    checked={isSaved}
-                    onChange={onCardClick}
-                  />
-                </form>
+                <button
+                  className={`card__save-button ${
+                    isSaved ? "card__save-button_active" : ""
+                  }`}
+                  type="button"
+                  onClick={onCardClick}
+                />
               )}
               {isSavedMoviesPage && (
-                <img
-                  onClick={() => handleMovieUnsave(movie)}
+                <button
+                  //onClick={handleMovieUnsave(movie._id)}
+                  onClick={() => handleMovieUnsave(movie._id)}
                   className="card__unsave"
-                  src={exitCard}
                   alt="Удаление"
                 />
               )}

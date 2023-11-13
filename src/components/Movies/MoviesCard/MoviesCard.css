@@ -76,9 +76,14 @@
 }
 
 .card__unsave{
+    background: url('../../../images/exitImage.svg');
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 0;
+    border: none;
     width: 10px;
     height: 8px;
-    position: absolute;
     bottom: 40px;
     right: 13px;
 }
