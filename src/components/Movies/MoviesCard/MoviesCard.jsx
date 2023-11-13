@@ -1,10 +1,12 @@
 import "./MoviesCard.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { mainApi } from "../../../utils/MainApi";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import exitCard from "../../../images/exitImage.svg";
 
 function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
+  const currentUser = useContext(CurrentUserContext);
   const location = useLocation();
   const isMoviesPage = location.pathname === "/movies";
   const isSavedMoviesPage = location.pathname === "/saved-movies";
@@ -18,7 +20,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
   }
 
   function onCardClick(movie) {
-    const savedMovie = savedMovies.find(i => i.movieId === (movie.movieId || movie.id));
+    const savedMovie = savedMovies.find(i => i.movieId === (movie.movieId || movie._id));
     if (isSaved) {
       handleMovieUnsave(savedMovie); //savedMovies.find((m) => m.movieId === movie.id));
     } else {
@@ -31,6 +33,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
     if (isSaved) {
       handleMovieUnsave(movie.movieId);
     } else {
+      movie.owner = currentUser._id;
       mainApi
         .saveMovie(movie)
         .then((newMovie) => {
@@ -50,13 +53,10 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
     mainApi
       .unsaveMovie(movie.movieId)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter((i) => i.movieId !== movie.movieId)
-        //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
+        const updatedSavedMovies = savedMovies.filter((i) => i.movieId !== movie.movieId)  //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
         setIsSaved(false);
-        setSavedMovies(updatedSavedMovies
-   //       movies.filter((savedMovie) => movie._id !== savedMovie._id)
-        );
-        //  localStorage.removeItem(movie.id);
+        setSavedMovies(updatedSavedMovies);                                                //movies.filter((savedMovie) => movie._id !== savedMovie._id)
+        // localStorage.removeItem(movie.movieId);
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);

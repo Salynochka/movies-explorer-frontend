@@ -25,7 +25,6 @@ function SavedMovies({
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
 
   const [isNotFoundSavedMovies, setIsNotFoundSavedMovies] = useState(false);
-
   const isSavedPage = true;
 
   function searchChange(evt) {
@@ -41,9 +40,6 @@ function SavedMovies({
   }
 
   function getSavedMovies() {
-    // if ("savedMovies" in localStorage) {
-    //   localStorage.getItem("savedMovies");
-    // } else {
     loggedIn &&
       mainApi
         .getUserSavedMovies()
@@ -52,7 +48,6 @@ function SavedMovies({
           localStorage.setItem("savedMovies", JSON.stringify(movies));
         })
         .catch((error) => console.log(error));
-    //  }
   }
 
   useEffect(() => {
@@ -79,28 +74,20 @@ function SavedMovies({
 
   useEffect(() => {
     setFilteredSavedMovies(filter(savedMovies));
+    getSavedMovies();
     if (filteredSavedMovies.length === 0) {
       setIsNotFoundSavedMovies(true);
     }
-  }, [searchSavedString, isShortSaved]);
-  
+  }, [loggedIn, searchSavedString, isShortSaved]);
+
   useEffect(() => {
     loggedIn &&
       localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
   }, [savedMovies, loggedIn]);
-/*
+  
   useEffect(() => {
-    setFilteredSavedMovies(filter(savedMovies));
-  }, [searchSavedString, isShortSaved]);*/
-
-  function handleSearch(savedMovies) {
     getSavedMovies();
-    return savedMovies;
-  }
-  /*
-  useEffect(() => {
-    handleSearch();
-  }, []);*/
+  }, [loggedIn]);
 
   return (
     <div className="saved-movies">
@@ -113,7 +100,7 @@ function SavedMovies({
         <SearchForm
           searchString={searchSavedString}
           searchChange={searchChange}
-          search={handleSearch}
+          search={getSavedMovies}
         />
         <FilterCheckbox
           switchCheckbox={toggleCheckbox}
@@ -121,7 +108,6 @@ function SavedMovies({
         />
         <MoviesCardList
           movies={filteredSavedMovies}
-       //   moviesFilter={filteredSavedMovies}
           savedMovies={savedMovies}
           setSavedMovies={setSavedMovies}
           isLoading={isLoading}

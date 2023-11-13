@@ -124,7 +124,7 @@ class MainApi {
         description: movie.description,
         duration: movie.duration,
         image: `https://api.nomoreparties.co/beatfilm-movies${movie.image.url}`,
-        movieId: movie.id,
+        movieId: movie.movieId,
         nameEN: movie.nameEN,
         nameRU: movie.nameRU,
         thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,

@@ -27,7 +27,7 @@ function MoviesCards({
             {movies.slice(0, amountCard).map((movie) => (
               <MoviesCard
                 movie={movie}
-                key={movie._id || movie.movieId}
+                key={movie.id || movie._id}
                 savedMovies={savedMovies}
                 setSavedMovies={setSavedMovies}
                 isSavedPage={isSavedPage}
