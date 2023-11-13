@@ -77,9 +77,9 @@ function Movies({
   useEffect(() => {
     getMovies();
   }, [loggedIn]);
+  
 
   const filter = (movies) => {
-    console.log(movies);
     setIsNotFoundMovies(false);
     return movies.filter((movie) =>
       isShort
