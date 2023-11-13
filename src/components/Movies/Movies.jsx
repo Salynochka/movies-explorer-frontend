@@ -6,6 +6,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import "./Movies.css";
 import useWindowSize from "../../utils/useWindowSize.jsx";
+import Preloader from "./Preloader/Preloader.jsx";
 import { moviesApi } from "../../utils/MoviesApi.js";
 import { mainApi } from "../../utils/MainApi";
 import {
@@ -77,7 +78,6 @@ function Movies({
   useEffect(() => {
     getMovies();
   }, [loggedIn]);
-  
 
   const filter = (movies) => {
     setIsNotFoundMovies(false);
@@ -103,10 +103,9 @@ function Movies({
     }
   }, [loggedIn, searchString, isShort]);
 
-
-  useEffect(() => { 
-    loggedIn && localStorage.setItem("movies", JSON.stringify(movies)); 
-  }, [movies, loggedIn]); 
+  useEffect(() => {
+    loggedIn && localStorage.setItem("movies", JSON.stringify(movies));
+  }, [movies, loggedIn]);
 
   useEffect(() => {
     if (searchString) {
@@ -192,17 +191,20 @@ function Movies({
           search={handleSearch}
         />
         <FilterCheckbox switchCheckbox={toggleCheckbox} isShort={isShort} />
-        <MoviesCardList
-          movies={filteredMovies}
-          isLoading={isLoading}
-          savedMovies={savedMovies}
-          setSavedMovies={setSavedMovies}
-          handleMoreMovies={handleMoreMovies}
-          isEndedCards={isEndedCards}
-          isSavedPage={isSavedPage}
-          isNotFoundMovies={isNotFoundMovies}
-          amountCard={amountCard}
-        />
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <MoviesCardList
+            movies={filteredMovies}
+            savedMovies={savedMovies}
+            setSavedMovies={setSavedMovies}
+            handleMoreMovies={handleMoreMovies}
+            isEndedCards={isEndedCards}
+            isSavedPage={isSavedPage}
+            isNotFoundMovies={isNotFoundMovies}
+            amountCard={amountCard}
+          />
+        )}
       </main>
       <Footer />
     </div>

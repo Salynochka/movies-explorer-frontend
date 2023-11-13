@@ -39,7 +39,7 @@
     text-align: left;
     margin: 0;
     color: white;
-    padding-right: 5px;
+    padding-right: 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -59,21 +59,20 @@
     height: 6px;
 }
 
-.card__save-button::before{
-    content: '';
+.card__save-button{
+    background: url('../../../images/unsaved.svg');
     position: absolute;
-    width: 13px;
-    height: 13px;
-    border-radius: 13px;
+    background-size: cover;
+    width: 28px;
+    height: 28px;
     padding: 0;
-    border: 2px solid white;
-    background: #313131;
-    right: -1px;
-    top: 0;
+    right: 5px;
+    bottom: 28px;
+    border: none;
 }
 
-.card__save-button:checked::before{
-    background: #2BE080;
+.card__save-button_active{
+    background: url('../../../images/saved.svg');
 }
 
 .card__unsave{

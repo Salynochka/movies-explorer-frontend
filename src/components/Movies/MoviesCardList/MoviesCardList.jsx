@@ -2,7 +2,6 @@ import "../MoviesCard/MoviesCard.css";
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import "./MoviesCardList.css";
-import Preloader from "../Preloader/Preloader";
 
 function MoviesCards({
   movies,
@@ -10,7 +9,6 @@ function MoviesCards({
   handleMoreMovies,
   isEndedCards,
   savedMovies,
-  isLoading,
   setSavedMovies,
   isNotFoundMovies,
   amountCard
@@ -18,7 +16,6 @@ function MoviesCards({
 
   return (
     <section className="cards">
-      {isLoading && <Preloader />}
       {isNotFoundMovies ? (
         <p className="cards_not-found">Ничего не найдено</p>
       ) : (
@@ -27,7 +24,7 @@ function MoviesCards({
             {movies.slice(0, amountCard).map((movie) => (
               <MoviesCard
                 movie={movie}
-                key={movie.id || movie._id}
+                key={movie.id || movie.movieId}
                 savedMovies={savedMovies}
                 setSavedMovies={setSavedMovies}
                 isSavedPage={isSavedPage}
