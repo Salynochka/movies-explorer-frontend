@@ -17,7 +17,7 @@ import {
   MORE_CARD_WIDTH_MIN,
   ADDED_CARDS_MAX,
   ADDED_CARDS_MIN,
-  SHORT_MOVIE
+  SHORT_MOVIE,
 } from "../../utils/constants.js";
 
 function Movies({
@@ -34,80 +34,114 @@ function Movies({
     JSON.parse(localStorage.getItem("isShort")) || false
   );
 
-  const [movies, setMovies] = useState([]);
-  // Отфильтрованные карточки
-  const [filteredMovies, setFilteredMovies] = useState(movies);
+  const [movies, setMovies] = useState(JSON.parse(localStorage.getItem('movies')) || []); 
+  // Отфильтрованные карточки 
+  const [filteredMovies, setFilteredMovies] = useState(movies); 
+  //console.log(movies)
+  //console.log(filteredMovies)
+ 
+  const [amountCard, setAmountCard] = useState(0); 
+  const [addedCards, setAddedCards] = useState(0); 
+  const [isEndedCards, setIsEndedCards] = useState(false); 
+ 
+  const [isNotFoundMovies, setIsNotFoundMovies] = useState(false); 
+ 
+  const isSavedPage = false; 
+ 
+  function searchChange(evt) { 
+    const value = evt.target.value; 
+    setSearchString(value); 
+    localStorage.setItem("searchString", value); 
+  } 
+ 
+  function toggleCheckbox(evt) { 
+    const value = evt.target.checked; 
+    setIsShort(value); 
+    localStorage.setItem("isShort", value); 
+  } 
+/* 
+  useEffect(() => { 
+    loggedIn && localStorage.setItem("movies", JSON.stringify(movies)); 
+  }, [searchString]);*/ 
+ 
+  useEffect(() => { 
+    setFilteredMovies(filter(filteredMovies)); 
+    getSavedMovies(); 
+    if (filteredMovies.length === 0) { 
+      setIsEndedCards(true); 
+    } 
+  }, [searchString, isShort]); 
+ 
+  useEffect(() => { 
+    localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies)) 
+  }, [loggedIn]); 
 
-  const [amountCard, setAmountCard] = useState(0);
-  const [addedCards, setAddedCards] = useState(0);
-  const [isEndedCards, setIsEndedCards] = useState(false);
-
-  const [isNotFoundMovies, setIsNotFoundMovies] = useState(false);
-
-  const isSavedPage = false;
-
-  function searchChange(evt) {
-    const value = evt.target.value;
-    setSearchString(value);
-    localStorage.setItem("searchString", value);
-  }
-
-  function toggleCheckbox(evt) {
-    const value = evt.target.checked;
-    setIsShort(value);
-    localStorage.setItem("isShort", value);
-  }
-
-  useEffect(()=>{
-    filter(movies);
-    if (movies.length === 0) {
-      setIsEndedCards(true);
-    }
-  }, [searchString, isShort])
-
-  const filter = (movies) => {
-    setIsNotFoundMovies(false)
-    return movies.filter((movie) =>
-      isShort
-        ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
-            movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) &&
-          movie.duration < SHORT_MOVIE
-        : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
-          movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
-    );
-  //  localStorage.setItem("filteredMovies", JSON.stringify(filteredMoviesList));
-  //  setFilteredMovies(filteredMoviesList);
-  //  return filteredMoviesList
-  };
-
-  // Получение фильмов
-  function handleSearch() {
-    if (loggedIn) {
-      if (localStorage.getItem("movies")) {
-        setMovies(localStorage.getItem("movies"));
-      }  else {
-        moviesApi
-          .getAllMoviesCards()
-          .then((movies) => {
-            if (movies.length === 0){
-              setIsNotFoundMovies(true)
-            }
-            setMovies(localStorage.setItem("movies", JSON.stringify(movies)));
-          })
-          .catch(console.error);
-      }
-    }
-  }
+  useEffect(() => {
+    getMovies();
+  }, [searchString]);
 
   useEffect(() => {
     if (searchString) {
-      setFilteredMovies(searchString);
+      setSearchString(searchString);
+      handleSearch(filteredMovies)
     }
   }, [searchString, isShort]);
+ 
+  const filter = (movies) => { 
+    console.log(movies)
+    setIsNotFoundMovies(false); 
+    return movies.filter((movie) => 
+      isShort 
+        ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || 
+            movie.nameEN.toLowerCase().includes(searchString.toLowerCase())) && 
+          movie.duration < SHORT_MOVIE 
+        : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || 
+          movie.nameEN.toLowerCase().includes(searchString.toLowerCase()) 
+    ); 
+    //  localStorage.setItem("filteredMovies", JSON.stringify(filteredMoviesList)); 
+    //  setFilteredMovies(filteredMoviesList); 
+    //  return filteredMoviesList 
+  }; 
+ 
+  // Получение фильмов 
+  function handleSearch(movies) { 
+    getMovies() 
+    return movies; 
+  } 
+ 
+  function getMovies(){ 
+    if (localStorage.getItem("movies")) { 
+      setMovies(localStorage.getItem("movies")); 
+    } else { 
+      loggedIn && 
+        moviesApi 
+          .getAllMoviesCards() 
+          .then((movies) => { 
+            if (movies.length === 0) { 
+              setIsNotFoundMovies(true); 
+            } 
+            setMovies( 
+              localStorage.setItem("movies", JSON.stringify(movies)) 
+            ); 
+          }) 
+          .catch(console.error); 
+    } 
+  }
 
-  useEffect(() => {
-    handleSearch();
-  }, [loggedIn]);
+  function getSavedMovies() {
+    // if ("savedMovies" in localStorage) {
+    //   localStorage.getItem("savedMovies");
+    // } else {
+    loggedIn &&
+      mainApi
+        .getUserSavedMovies()
+        .then((movies) => {
+          setSavedMovies(movies);
+          localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+        })
+        .catch((error) => console.log(error));
+    //  }
+  }
 
   const windowWidth = useWindowSize();
   // Изменение количества отображаемых и добавляемых карточек
@@ -138,12 +172,17 @@ function Movies({
   }, [windowWidth, loggedIn]);
 
   function handleMoreMovies() {
-   // let full = 0;
-   // full = +amountCard + addedCards;
-   // setAmountCard(full);
-   // renderMovies(full);
-   setAmountCard(amountCard + addedCards)
+    setAmountCard(amountCard + addedCards);
+    // let full = 0;
+    // full = +amountCard + addedCards;
+    // setAmountCard(full);
+    // renderMovies(full);
   }
+
+  /*
+  useEffect(() => {
+    handleSearch();
+  }, [searchString]);*/
 
   return (
     <div className="movies">

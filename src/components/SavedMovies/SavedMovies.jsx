@@ -97,10 +97,10 @@ function SavedMovies({
     getSavedMovies();
     return savedMovies;
   }
-  
+  /*
   useEffect(() => {
-    getSavedMovies();
-  }, [loggedIn]);
+    handleSearch();
+  }, []);*/
 
   return (
     <div className="saved-movies">
@@ -121,6 +121,7 @@ function SavedMovies({
         />
         <MoviesCardList
           movies={filteredSavedMovies}
+       //   moviesFilter={filteredSavedMovies}
           savedMovies={savedMovies}
           setSavedMovies={setSavedMovies}
           isLoading={isLoading}
