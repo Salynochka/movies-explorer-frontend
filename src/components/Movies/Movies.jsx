@@ -96,7 +96,7 @@ function Movies({
       "filteredMovies",
       JSON.stringify(filter(filteredMovies))
     );
-    setFilteredMovies(filteredMovies);
+    setFilteredMovies(filter(movies));
     getSavedMovies();
     if (filteredMovies.length === 0) {
       setIsEndedCards(true);
