@@ -31,7 +31,7 @@ function MoviesCards({
             ))}
           </div>
           <div className="cards__more">
-            {isSavedPage || isEndedCards ? (
+            {(isSavedPage || isEndedCards) ? (
               ""
             ) : (
               <button

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { mainApi } from "../../../utils/MainApi";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 
-function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
+function MoviesCard({ movie, savedMovies, setSavedMovies }) {
 
   const currentUser = useContext(CurrentUserContext);
   const location = useLocation();
@@ -89,7 +89,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
             <img
               className="card__photo"
               src={
-                isSavedPage
+                isSavedMoviesPage
                   ? movie.image
                   : `https://api.nomoreparties.co${movie.image.url}`
               }

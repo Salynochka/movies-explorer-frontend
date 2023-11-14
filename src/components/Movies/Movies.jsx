@@ -177,9 +177,9 @@ function Movies({
             setSavedMovies={setSavedMovies}
             handleMoreMovies={handleMoreMovies}
             isEndedCards={isEndedCards}
-            isSavedPage={isSavedPage}
             isNotFoundMovies={isNotFoundMovies}
             amountCard={amountCard}
+            isSavedPage={isSavedPage}
           />
         )}
       </main>
