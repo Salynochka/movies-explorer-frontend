@@ -21,6 +21,7 @@ function SavedMovies({
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
 
   const [isNotFoundSavedMovies, setIsNotFoundSavedMovies] = useState(false);
+  
   const isSavedPage = true;
 
   function searchChange(evt) {
