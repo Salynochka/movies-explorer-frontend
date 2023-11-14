@@ -11,9 +11,8 @@ function MoviesCards({
   savedMovies,
   setSavedMovies,
   isNotFoundMovies,
-  amountCard
+  amountCard,
 }) {
-
   return (
     <section className="cards">
       {isNotFoundMovies ? (
@@ -32,7 +31,7 @@ function MoviesCards({
             ))}
           </div>
           <div className="cards__more">
-            {(isSavedPage || isEndedCards) ? (
+            {isSavedPage || isEndedCards ? (
               ""
             ) : (
               <button

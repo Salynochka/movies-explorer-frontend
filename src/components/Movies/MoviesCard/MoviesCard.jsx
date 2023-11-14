@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { mainApi } from "../../../utils/MainApi";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import exitCard from "../../../images/exitImage.svg";
 
 function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
   const currentUser = useContext(CurrentUserContext);
@@ -25,17 +24,18 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
     } else {
       handleMovieSave(movie);
     }
-    //  setIsSaved(!isSaved);
   }
 
   function handleMovieSave(movie) {
+    const movieId = savedMovies.find((m) => m.movieId === movie.id)
     if (isSaved) {
-      handleMovieUnsave(movie.movieId);
+      handleMovieUnsave(movieId);
     } else {
       movie.owner = currentUser._id;
-      mainApi
+      return mainApi
         .saveMovie(movie)
         .then((newMovie) => {
+          movie._id = newMovie["_id"];
           setSavedMovies([...savedMovies, newMovie]);
           setIsSaved(true);
           //  localStorage.setItem("savedMovie", JSON.stringify(movie));
@@ -49,14 +49,14 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
 
   // Функция удаления из сохраненных
   function handleMovieUnsave(movie) {
-    mainApi
+    return mainApi
       .unsaveMovie(movie)
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(
           (i) => i.id !== movie.movieId
-        ); //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
+        );
         setIsSaved(false);
-        setSavedMovies(updatedSavedMovies); //movies.filter((savedMovie) => movie._id !== savedMovie._id)
+        setSavedMovies(updatedSavedMovies);
         localStorage.setItem(
           "filteredSavedMovies",
           JSON.stringify(updatedSavedMovies)
@@ -84,8 +84,8 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
               className="card__photo"
               src={
                 isSavedPage
-                  ? `${movie.image}`
-                  : `https://api.nomoreparties.co/${movie.image.url}`
+                  ? movie.image
+                  : `https://api.nomoreparties.co${movie.image.url}`
               }
               alt={`${movie.nameRU}`}
             />

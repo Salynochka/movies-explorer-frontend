@@ -67,6 +67,10 @@ function SavedMovies({
   };
 
   useEffect(() => {
+    localStorage.setItem(
+      "filteredMovies",
+      JSON.stringify(filter(filteredSavedMovies))
+    );
     setFilteredSavedMovies(filter(savedMovies));
     getSavedMovies();
     if (filteredSavedMovies.length === 0) {
@@ -94,7 +98,7 @@ function SavedMovies({
         <SearchForm
           searchString={searchSavedString}
           searchChange={searchChange}
-          submit={getSavedMovies}
+          handleSubmit={getSavedMovies}
         />
         <FilterCheckbox
           switchCheckbox={toggleCheckbox}

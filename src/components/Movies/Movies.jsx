@@ -49,19 +49,15 @@ function Movies({
 
   const isSavedPage = false;
 
+  const searchChange = (event) => {
+    setSearchString(event.target.value);
+    localStorage.setItem("searchString", event.target.value);
+  };
 
-
-  function searchChange(evt) {
-    const value = evt.target.value;
-    setSearchString(value);
-    localStorage.setItem("searchString", value);
-  }
-
-  function toggleCheckbox(evt) {
-    const value = evt.target.checked;
-    setIsShort(value);
-    localStorage.setItem("isShort", value);
-  }
+  const toggleCheckbox = (event) => {
+    setIsShort(event.target.checked);
+    localStorage.setItem("isShort", event.target.checked);
+  };
 
   useEffect(() => {
     handleSearch();
@@ -72,18 +68,11 @@ function Movies({
       moviesApi
         .getAllMoviesCards()
         .then((movies) => {
-          if (movies.length === 0) {
-            setIsNotFoundMovies(true);
-          }
           setMovies(movies);
           localStorage.setItem("movies", JSON.stringify(movies));
         })
         .catch(console.error);
   }
-
-  useEffect(() => {
-    getMovies();
-  }, [loggedIn]);
 
   const filter = (movies) => {
     setIsNotFoundMovies(false);
@@ -102,10 +91,12 @@ function Movies({
       "filteredMovies",
       JSON.stringify(filter(filteredMovies))
     );
-    setFilteredMovies(filter(movies));
+    const filtered= filter(movies);
+    setFilteredMovies(filtered);
     getSavedMovies();
-    if (filteredMovies.length === 0) {
+    if (filtered.length === 0) {
       setIsEndedCards(true);
+      setIsNotFoundMovies(true);
     }
   }, [loggedIn, searchString, isShort]);
 
@@ -213,3 +204,40 @@ function Movies({
 }
 
 export default Movies;
+
+/*
+  const handleSearch = () => {
+    if (searchString.trim() !== "") {
+      moviesApi
+        .getAllMoviesCards()
+        .then((foundedMovies) => {
+          setMovies(foundedMovies);
+          localStorage.setItem("movies", JSON.stringify(foundedMovies));
+        })
+        .catch(console.error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchString) {
+      let filtered = movies.filter((movie) =>
+        isShort
+          ? (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+              movie.nameEN
+                .toLowerCase()
+                .includes(searchString.toLowerCase())) &&
+            movie.duration < SHORT_MOVIE
+          : movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+            movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
+      );
+      setFilteredMovies(filtered);
+    } else {
+      setFilteredMovies([]);
+    }
+    //getSavedMovies();
+    if (filteredMovies.length === 0) {
+      setIsEndedCards(true);
+    }
+  }, [searchString, isShort]);
+
+  */

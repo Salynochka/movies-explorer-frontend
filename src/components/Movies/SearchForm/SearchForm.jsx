@@ -2,18 +2,14 @@ import React from "react";
 import "./SearchForm.css";
 import { useFormValidation } from "../../../utils/useValidation";
 
-function SearchForm({ submit, searchString, searchChange }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    submit();
-  };
+function SearchForm({ handleSubmit, searchString, searchChange }) {
 
   const { errors, isValid } = useFormValidation();
 
   return (
     <div className="search">
       <div className="search__info">
-        <form className="search__form" onSubmit={handleSubmit}>
+        <form className="search__form" onClick={handleSubmit}>
           <input
             className="search__input"
             type="text"
@@ -21,7 +17,7 @@ function SearchForm({ submit, searchString, searchChange }) {
             placeholder="Фильм"
             name="search"
             onChange={searchChange}
-            value={searchString || ""}
+            value={searchString}
             autoComplete="on"
             required
           />
