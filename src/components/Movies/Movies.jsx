@@ -91,7 +91,7 @@ function Movies({
       "filteredMovies",
       JSON.stringify(filter(filteredMovies))
     );
-    const filtered= filter(movies);
+    const filtered = filter(movies);
     localStorage.setItem("filtered", JSON.stringify(filtered));
     setFilteredMovies(filtered);
     getSavedMovies();

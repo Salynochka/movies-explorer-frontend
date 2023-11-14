@@ -71,9 +71,10 @@ function SavedMovies({
       "filteredMovies",
       JSON.stringify(filter(filteredSavedMovies))
     );
-    setFilteredSavedMovies(filter(savedMovies));
+    const filtered = filter(savedMovies);
+    setFilteredSavedMovies(filter(filtered));
     getSavedMovies();
-    if (filteredSavedMovies.length === 0) {
+    if (filtered.length === 0) {
       setIsNotFoundSavedMovies(true);
     }
   }, [loggedIn, searchSavedString, isShortSaved]);
