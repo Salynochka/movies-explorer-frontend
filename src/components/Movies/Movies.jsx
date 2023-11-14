@@ -92,24 +92,21 @@ function Movies({
       JSON.stringify(filter(filteredMovies))
     );
     const filtered= filter(movies);
+    localStorage.setItem("filtered", JSON.stringify(filtered));
     setFilteredMovies(filtered);
     getSavedMovies();
     if (filtered.length === 0) {
       setIsEndedCards(true);
       setIsNotFoundMovies(true);
     }
-  }, [loggedIn, searchString, isShort]);
-
-  useEffect(() => {
-    loggedIn && localStorage.setItem("movies", JSON.stringify(movies));
-  }, [movies, loggedIn]);
+  }, [searchString, isShort]);
 
   useEffect(() => {
     if (searchString) {
       setSearchString(searchString);
       handleSearch(filteredMovies);
     }
-    localStorage.getItem("filteredMovies");
+    localStorage.getItem("filtered");
   }, [searchString, isShort]);
 
   // Получение фильмов
