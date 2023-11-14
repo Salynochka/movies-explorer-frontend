@@ -49,6 +49,8 @@ function Movies({
 
   const isSavedPage = false;
 
+
+
   function searchChange(evt) {
     const value = evt.target.value;
     setSearchString(value);
@@ -60,6 +62,10 @@ function Movies({
     setIsShort(value);
     localStorage.setItem("isShort", value);
   }
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchString]);
 
   function getMovies() {
     loggedIn &&
@@ -172,11 +178,6 @@ function Movies({
     // renderMovies(full);
   }
 
-  /*
-  useEffect(() => {
-    handleSearch();
-  }, [searchString]);*/
-
   return (
     <div className="movies">
       <Header
@@ -188,7 +189,7 @@ function Movies({
         <SearchForm
           searchString={searchString}
           searchChange={searchChange}
-          search={handleSearch}
+          submit={handleSearch}
         />
         <FilterCheckbox switchCheckbox={toggleCheckbox} isShort={isShort} />
         {isLoading ? (

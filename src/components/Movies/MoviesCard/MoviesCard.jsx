@@ -18,14 +18,14 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
     const minutes = duration % 60;
     return hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
   }
-  
+
   function onCardClick() {
     if (isSaved) {
       handleMovieUnsave(savedMovies.find((m) => m.movieId === movie.id));
     } else {
       handleMovieSave(movie);
     }
-  //  setIsSaved(!isSaved);
+    //  setIsSaved(!isSaved);
   }
 
   function handleMovieSave(movie) {
@@ -38,7 +38,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
         .then((newMovie) => {
           setSavedMovies([...savedMovies, newMovie]);
           setIsSaved(true);
-        //  localStorage.setItem("savedMovie", JSON.stringify(movie));
+          //  localStorage.setItem("savedMovie", JSON.stringify(movie));
         })
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -53,7 +53,7 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
       .unsaveMovie(movie)
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(
-          (i) => i.movieId !== movie.movieId
+          (i) => i.id !== movie.movieId
         ); //  const updatedSavedMovies = savedMovies.filter((m) => m._id !== movieId);
         setIsSaved(false);
         setSavedMovies(updatedSavedMovies); //movies.filter((savedMovie) => movie._id !== savedMovie._id)
@@ -104,7 +104,6 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
               )}
               {isSavedMoviesPage && (
                 <button
-                  //onClick={handleMovieUnsave(movie._id)}
                   onClick={() => handleMovieUnsave(movie._id)}
                   className="card__unsave"
                   alt="Удаление"

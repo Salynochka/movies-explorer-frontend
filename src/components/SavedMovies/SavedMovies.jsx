@@ -15,12 +15,8 @@ function SavedMovies({
   onBurgerMenu,
   loggedIn,
 }) {
-  const [searchSavedString, setSearchSavedString] = useState(
-    localStorage.getItem("searchSavedString") || ""
-  );
-  const [isShortSaved, setIsShortSaved] = useState(
-    JSON.parse(localStorage.getItem("isShortSaved")) || false
-  );
+  const [searchSavedString, setSearchSavedString] = useState("");
+  const [isShortSaved, setIsShortSaved] = useState(false);
 
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
 
@@ -30,13 +26,11 @@ function SavedMovies({
   function searchChange(evt) {
     const value = evt.target.value;
     setSearchSavedString(value);
-    localStorage.setItem("searchSavedString", value);
   }
 
   function toggleCheckbox(evt) {
     const value = evt.target.checked;
     setIsShortSaved(value);
-    localStorage.setItem("isShortSaved", value);
   }
 
   function getSavedMovies() {
@@ -79,11 +73,11 @@ function SavedMovies({
       setIsNotFoundSavedMovies(true);
     }
   }, [loggedIn, searchSavedString, isShortSaved]);
-
+/*
   useEffect(() => {
     loggedIn &&
       localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
-  }, [savedMovies, loggedIn]);
+  }, [savedMovies, loggedIn]);*/
   
   useEffect(() => {
     getSavedMovies();
@@ -100,7 +94,7 @@ function SavedMovies({
         <SearchForm
           searchString={searchSavedString}
           searchChange={searchChange}
-          search={getSavedMovies}
+          submit={getSavedMovies}
         />
         <FilterCheckbox
           switchCheckbox={toggleCheckbox}
