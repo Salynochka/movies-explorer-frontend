@@ -59,10 +59,6 @@ function Movies({
     localStorage.setItem("isShort", event.target.checked);
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, [searchString]);
-
   function getMovies() {
     loggedIn &&
       moviesApi
@@ -116,9 +112,6 @@ function Movies({
   }
 
   function getSavedMovies() {
-    // if ("savedMovies" in localStorage) {
-    //   localStorage.getItem("savedMovies");
-    // } else {
     loggedIn &&
       mainApi
         .getUserSavedMovies()
@@ -127,7 +120,6 @@ function Movies({
           localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
         })
         .catch((error) => console.log(error));
-    //  }
   }
 
   const windowWidth = useWindowSize();
@@ -160,10 +152,6 @@ function Movies({
 
   function handleMoreMovies() {
     setAmountCard(amountCard + addedCards);
-    // let full = 0;
-    // full = +amountCard + addedCards;
-    // setAmountCard(full);
-    // renderMovies(full);
   }
 
   return (

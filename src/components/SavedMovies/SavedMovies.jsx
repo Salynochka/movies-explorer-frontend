@@ -68,7 +68,7 @@ function SavedMovies({
 
   useEffect(() => {
     localStorage.setItem(
-      "filteredMovies",
+      "filteredSavedMovies",
       JSON.stringify(filter(filteredSavedMovies))
     );
     const filtered = filter(savedMovies);

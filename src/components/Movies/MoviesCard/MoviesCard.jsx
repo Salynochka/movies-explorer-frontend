@@ -5,6 +5,7 @@ import { mainApi } from "../../../utils/MainApi";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 
 function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
+
   const currentUser = useContext(CurrentUserContext);
   const location = useLocation();
   const isMoviesPage = location.pathname === "/movies";
@@ -19,8 +20,11 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
   }
 
   function onCardClick() {
+    const savedMovie = savedMovies.find(
+        (savedMovie) => savedMovie.movieId === Number(movie.id),
+    )
     if (isSaved) {
-      handleMovieUnsave(savedMovies.find((m) => m.movieId === movie.id));
+      handleMovieUnsave(savedMovie._id);
     } else {
       handleMovieSave(movie);
     }
@@ -37,8 +41,8 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
         .then((newMovie) => {
           movie._id = newMovie["_id"];
           setSavedMovies([...savedMovies, newMovie]);
+          localStorage.setItem("savedMovie", JSON.stringify(savedMovies, ...[movie]));
           setIsSaved(true);
-          //  localStorage.setItem("savedMovie", JSON.stringify(movie));
         })
         .catch((err) => {
           console.error(`Ошибка: ${err}`);
@@ -68,9 +72,11 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
   }
 
   useEffect(() => {
+    const savedMovie = savedMovies.find(
+        (savedMovie) => savedMovie.movieId === Number(movie.id),
+    )
     // Проверяем, сохранена ли карточка при загрузке компонента
-    const saved = localStorage.getItem("savedMovie");
-    if (saved) {
+    if (savedMovie?.movieId === movie.id) {
       setIsSaved(true);
     }
   }, [movie.movieId]);
@@ -99,14 +105,13 @@ function MoviesCard({ movie, savedMovies, setSavedMovies, isSavedPage }) {
                     isSaved ? "card__save-button_active" : ""
                   }`}
                   type="button"
-                  onClick={onCardClick}
+                  onClick={() => onCardClick()}
                 />
               )}
               {isSavedMoviesPage && (
                 <button
                   onClick={() => handleMovieUnsave(movie._id)}
                   className="card__unsave"
-                  alt="Удаление"
                 />
               )}
             </div>

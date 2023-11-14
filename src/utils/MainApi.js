@@ -124,7 +124,7 @@ class MainApi {
         description: movie.description,
         duration: movie.duration,
         image: `https://api.nomoreparties.co/beatfilm-movies${movie.image.url}`,
-        movieId: movie.movieId,
+        movieId: movie.id,
         nameEN: movie.nameEN,
         nameRU: movie.nameRU,
         thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
@@ -136,6 +136,7 @@ class MainApi {
 
   //Удаление из сохраненных фильмов
   unsaveMovie(movieId) {
+    console.log(movieId)
     return fetch(`${this._mainUrl}/movies/${movieId}`, {
       method: "DELETE",
       headers: {
