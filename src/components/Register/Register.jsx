@@ -1,23 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import { useFormValidation } from "../../utils/useValidation";
+import { useFormValidation } from "../../utils/useFormValidation";
 
-function Register({ handleSubmit}) {
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormValidation();
+function Register({ handleSubmit, isLoggedIn }) {
+  const { values, onChange, errors, isValid } = useFormValidation();
 
-  function handleSubmited(e) {
-    e.preventDefault();
-    handleSubmit(values.name, values.email, values.password);
+  function handleChange(e) {
+    onChange(e);
   }
 
-  useEffect(() => {
-    resetForm();
-  }, [resetForm]);
+  function handleSubmitted(e) {
+    e.preventDefault();
+    handleSubmit(values)
+  }
 
-  return (
+  return isLoggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <main>
       <section className="register">
         <div className="register__container">
@@ -28,7 +29,7 @@ function Register({ handleSubmit}) {
           <form
             className="register__form"
             name="register"
-            onSubmit={handleSubmited}
+            onSubmit={handleSubmitted}
           >
             <fieldset className="register__input">
               <h2 className="register__heading">Имя</h2>

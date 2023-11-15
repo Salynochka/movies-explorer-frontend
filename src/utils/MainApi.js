@@ -14,25 +14,13 @@ class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getToken = (token) => {
-    return fetch(`${this._mainUrl}/users/me`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
-    }).then((res) => this._checkStatus(res));
-  };
-
   //Регистрация пользователя
-  register = (name, email, password) => {
+  register = ({name, email, password}) => {
     return fetch(`${this._mainUrl}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       credentials: "include",
       body: JSON.stringify({
@@ -44,7 +32,7 @@ class MainApi {
   };
 
   //Вход пользователя
-  login = (email, password) => {
+  login = ({email, password}) => {
     return fetch(`${this._mainUrl}/signin`, {
       method: "POST",
       headers: this._headers,
@@ -62,31 +50,30 @@ class MainApi {
       method: "POST",
       credentials: "include",
       headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json"
       },
     });
   }
 
   // Получение данных о пользователе
-  getUserInfo() {
+  getUserInfo(token) {
     return fetch(`${this._mainUrl}/users/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        authorization: `Bearer ${token}`,
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));
   }
 
   //Редактирование данных пользователя
-  editUserInfo(data) {
+  editUserInfo(data, token) {
     return fetch(`${this._mainUrl}/users/me`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        authorization: `Bearer ${token}`,
       },
       credentials: "include",
       body: JSON.stringify({
@@ -97,8 +84,8 @@ class MainApi {
   }
 
   //Получение сохраненных фильмов пользователя
-  getUserSavedMovies() {
-    const jwt = localStorage.getItem("jwt");
+  getUserSavedMovies(token) {
+    const jwt = token;
     return fetch(`${this._mainUrl}/movies`, {
       method: "GET",
       headers: {
@@ -110,12 +97,12 @@ class MainApi {
   }
 
   //Добавление фильма на сервер
-  saveMovie(movie) {
+  saveMovie(movie, token) {
     return fetch(`${this._mainUrl}/movies`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        authorization: `Bearer ${token}`,
       },
       credentials: "include",
       body: JSON.stringify({
@@ -135,13 +122,13 @@ class MainApi {
   }
 
   //Удаление из сохраненных фильмов
-  unsaveMovie(movieId) {
+  unsaveMovie(movieId, token) {
     console.log(movieId)
     return fetch(`${this._mainUrl}/movies/${movieId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        authorization: `Bearer ${token}`,
       },
       credentials: "include",
     }).then((res) => this._checkStatus(res));

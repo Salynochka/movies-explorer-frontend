@@ -1,34 +1,27 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import { useFormValidation } from "../../utils/useValidation";
+import { useFormValidation } from "../../utils/useFormValidation";
 
 function Login({ handleSubmit, isLoggedIn }) {
-  const navigate = useNavigate();
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormValidation();
+  const { values, onChange, errors, isValid } = useFormValidation();
 
-  function handleSubmited(e) {
+  function handleSubmitted(e) {
     e.preventDefault();
-    handleSubmit(values.email, values.password);
+    handleSubmit(values);
   }
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/movies');
-    }
-  }, [isLoggedIn]);
+  function handleChange(evt) {
+    onChange(evt);
+  }
 
-  useEffect(() => {
-    resetForm();
-  }, [resetForm]);
-
-  return (
+  return isLoggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <main>
       <section className="login">
-        <div className="login__container" onSubmit={handleSubmited}>
+        <div className="login__container" onSubmit={handleSubmitted}>
           <Link to="/" className="login__logo">
             <img src={logo} alt="Логотип" />
           </Link>

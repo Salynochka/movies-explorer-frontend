@@ -1,6 +1,6 @@
 import "./Techs.css";
 
-function Techs(props) {
+function Techs() {
   return (
     <section className="techs">
       <h2 className="techs__theme">Технологии</h2>

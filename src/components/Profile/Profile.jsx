@@ -1,59 +1,62 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Header from "../Header/Header";
 import "./Profile.css";
 import { Link } from "react-router-dom";
-import { useFormValidation, useForm } from "../../utils/useValidation";
+import { useFormValidation } from "../../utils/useFormValidation";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
-function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
+function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, resetForm, setIsValid } =
-    useFormValidation({ name: currentUser.name, email: currentUser.email });
-  const { setValues } = useForm();
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [isShowSaveButton, setIsShowSaveButton] = useState(false);
-  const [isClickedEditButton, setIsClickedEditButton] = useState(false);
+  const { values, onChange, errors, isValid, setValues } =
+    useFormValidation();
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  useEffect(() => {
-    resetForm({ email: currentUser.email, name: currentUser.name }, {}, false);
-  }, [currentUser, resetForm]);
-
-  useEffect(() => {
-    setValues(currentUser);
-    setIsValid(true);
-  }, [currentUser, resetForm, setValues]);
-
-  useEffect(() => {
-    if (
-      currentUser.name !== values.name ||
-      currentUser.email !== values.email
-    ) {
-      setIsValid(false);
-    }
-  }, [values, currentUser, setIsValid]);
-
-  function onSubmit(evt) {
-    evt.preventDefault();
-    setIsButtonDisabled(true);
-    handleSubmit({ name: values.name, email: values.email });
-    if (!errors) {
-      setIsShowSaveButton(false);
-    } else {
-      setIsShowSaveButton(true);
+  function handleCloseByEscape(evt) {
+    if (evt.key === "Escape") {
+      setIsDisabled(true);
     }
   }
 
   useEffect(() => {
-    if (isPass) {
-      setIsShowSaveButton(false);
-      setIsClickedEditButton(false);
-    }
-  }, [isPass]);
+    document.addEventListener("keydown", handleCloseByEscape);
+    return () => {
+      document.removeEventListener("keydown", handleCloseByEscape);
+    };
+  }, []);
 
-  function handleEditProfile(evt) {
+  useEffect(() => {
+    setValues((values) => ({
+      ...values,
+      name: currentUser.name,
+      email: currentUser.email,
+    }));
+  }, [currentUser]);
+
+  const changingInfo =
+    values.name === currentUser.name && values.email === currentUser.email
+      ? false
+      : true;
+
+  function handleChange(e) {
+    onChange(e);
+  }
+
+  function handleEditProfile() {
+    setIsDisabled(false);
+  }
+
+  function handleSubmitted(evt) {
     evt.preventDefault();
-    setIsShowSaveButton(true);
-    setIsClickedEditButton(true);
+    if (
+      currentUser.name === values.name &&
+      currentUser.email === values.email
+    ) {
+      setIsDisabled(true);
+      return;
+    } else {
+      handleSubmit(values);
+      setIsDisabled(true);
+    }
   }
 
   return (
@@ -61,8 +64,8 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
       <Header onBurgerMenu={onBurgerMenu} loggedIn={loggedIn} />
       <main>
         <section className="profile__section">
-          <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
-          <form onSubmit={onSubmit} name="profile">
+          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+          <form onSubmit={handleSubmitted} name="profile">
             <div className="profile__info">
               <fieldset className="profile__input">
                 <div className="profile__line">
@@ -77,7 +80,7 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     onChange={handleChange}
                     value={values.name || ""}
                     autoComplete="on"
-                    disabled={!isShowSaveButton}
+                    disabled={isDisabled}
                   />
                 </div>
                 <span className="profile__item-error">{errors.name}</span>
@@ -94,21 +97,22 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                     value={values.email || ""}
                     autoComplete="on"
                     pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
-                    disabled={!isShowSaveButton}
+                    disabled={isDisabled}
                   />
                 </div>
                 <span className="profile__item-error">{errors.email}</span>
               </fieldset>
             </div>
             <div className="profile__changing">
-              {isShowSaveButton ? (
+              {!isDisabled ? (
                 <button
-                  className="profile__save-button"
-                  type="submit"
-                  disabled={
-                    values.name === currentUser.name ||
-                    values.email === currentUser.email
+                  className={
+                    isValid && changingInfo
+                      ? "profile__save-button"
+                      : "profile__save-button profile__save-button_disabled"
                   }
+                  type="submit"
+                  disabled={!isValid}
                 >
                   Сохранить
                 </button>
@@ -117,18 +121,11 @@ function Profile({ onBurgerMenu, loggedIn, onExit, handleSubmit, isPass }) {
                   <button
                     className="profile__edit"
                     type="button"
-                    disabled={isButtonDisabled}
                     onClick={handleEditProfile}
                   >
                     Редактировать
                   </button>
-                  <Link
-                    to="/"
-                    className={`profile__to-login${
-                      isClickedEditButton ? "" : "_visible"
-                    }`}
-                    onClick={onExit}
-                  >
+                  <Link to="/" className="profile__to-login" onClick={onExit}>
                     Выйти из аккаунта
                   </Link>
                 </>

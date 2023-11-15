@@ -27,12 +27,23 @@ function Header({ loggedIn, onBurgerMenu, isSavedPage }) {
               loggedIn ? "_visible" : ""
             }`}
           >
-            <Link to="/movies" className={isSavedPage ? `header__films` : `header__films header__films_active`}>
+            <Link
+              to="/movies"
+              className={
+                isSavedPage
+                  ? `header__films`
+                  : `header__films header__films_active`
+              }
+            >
               <p>Фильмы</p>
             </Link>
             <Link
               to="/saved-movies"
-              className={isSavedPage ? `header__saved-films header__saved-films_active` : `header__films`}
+              className={
+                isSavedPage
+                  ? `header__saved-films header__saved-films_active`
+                  : `header__films`
+              }
             >
               <p>Сохраненные фильмы</p>
             </Link>

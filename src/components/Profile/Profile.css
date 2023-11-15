@@ -110,10 +110,6 @@
 }
 
 .profile__to-login{
-    display: none;
-}
-
-.profile__to-login_visible{
     display: flex;
     visibility: visible;
     opacity: 1;
@@ -143,6 +139,12 @@
     border: none;
     padding: 0;
 }
+
+.profile__save-button_disabled{
+    color: #C2C2C2;
+    background-color: #F8F8F8;
+}
+
 
 .profile__save-button:disabled{
     color: #C2C2C2;
