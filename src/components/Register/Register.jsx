@@ -43,7 +43,7 @@ function Register({ handleSubmit, isLoggedIn }) {
                 onChange={handleChange}
                 value={values.name || ""}
                 autoComplete="on"
-                isValid={isValid.name}
+                disabled={isValid.name}
               />
               <span className="register__form-error register__form-error_type_name name-error">
                 {errors.name}
@@ -60,7 +60,7 @@ function Register({ handleSubmit, isLoggedIn }) {
                 value={values.email || ""}
                 autoComplete="on"
                 pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
-                isValid={isValid.email}
+                disabled={isValid.email}
               />
               <span className="register__form-error register__form-error_type_email email-error">
                 {errors.email}
@@ -76,7 +76,7 @@ function Register({ handleSubmit, isLoggedIn }) {
                 onChange={handleChange}
                 value={values.password || ""}
                 autocomplete="on"
-                isValid={isValid.password}
+                disabled={isValid.password}
               />
               <span className="register__form-error register__form-error_type_password password-error">
                 {errors.password}

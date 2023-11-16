@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./SearchForm.css";
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm({ handleSubmit, isShort, setIsShort }) {
+function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
   const [value, setValue] = useState({});
   const [error, setError] = useState(false);
   const location = useLocation();
@@ -19,8 +20,8 @@ function SearchForm({ handleSubmit, isShort, setIsShort }) {
 
   useEffect(() => {
     if (isMoviesPage) {
-      setIsShort(JSON.parse(localStorage.getItem("isShort")) || false);
-      setValue(localStorage.getItem("search"));
+      setIsShort(JSON.parse(localStorage.getItem("checkbox")) || false);
+      setValue(localStorage.getItem("searchString"));
       return;
     } else if (isSavedMoviesPage) {
       setIsShort(false);
@@ -57,6 +58,7 @@ function SearchForm({ handleSubmit, isShort, setIsShort }) {
           <button className="search__button" type="submit" />
         </form>
       </div>
+      <FilterCheckbox isShort={isShort} switchCheckbox={switchCheckbox} />
     </div>
   );
 }

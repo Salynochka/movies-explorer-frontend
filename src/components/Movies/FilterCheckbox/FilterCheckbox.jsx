@@ -2,11 +2,11 @@ import React from "react";
 import "./FilterCheckbox.css";
 
 function FilterCheckbox({ isShort, switchCheckbox }) {
-
+/*
   const onChange = (evt) => {
     switchCheckbox();
     localStorage.setItem("isShort", evt.target.checked);
-  };
+  };*/
 
   return (
     <div className="filter">
@@ -17,7 +17,7 @@ function FilterCheckbox({ isShort, switchCheckbox }) {
             type="checkbox"
             className="filter__checkbox-round"
             name='shortFilms'
-            onChange={onChange}
+            onChange={switchCheckbox}
             checked={isShort || false}
           />
         </form>

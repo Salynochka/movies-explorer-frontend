@@ -110,7 +110,7 @@ class MainApi {
         director: movie.director,
         description: movie.description,
         duration: movie.duration,
-        image: `https://api.nomoreparties.co/beatfilm-movies${movie.image.url}`,
+        image: `https://api.nomoreparties.co${movie.image.url}`,
         movieId: movie.id,
         nameEN: movie.nameEN,
         nameRU: movie.nameRU,

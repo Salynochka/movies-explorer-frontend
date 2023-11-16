@@ -12,9 +12,6 @@ function MoviesCard({
 
   const isMoviesPage = location.pathname === "/movies";
   const isSavedMoviesPage = location.pathname === "/saved-movies";
-  const imageUrl = isSavedMoviesPage
-    ? movie.image
-    : `https://api.nomoreparties.co/${movie.image.url}`;
 
   const { isAdd, id } = movie;
   const [isSaved, setIsSaved] = useState(isAdd);
@@ -34,7 +31,7 @@ function MoviesCard({
 
   function handleClickSave() {
     isSaved
-      ? handleUnsaveMovie(movie, setIsSaved)
+      ? handleUnsaveMovie(savedMovies.filter((m) => m.movieId === movie.id)[0], setIsSaved)
       : handleSaveMovie(movie, setIsSaved);
   }
 
@@ -44,12 +41,14 @@ function MoviesCard({
 
   return (
     <>
-      <article className="card">
+      <article className="card" key={movie.id}>
         <div className="card__info">
           <a href={movie.trailerLink}>
             <img
               className="card__photo"
-              src={imageUrl}
+              src={isSavedMoviesPage
+                ? movie.image
+                : `https://api.nomoreparties.co/${movie.image.url}`}
               alt={movie.nameRU}
             />
           </a>

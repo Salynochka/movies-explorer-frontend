@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import account from "../../../images/account.svg";
 import exit from "../../../images/exit.svg";
 
-function Navigation({ isOpen, onClose, isActive, onClick }) {
+function Navigation({ isOpen, onClose, onClick }) {
   const location = useLocation();
 
   function handleEscClose(evt) {

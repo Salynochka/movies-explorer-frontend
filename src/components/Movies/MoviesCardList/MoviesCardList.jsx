@@ -17,7 +17,7 @@ function MoviesCards({
 }) {
   const location = useLocation();
 
-  const filteredMovies = JSON.parse(localStorage.getItem("moviesSearch"));
+  const moviesSearch = JSON.parse(localStorage.getItem("moviesSearch"));
   const moviesCheckbox = JSON.parse(
     localStorage.getItem("moviesFilterCheckbox")
   );
@@ -25,7 +25,7 @@ function MoviesCards({
 
   const lengthMovies = JSON.parse(localStorage.getItem("checkbox"))
     ? moviesCheckbox
-    : filteredMovies;
+    : moviesSearch;
 
   return isLoading ? (
     <Preloader />

@@ -4,7 +4,6 @@ import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import Preloader from "../Movies/Preloader/Preloader";
-import FilterCheckbox from "../Movies/FilterCheckbox/FilterCheckbox";
 import "./SavedMovies.css";
 
 function SavedMovies({
@@ -14,11 +13,11 @@ function SavedMovies({
   setSavedMovies,
   onBurgerMenu,
   handleSubmit,
-  isSavedShort,
-  setIsSavedShort,
-  switchCheckbox,
+  isShort,
+  setIsShort,
   handleUnsaveMovie,
   isNotFoundMovies,
+  switchCheckbox,
 }) {
   const isSavedPage = true;
 
@@ -37,22 +36,16 @@ function SavedMovies({
       <main>
         <SearchForm
           handleSubmit={handleSubmit}
-          isShort={isSavedShort}
-          setIsShort={setIsSavedShort}
+          isShort={isShort}
+          setIsShort={setIsShort}
+          switchCheckbox={switchCheckbox}
         />
-        <FilterCheckbox isShort={isSavedShort} switchCheckbox={switchCheckbox} />
-        {isLoading ? (
-          <Preloader />
-        ) : savedMovies.length === 0 || undefined || null ? (
-          <p className="saved-movies_not-found">Ничего не найдено</p>
-        ) : (
-          <MoviesCardList
-            movies={savedMovies}
-            savedMovies={savedMovies}
-            handleUnsaveMovie={handleUnsaveMovie}
-            isNotFoundMovies={isNotFoundMovies}
-          />
-        )}
+        <MoviesCardList
+          movies={savedMovies}
+          savedMovies={savedMovies}
+          handleUnsaveMovie={handleUnsaveMovie}
+          isNotFoundMovies={isNotFoundMovies}
+        />
       </main>
       <Footer />
     </div>
