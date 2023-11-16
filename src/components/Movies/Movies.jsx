@@ -42,15 +42,23 @@ function Movies({
           isShort={isShort}
           setIsShort={setIsShort}
         />
-        <MoviesCardList
-          movies={movies || ""}
-          savedMovies={savedMovies}
-          handleUnsaveMovie={handleUnsaveMovie}
-          handleSaveMovie={handleSaveMovie}
-          handleMoreMovies={handleMoreMovies}
-          isNotFoundMovies={isNotFoundMovies}
-          isLoading={isLoading}
-        />
+        {isLoading ? (
+          <Preloader />
+        ) : isNotFoundMovies ? (
+          " "
+        ) : movies.length === 0 || undefined || null ? (
+          <p className="movies_not-found">Ничего не найдено</p>
+        ) : (
+          <MoviesCardList
+            movies={movies || ""}
+            savedMovies={savedMovies}
+            handleUnsaveMovie={handleUnsaveMovie}
+            handleSaveMovie={handleSaveMovie}
+            handleMoreMovies={handleMoreMovies}
+            isNotFoundMovies={isNotFoundMovies}
+            isLoading={isLoading}
+          />
+        )}
       </main>
       <Footer />
     </div>

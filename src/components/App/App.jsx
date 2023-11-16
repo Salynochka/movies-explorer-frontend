@@ -191,14 +191,14 @@ function App() {
         movie.nameRU.toLowerCase().includes(textSearch.toLowerCase())
       );
       resultFiltered = checkbox
-        ? resultFiltered.filter((item) => item.duration <= SHORT_MOVIE)
+        ? resultFiltered.filter((m) => m.duration <= SHORT_MOVIE)
         : resultFiltered;
 
       return resultFiltered;
     }
     if (!textSearch) {
       movies = checkbox
-        ? movies.filter((item) => item.duration <= SHORT_MOVIE)
+        ? movies.filter((m) => m.duration <= SHORT_MOVIE)
         : movies;
       return movies;
     }
@@ -233,8 +233,9 @@ function App() {
 
   function handleSubmitSearchSavedMovies(search, isShort) {
     const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
-    const savedMoviesFoundSeach = filterMovies(savedMovies, search, isShort);
-    setSavedMovies(savedMoviesFoundSeach);
+    const moviesSavedSearch = filterMovies(savedMovies, search, isShort);
+    localStorage.setItem("moviesSavedSearch", JSON.stringify(moviesSavedSearch));
+    setSavedMovies(moviesSavedSearch);
   }
 
   function handleCheckbox() {
@@ -255,11 +256,21 @@ function App() {
       }
     }
     if (pathname === "/saved-movies") {
-      const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
-      const moviesSavedCheckbox = !isShort
-        ? savedMovies.filter((item) => item.duration <= SHORT_MOVIE)
-        : savedMovies;
-      setSavedMovies(moviesSavedCheckbox);
+      // const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+      const moviesSavedSearch = JSON.parse(
+        localStorage.getItem("moviesSavedSearch")
+      );
+      localStorage.setItem("savedCheckbox", !isShort);
+      if (moviesSavedSearch) {
+        const moviesSavedCheckbox = !isShort
+          ? moviesSavedSearch.filter((m) => m.duration <= SHORT_MOVIE)
+          : moviesSavedSearch;
+        setSavedMovies(moviesSavedCheckbox);
+        localStorage.setItem(
+          "moviesSavedCheckbox",
+          JSON.stringify(moviesSavedCheckbox)
+        );
+      }
     }
   }
 
@@ -436,7 +447,7 @@ function App() {
                   setSavedMovies={setSavedMovies}
                   onBurgerMenu={handleOpenBurgerMenu}
                   handleUnsaveMovie={handleUnsaveMovie}
-                  handleSubmit={handleSubmitSearchMovies}
+                  handleSubmit={handleSubmitSearchSavedMovies}
                   isRendered={isRendered}
                   setIsRendered={setIsRendered}
                   switchCheckbox={handleCheckbox}

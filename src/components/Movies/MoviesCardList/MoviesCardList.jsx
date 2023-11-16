@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import "./MoviesCardList.css";
 import Preloader from "../Preloader/Preloader";
-import { useEffect } from "react";
 
 function MoviesCards({
   isLoading,
@@ -13,7 +12,8 @@ function MoviesCards({
   savedMovies,
   handleSaveMovie,
   handleUnsaveMovie,
-  isSaved
+  isSaved,
+  isNotFoundMovies,
 }) {
   const location = useLocation();
 
@@ -22,51 +22,46 @@ function MoviesCards({
     localStorage.getItem("moviesFilterCheckbox")
   );
 
-
   const lengthMovies = JSON.parse(localStorage.getItem("checkbox"))
     ? moviesCheckbox
     : moviesSearch;
 
-  return isLoading ? (
-    <Preloader />
-  ) : movies.length === 0 || undefined || null ? (
-    <p className="movies_not-found">Ничего не найдено</p>
-  ) : (
+  return (
     <section
       className={
         location.pathname === "/saved-movies" ? "cards cards_saved" : "cards"
       }
     >
-      <>
-        <div className="cards__full">
-          {movies.map((movie) => (
-            <MoviesCard
-              movie={movie}
-              key={movie.id || movie._id}
-              handleUnsaveMovie={handleUnsaveMovie}
-              handleSaveMovie={handleSaveMovie}
-              isSaved={isSaved}
-              savedMovies={savedMovies}
-              isSavedPage={isSavedPage}
-            />
-          ))}
-        </div>
-        <div className="cards__more">
-          {location.pathname === "/movies" &&
-          movies.length >= 3 &&
-          movies.length < lengthMovies.length ? (
-            <button
-              className="cards__button"
-              type="button"
-              onClick={handleMoreMovies}
-            >
-              Ещё
-            </button>
-          ) : (
-            ""
-          )}
-        </div>
-      </>
+        <>
+          <div className="cards__full">
+            {movies.map((movie) => (
+              <MoviesCard
+                movie={movie}
+                key={movie.id || movie._id}
+                handleUnsaveMovie={handleUnsaveMovie}
+                handleSaveMovie={handleSaveMovie}
+                isSaved={isSaved}
+                savedMovies={savedMovies}
+                isSavedPage={isSavedPage}
+              />
+            ))}
+          </div>
+          <div className="cards__more">
+            {location.pathname === "/movies" &&
+            movies.length >= 3 &&
+            movies.length < lengthMovies.length ? (
+              <button
+                className="cards__button"
+                type="button"
+                onClick={handleMoreMovies}
+              >
+                Ещё
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
+        </>
     </section>
   );
 }
