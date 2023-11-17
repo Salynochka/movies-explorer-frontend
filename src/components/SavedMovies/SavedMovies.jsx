@@ -8,7 +8,6 @@ import "./SavedMovies.css";
 
 function SavedMovies({
   loggedIn,
-  isLoading,
   savedMovies,
   setSavedMovies,
   onBurgerMenu,
@@ -40,12 +39,16 @@ function SavedMovies({
           setIsShort={setIsShort}
           switchCheckbox={switchCheckbox}
         />
-        <MoviesCardList
-          movies={savedMovies}
-          savedMovies={savedMovies}
-          handleUnsaveMovie={handleUnsaveMovie}
-          isNotFoundMovies={isNotFoundMovies}
-        />
+        {(savedMovies.length === 0 || undefined || null) ? (
+          <p className="movies_not-found">Ничего не найдено</p>
+        ) : (
+          <MoviesCardList
+            movies={savedMovies}
+            savedMovies={savedMovies}
+            handleUnsaveMovie={handleUnsaveMovie}
+            isNotFoundMovies={isNotFoundMovies}
+          />
+        )}
       </main>
       <Footer />
     </div>

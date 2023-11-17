@@ -1,11 +1,13 @@
-export const LARGE_VERSION = 770;
-export const MEDIUM_VERSION = 480;
+export const LARGE_VERSION = 1180;
+export const MEDIUM_VERSION = 768;
 export const MIN_VERSION = 320;
 
-export const MORE_CARD_WIDTH_MAX = 8;
-export const MORE_CARD_WIDTH_MIN = 2;
+export const CARD_WIDTH_MAX = 16;
+export const CARD_WIDTH_MEDIUM = 12;
+export const CARD_WIDTH_MIN = 5;
 
-export const ADDED_CARDS_MAX = 5;
+export const ADDED_CARDS_MAX = 4;
+export const ADDED_CARDS_MEDIUM = 3;
 export const ADDED_CARDS_MIN = 2;
 
 export const MOVIES_SITE = 'https://api.nomoreparties.co/beatfilm-movies'

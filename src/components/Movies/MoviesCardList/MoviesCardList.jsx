@@ -32,36 +32,35 @@ function MoviesCards({
         location.pathname === "/saved-movies" ? "cards cards_saved" : "cards"
       }
     >
-        <>
-          <div className="cards__full">
-            {movies.map((movie) => (
-              <MoviesCard
-                movie={movie}
-                key={movie.id || movie._id}
-                handleUnsaveMovie={handleUnsaveMovie}
-                handleSaveMovie={handleSaveMovie}
-                isSaved={isSaved}
-                savedMovies={savedMovies}
-                isSavedPage={isSavedPage}
-              />
-            ))}
-          </div>
-          <div className="cards__more">
-            {location.pathname === "/movies" &&
-            movies.length >= 3 &&
-            movies.length < lengthMovies.length ? (
-              <button
-                className="cards__button"
-                type="button"
-                onClick={handleMoreMovies}
-              >
-                Ещё
-              </button>
-            ) : (
-              ""
-            )}
-          </div>
-        </>
+      <>
+        <div className="cards__full">
+          {movies.map((movie) => (
+            <MoviesCard
+              movie={movie}
+              key={movie.id || movie._id}
+              handleUnsaveMovie={handleUnsaveMovie}
+              handleSaveMovie={handleSaveMovie}
+              isSaved={isSaved}
+              savedMovies={savedMovies}
+              isSavedPage={isSavedPage}
+            />
+          ))}
+        </div>
+        <div className="cards__more">
+          {location.pathname === "/movies" &&
+          movies.length < lengthMovies.length ? (
+            <button
+              className="cards__button"
+              type="button"
+              onClick={handleMoreMovies}
+            >
+              Ещё
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
+      </>
     </section>
   );
 }

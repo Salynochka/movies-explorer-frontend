@@ -17,8 +17,11 @@ import ErrorWindow from "../ErrorWindow/ErrorWindow";
 import Preloader from "../Movies/Preloader/Preloader";
 import {
   LARGE_VERSION,
-  MORE_CARD_WIDTH_MAX,
-  MORE_CARD_WIDTH_MIN,
+  CARD_WIDTH_MAX,
+  CARD_WIDTH_MEDIUM,
+  CARD_WIDTH_MIN,
+  ADDED_CARDS_MAX,
+  ADDED_CARDS_MEDIUM,
   SHORT_MOVIE,
 } from "../../utils/constants.js";
 
@@ -289,22 +292,22 @@ function App() {
           return;
         }
         if (windowInnerWidth > LARGE_VERSION) {
-          setMovies(moviesFilterCheckbox.slice(0, 7));
-          setAddMovies(MORE_CARD_WIDTH_MAX);
+          setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MAX));
+          setAddMovies(ADDED_CARDS_MAX);
         } else if (windowInnerWidth <= LARGE_VERSION) {
-          setMovies(moviesFilterCheckbox.slice(0, 5));
-          setAddMovies(MORE_CARD_WIDTH_MIN);
+          setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MEDIUM));
+          setAddMovies(ADDED_CARDS_MEDIUM);
         }
         return;
       } else if (moviesSearch === null) {
         return;
       }
       if (windowInnerWidth > LARGE_VERSION) {
-        setMovies(moviesSearch.slice(0, 7));
-        setAddMovies(MORE_CARD_WIDTH_MAX);
+        setMovies(moviesSearch.slice(0, CARD_WIDTH_MAX));
+        setAddMovies(ADDED_CARDS_MAX);
       } else if (windowInnerWidth <= LARGE_VERSION) {
-        setMovies(moviesSearch.slice(0, 5));
-        setAddMovies(MORE_CARD_WIDTH_MIN);
+        setMovies(moviesSearch.slice(0, CARD_WIDTH_MEDIUM));
+        setAddMovies(ADDED_CARDS_MEDIUM);
       }
     }
   }
