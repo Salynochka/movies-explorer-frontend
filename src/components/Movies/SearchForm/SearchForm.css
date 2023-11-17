@@ -79,7 +79,7 @@
     }
 
     .search__input{
-        width: 480px;
+        max-width: 300px;
     }
 }
 
@@ -100,7 +100,7 @@
     }
 
     .search__input{
-        width: 280px;
+        max-width: 240px;
         font-size: 18px;
         line-height: 22px;
     }

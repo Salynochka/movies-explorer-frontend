@@ -17,11 +17,13 @@ import ErrorWindow from "../ErrorWindow/ErrorWindow";
 import Preloader from "../Movies/Preloader/Preloader";
 import {
   LARGE_VERSION,
+  MEDIUM_VERSION,
   CARD_WIDTH_MAX,
   CARD_WIDTH_MEDIUM,
   CARD_WIDTH_MIN,
   ADDED_CARDS_MAX,
   ADDED_CARDS_MEDIUM,
+  ADDED_CARDS_MIN,
   SHORT_MOVIE,
 } from "../../utils/constants.js";
 
@@ -294,9 +296,12 @@ function App() {
         if (windowInnerWidth > LARGE_VERSION) {
           setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MAX));
           setAddMovies(ADDED_CARDS_MAX);
-        } else if (windowInnerWidth <= LARGE_VERSION) {
+        } else if (windowInnerWidth >= MEDIUM_VERSION) {
           setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MEDIUM));
           setAddMovies(ADDED_CARDS_MEDIUM);
+        } else {
+          setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MIN));
+          setAddMovies(ADDED_CARDS_MIN);
         }
         return;
       } else if (moviesSearch === null) {
@@ -305,9 +310,12 @@ function App() {
       if (windowInnerWidth > LARGE_VERSION) {
         setMovies(moviesSearch.slice(0, CARD_WIDTH_MAX));
         setAddMovies(ADDED_CARDS_MAX);
-      } else if (windowInnerWidth <= LARGE_VERSION) {
+      } else if (windowInnerWidth >= MEDIUM_VERSION) {
         setMovies(moviesSearch.slice(0, CARD_WIDTH_MEDIUM));
         setAddMovies(ADDED_CARDS_MEDIUM);
+      } else {
+        setMovies(moviesSearch.slice(0, CARD_WIDTH_MIN));
+        setAddMovies(ADDED_CARDS_MIN);
       }
     }
   }
