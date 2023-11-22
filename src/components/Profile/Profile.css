@@ -20,11 +20,16 @@
 .profile__info{
     flex-direction: column;
     max-width: 410px;
-    margin: 123px auto 0;
+    margin: 110px auto 0;
+}
+
+.profile__input{
+    border: none;
+    padding: 0;
 }
 
 .profile__line{
-    margin-bottom: 16px;
+    margin-top: 16px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -44,12 +49,25 @@
     margin: 0;
 }
 
-.profile__name{
+.profile__item{
     font-size: 11px;
     font-weight: 400;
     line-height: 13px;
     text-align: right;
     color: white;
+    background: #202020;
+    width: 122px;
+    height: 14px;
+    border: none;
+}
+
+.profile__item-error{
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+    color: #EE3465;
+    padding: 0;
 }
 
 .profile__email{
@@ -69,8 +87,10 @@
     row-gap: 16px;
     align-items: center;
 }
-
 .profile__edit{
+    display: flex;
+    visibility: visible;
+    opacity: 1;
     font-size: 13px;
     font-weight: 400;
     line-height: 16px;
@@ -85,7 +105,14 @@
     opacity: 0.7;
 }
 
+.profile__edit:disabled{
+    opacity: 0.3;
+}
+
 .profile__to-login{
+    display: flex;
+    visibility: visible;
+    opacity: 1;
     font-size: 13px;
     font-weight: 500;
     line-height: 16px;
@@ -96,6 +123,37 @@
 .profile__to-login:hover{
     cursor: pointer;
     opacity: 0.7;
+}
+
+.profile__save-button{
+    visibility: visible;
+    opacity: 1;
+    width: 396px;
+    height: 45px;
+    border-radius: 3px;
+    color: white;
+    background-color: #3456F3;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    border: none;
+    padding: 0;
+}
+
+.profile__save-button_disabled{
+    color: #C2C2C2;
+    background-color: #F8F8F8;
+}
+
+
+.profile__save-button:disabled{
+    color: #C2C2C2;
+    background-color: #F8F8F8;
+}
+
+.profile__save-button:hover{
+    cursor: pointer;
+    opacity: 1;
 }
 
 @media screen and (max-width: 800px){
@@ -146,6 +204,11 @@
     }
 
     .profile__to-login{
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .profile__save-button_visible{
         font-size: 12px;
         line-height: 15px;
     }

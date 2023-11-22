@@ -3,43 +3,54 @@ import logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import account from "../../images/account.svg";
 
-function Header(props) {
+function Header({ loggedIn, onBurgerMenu, isSavedPage }) {
   return (
     <header className="header">
-      <div className={`header__theme${props.logIn ? "-gray" : "-green"}`}>
+      <div className={`header__theme${loggedIn ? "-gray" : "-green"}`}>
         <div className="header__info">
           <button
             className={`header__burger header__burger${
-              props.logIn ? "_visible" : ""
+              loggedIn ? "_visible" : ""
             }`}
             type="button"
-            onClick={props.onBurgerMenu}
+            onClick={onBurgerMenu}
           >
-            <span className="header__line"/>
-            <span className="header__line"/>
-            <span className="header__line"/>
+            <span className="header__line" />
+            <span className="header__line" />
+            <span className="header__line" />
           </button>
           <Link to="/">
             <img className="header__logo" src={logo} alt="Логотип сайта" />
           </Link>
           <nav
             className={`header__navigation header__navigation${
-              props.logIn ? "_visible" : ""
+              loggedIn ? "_visible" : ""
             }`}
           >
-            <Link to="/movies" className="header__films header__films_active">
+            <Link
+              to="/movies"
+              className={
+                isSavedPage
+                  ? `header__films`
+                  : `header__films header__films_active`
+              }
+            >
               <p>Фильмы</p>
             </Link>
             <Link
               to="/saved-movies"
-              className="header__saved-films header__saved-films_active"
+              className={
+                isSavedPage
+                  ? `header__saved-films header__saved-films_active`
+                  : `header__films`
+              }
             >
               <p>Сохраненные фильмы</p>
             </Link>
           </nav>
           <div
             className={`header__account header__account${
-              props.logIn ? "_visible" : ""
+              loggedIn ? "_visible" : ""
             }`}
           >
             <Link to="/profile" className="header__name">
@@ -49,7 +60,7 @@ function Header(props) {
           </div>
           <div
             className={`header__entrance-buttons header__entrance-buttons${
-              props.logIn ? "" : "_visible"
+              loggedIn ? "" : "_visible"
             }`}
           >
             <Link to="/signup" className="header__register">

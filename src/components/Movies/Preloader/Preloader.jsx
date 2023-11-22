@@ -3,7 +3,7 @@ import "./Preloader.css";
 function Preloader() {
   return (
     <section className="preloader">
-        <button className="preloader__button"/>
+      <span className="preloader__spinner" />
     </section>
   );
 }

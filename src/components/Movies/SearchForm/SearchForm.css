@@ -17,10 +17,24 @@
     justify-content: space-between;
 }
 
+.search__form-error{
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+    color: #EE3465;
+    padding: 0;
+}
+
 .search__input{
     background: none;
     border: none;
     padding: 0;
+    color: white;
+    width: 680px;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 34px;
 }
 
 .search__input::placeholder{
@@ -63,6 +77,10 @@
     .search__form{
         max-width: 708px;
     }
+
+    .search__input{
+        max-width: 300px;
+    }
 }
 
 @media screen and (max-width: 400px){
@@ -79,5 +97,11 @@
 
     .search__form{
         max-width: 292px;
+    }
+
+    .search__input{
+        max-width: 240px;
+        font-size: 18px;
+        line-height: 22px;
     }
 }

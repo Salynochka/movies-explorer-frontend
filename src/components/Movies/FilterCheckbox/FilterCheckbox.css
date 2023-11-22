@@ -59,7 +59,7 @@
     display: none;
 }
 
-.filter__text{
+.filter__text_desktop{
     font-size: 13px;
     font-weight: 400;
     line-height: 18px;
@@ -95,7 +95,7 @@
         margin: 0 14px 0 0;
     }
 
-    .filter__text{
+    .filter__text_desktop{
         display: none;
     }
 }

@@ -1,10 +1,24 @@
 import React from "react";
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useFormValidation } from "../../utils/useFormValidation";
 
-function Register(props) {
-  return (
+function Register({ handleSubmit, isLoggedIn }) {
+  const { values, onChange, errors, isValid } = useFormValidation();
+
+  function handleChange(e) {
+    onChange(e);
+  }
+
+  function handleSubmitted(e) {
+    e.preventDefault();
+    handleSubmit(values)
+  }
+
+  return isLoggedIn ? (
+    <Navigate to="/" replace />
+  ) : (
     <main>
       <section className="register">
         <div className="register__container">
@@ -12,7 +26,11 @@ function Register(props) {
             <img src={logo} alt="Логотип" />
           </Link>
           <h1 className="register__title">Добро пожаловать!</h1>
-          <form className="register__form" name="register">
+          <form
+            className="register__form"
+            name="register"
+            onSubmit={handleSubmitted}
+          >
             <fieldset className="register__input">
               <h2 className="register__heading">Имя</h2>
               <input
@@ -21,34 +39,54 @@ function Register(props) {
                 name="name"
                 placeholder="Имя"
                 minLength="2"
-                maxLength="40"
                 required
+                onChange={handleChange}
+                value={values.name || ""}
+                autoComplete="on"
+                disabled={isValid.name}
               />
-              <span className="register__form-error register__form-error_type_name name-error" />
+              <span className="register__form-error register__form-error_type_name name-error">
+                {errors.name}
+              </span>
               <h2 className="register__heading">E-mail</h2>
               <input
-                type="text"
+                type="email"
                 className="register__item register__item_type_email"
                 name="email"
                 placeholder="Email"
                 minLength="2"
-                maxLength="40"
                 required
+                onChange={handleChange}
+                value={values.email || ""}
+                autoComplete="on"
+                pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
+                disabled={isValid.email}
               />
-              <span className="register__form-error register__form-error_type_email email-error" />
+              <span className="register__form-error register__form-error_type_email email-error">
+                {errors.email}
+              </span>
               <h2 className="register__heading">Пароль</h2>
               <input
-                type="text"
+                type="password"
                 className="register__item register__item_type_password"
                 name="password"
                 placeholder="Пароль"
-                minLength="2"
-                maxLength="200"
+                minLength="8"
                 required
+                onChange={handleChange}
+                value={values.password || ""}
+                autocomplete="on"
+                disabled={isValid.password}
               />
-              <span className="register__form-error register__form-error_type_password password-error" />
+              <span className="register__form-error register__form-error_type_password password-error">
+                {errors.password}
+              </span>
             </fieldset>
-            <button className="register__button" type="submit">
+            <button
+              className="register__button"
+              type="submit"
+              disabled={!isValid}
+            >
               Зарегистрироваться
             </button>
             <div className="register__ask">
