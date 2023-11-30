@@ -139,6 +139,7 @@ function App() {
           setIsLoggedIn(true);
           setCurrentUser(res);
           navigate("/movies", { replace: true });
+          setIsNotFoundMovies(true);
         }
       })
       .catch((err) => {
@@ -192,8 +193,10 @@ function App() {
 
   function filterMovies(movies, searchString, checkbox) {
     if (searchString) {
-      let filtered = movies.filter((movie) =>
-        movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
+      let filtered = movies.filter(
+        (movie) =>
+          movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
+          movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
       );
       filtered = checkbox
         ? filtered.filter((m) => m.duration <= SHORT_MOVIE)
@@ -223,15 +226,21 @@ function App() {
           localStorage.setItem("moviesSearch", JSON.stringify(moviesSearch));
           setIsNotFoundMovies(false);
           setMovies(moviesSearch);
+          if (search.length === 0) {
+            alert("Нужно ввести ключевое слово");
+          }
         })
         .catch((err) => {
           console.log(err);
         })
-        .finally(() => setPreloader(false));
+        .finally(() => {setPreloader(false)});
     } else {
       const moviesSearch = filterMovies(allMovies, search, isShort);
       localStorage.setItem("moviesSearch", JSON.stringify(moviesSearch));
       setMovies(moviesSearch);
+      if (search.length === 0) {
+        alert("Нужно ввести ключевое слово");
+      }
     }
   }
 
@@ -240,6 +249,9 @@ function App() {
     const moviesSavedSearch = filterMovies(savedMovies, search, isShort);
     localStorage.setItem("moviesSavedSearch", JSON.stringify(moviesSavedSearch));
     setSavedMovies(moviesSavedSearch);
+    if (search.length === 0) {
+      alert("Нужно ввести ключевое слово");
+    }
   }
 
   function handleCheckbox() {
@@ -260,7 +272,6 @@ function App() {
       }
     }
     if (pathname === "/saved-movies") {
-      // const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
       const moviesSavedSearch = JSON.parse(
         localStorage.getItem("moviesSavedSearch")
       );

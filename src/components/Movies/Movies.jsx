@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
@@ -22,11 +22,6 @@ function Movies({
   isNotFoundMovies,
 }) {
   const isSavedPage = false;
-  /*
-  useEffect(() => {
-    const movies = JSON.parse(localStorage.getItem("movies"));
-    setMovies(movies);
-  }, []);*/
 
   return (
     <div className="movies">
@@ -45,9 +40,9 @@ function Movies({
         {isLoading ? (
           <Preloader />
         ) : isNotFoundMovies ? (
-          " "
-        ) : movies.length === 0 || undefined || null ? (
-          <p className="movies_not-found">Ничего не найдено</p>
+          <p className="movies_text">Необходимо ввести ключевое слово в строку поиска</p>
+        ) : (movies.length === 0 || undefined || null) ? (
+          <p className="movies_text">Ничего не найдено</p>
         ) : (
           <MoviesCardList
             movies={movies || ""}
