@@ -190,18 +190,17 @@ function App() {
       });
   }
 
-  function filterMovies(movies, textSearch, checkbox) {
-    if (textSearch) {
-      let resultFiltered = movies.filter((movie) =>
-        movie.nameRU.toLowerCase().includes(textSearch.toLowerCase())
+  function filterMovies(movies, searchString, checkbox) {
+    if (searchString) {
+      let filtered = movies.filter((movie) =>
+        movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) || movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
       );
-      resultFiltered = checkbox
-        ? resultFiltered.filter((m) => m.duration <= SHORT_MOVIE)
-        : resultFiltered;
-
-      return resultFiltered;
+      filtered = checkbox
+        ? filtered.filter((m) => m.duration <= SHORT_MOVIE)
+        : filtered;
+      return filtered;
     }
-    if (!textSearch) {
+    if (!searchString) {
       movies = checkbox
         ? movies.filter((m) => m.duration <= SHORT_MOVIE)
         : movies;

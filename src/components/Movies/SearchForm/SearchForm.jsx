@@ -34,7 +34,9 @@ function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
     if (isMoviesPage && !value) {
       setError(!error);
       return;
-    }
+    }// else if (searchString.trim().length === 0) {
+   //   alert('Нужно ввести ключевое слово')
+   // }
     handleSubmit(value, isShort, setValue, setIsShort);
     setError(false);
   }
@@ -42,7 +44,7 @@ function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
   return (
     <div className="search">
       <div className="search__info">
-        <form className="search__form" onClick={handleSubmitted} name="search">
+        <form className="search__form" onSubmit={handleSubmitted} name="search">
           <input
             className="search__input"
             type="text"
