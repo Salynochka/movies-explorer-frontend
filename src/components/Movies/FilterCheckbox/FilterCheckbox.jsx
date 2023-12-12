@@ -1,7 +1,7 @@
 import React from "react";
 import "./FilterCheckbox.css";
 
-function FilterCheckbox({ isShort, switchCheckbox }) {
+function FilterCheckbox({ isShort, switchCheckbox, disabled }) {
 /*
   const onChange = (evt) => {
     switchCheckbox();
@@ -19,6 +19,7 @@ function FilterCheckbox({ isShort, switchCheckbox }) {
             name='shortFilms'
             onChange={switchCheckbox}
             checked={isShort || false}
+            disabled={disabled}
           />
         </form>
         <h3 className="filter__text filter__text_desktop">Короткометражки</h3>

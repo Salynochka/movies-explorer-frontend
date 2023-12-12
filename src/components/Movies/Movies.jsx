@@ -19,9 +19,10 @@ function Movies({
   handleSaveMovie,
   savedMovies,
   handleMoreMovies,
-  isNotFoundMovies,
+  isNeedToSearchMovies,
 }) {
   const isSavedPage = false;
+  const isNotFoundMovies = movies.length === 0 || undefined || null
 
   return (
     <div className="movies">
@@ -39,9 +40,9 @@ function Movies({
         />
         {isLoading ? (
           <Preloader />
-        ) : isNotFoundMovies ? (
+        ) : isNeedToSearchMovies ? (
           <p className="movies_text">Необходимо ввести ключевое слово в строку поиска</p>
-        ) : (movies.length === 0 || undefined || null) ? (
+        ) : isNotFoundMovies ? (
           <p className="movies_text">Ничего не найдено</p>
         ) : (
           <MoviesCardList
@@ -50,7 +51,7 @@ function Movies({
             handleUnsaveMovie={handleUnsaveMovie}
             handleSaveMovie={handleSaveMovie}
             handleMoreMovies={handleMoreMovies}
-            isNotFoundMovies={isNotFoundMovies}
+            isNeedToSearchMovies={isNeedToSearchMovies}
             isLoading={isLoading}
           />
         )}

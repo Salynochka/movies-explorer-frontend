@@ -2,10 +2,8 @@ import "../MoviesCard/MoviesCard.css";
 import { useLocation } from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import "./MoviesCardList.css";
-import Preloader from "../Preloader/Preloader";
 
 function MoviesCards({
-  isLoading,
   movies,
   isSavedPage,
   handleMoreMovies,
@@ -13,7 +11,6 @@ function MoviesCards({
   handleSaveMovie,
   handleUnsaveMovie,
   isSaved,
-  isNotFoundMovies,
 }) {
   const location = useLocation();
 

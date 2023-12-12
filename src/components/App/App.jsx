@@ -42,8 +42,10 @@ function App() {
   const [addMovies, setAddMovies] = useState(0);
   const [windowInnerWidth, setWindowInnerWidth] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
   const [isShort, setIsShort] = useState(false);
+  const [isNeedToSearchMovies, setIsNeedToSearchMovies] = useState(false);
   const [isNotFoundMovies, setIsNotFoundMovies] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
 
@@ -139,7 +141,7 @@ function App() {
           setIsLoggedIn(true);
           setCurrentUser(res);
           navigate("/movies", { replace: true });
-          setIsNotFoundMovies(true);
+          setIsNeedToSearchMovies(true);
         }
       })
       .catch((err) => {
@@ -191,24 +193,15 @@ function App() {
       });
   }
 
-  function filterMovies(movies, searchString, checkbox) {
-    if (searchString) {
-      let filtered = movies.filter(
-        (movie) =>
-          movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) ||
-          movie.nameEN.toLowerCase().includes(searchString.toLowerCase())
-      );
-      filtered = checkbox
-        ? filtered.filter((m) => m.duration <= SHORT_MOVIE)
-        : filtered;
-      return filtered;
-    }
-    if (!searchString) {
-      movies = checkbox
-        ? movies.filter((m) => m.duration <= SHORT_MOVIE)
-        : movies;
-      return movies;
-    }
+  function filterMovies(movies, searchString, isShort) {
+    let filtered = movies.filter((movie) =>
+      movie.nameRU.toLowerCase().includes(searchString.toLowerCase())
+    );
+    setMovies(filtered);
+    setFilteredMovies(
+      isShort ? filtered.filter((m) => m.duration <= SHORT_MOVIE) : filtered
+    );
+    return filtered;
   }
 
   function handleSubmitSearchMovies(search, isShort) {
@@ -224,8 +217,8 @@ function App() {
           localStorage.setItem("allMovies", JSON.stringify(allMovies));
           const moviesSearch = filterMovies(allMovies, search, isShort);
           localStorage.setItem("moviesSearch", JSON.stringify(moviesSearch));
-          setIsNotFoundMovies(false);
-          setMovies(moviesSearch);
+          setIsNeedToSearchMovies(false);
+          setFilteredMovies(moviesSearch);
           if (search.length === 0) {
             alert("Нужно ввести ключевое слово");
           }
@@ -233,26 +226,60 @@ function App() {
         .catch((err) => {
           console.log(err);
         })
-        .finally(() => {setPreloader(false)});
+        .finally(() => {
+          setPreloader(false);
+        });
     } else {
       const moviesSearch = filterMovies(allMovies, search, isShort);
       localStorage.setItem("moviesSearch", JSON.stringify(moviesSearch));
-      setMovies(moviesSearch);
+      setFilteredMovies(moviesSearch);
       if (search.length === 0) {
         alert("Нужно ввести ключевое слово");
       }
     }
   }
 
+  useEffect(() => {
+    if (localStorage.getItem("moviesSearch")) {
+      setIsNotFoundMovies(filteredMovies.length === 0);
+    } else {
+      setIsNotFoundMovies(false);
+    }
+  }, [filteredMovies]);
+
+  useEffect(() => {
+    if (localStorage.getItem("movies")) {
+      const movies = JSON.parse(localStorage.getItem("movies"));
+      setMovies(movies);
+      if (localStorage.getItem("checkbox") === "true") {
+        setFilteredMovies(filteredMovies);
+      } else {
+        setFilteredMovies(movies);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    setIsShort(localStorage.getItem("checkbox") === "true");
+  }, []);
+
   function handleSubmitSearchSavedMovies(search, isShort) {
     const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
     const moviesSavedSearch = filterMovies(savedMovies, search, isShort);
-    localStorage.setItem("moviesSavedSearch", JSON.stringify(moviesSavedSearch));
+    localStorage.setItem(
+      "moviesSavedSearch",
+      JSON.stringify(moviesSavedSearch)
+    );
     setSavedMovies(moviesSavedSearch);
     if (search.length === 0) {
       alert("Нужно ввести ключевое слово");
     }
   }
+
+  useEffect(() => {
+    const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+    setSavedMovies(savedMovies);
+  }, []);
 
   function handleCheckbox() {
     setIsShort(!isShort);
@@ -263,29 +290,23 @@ function App() {
         const moviesFilterCheckbox = !isShort
           ? moviesSearch.filter((item) => item.duration <= SHORT_MOVIE)
           : moviesSearch;
-
-        setMovies(moviesFilterCheckbox);
         localStorage.setItem(
           "moviesFilterCheckbox",
           JSON.stringify(moviesFilterCheckbox)
         );
+        setFilteredMovies(moviesFilterCheckbox);
+      } else {
+        setFilteredMovies(moviesSearch);
       }
     }
     if (pathname === "/saved-movies") {
       const moviesSavedSearch = JSON.parse(
         localStorage.getItem("moviesSavedSearch")
       );
-      localStorage.setItem("savedCheckbox", !isShort);
-      if (moviesSavedSearch) {
-        const moviesSavedCheckbox = !isShort
-          ? moviesSavedSearch.filter((m) => m.duration <= SHORT_MOVIE)
-          : moviesSavedSearch;
-        setSavedMovies(moviesSavedCheckbox);
-        localStorage.setItem(
-          "moviesSavedCheckbox",
-          JSON.stringify(moviesSavedCheckbox)
-        );
-      }
+      const moviesSavedCheckbox = !isShort
+        ? moviesSavedSearch.filter((m) => m.duration <= SHORT_MOVIE)
+        : moviesSavedSearch;
+      setSavedMovies(moviesSavedCheckbox);
     }
   }
 
@@ -295,7 +316,7 @@ function App() {
       localStorage.getItem("moviesFilterCheckbox")
     );
     if (moviesSearch || moviesFilterCheckbox) {
-      setIsNotFoundMovies(false);
+      setIsNeedToSearchMovies(false);
       if (
         JSON.parse(localStorage.getItem("checkbox")) &&
         moviesFilterCheckbox
@@ -304,13 +325,13 @@ function App() {
           return;
         }
         if (windowInnerWidth > LARGE_VERSION) {
-          setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MAX));
+          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MAX));
           setAddMovies(ADDED_CARDS_MAX);
         } else if (windowInnerWidth >= MEDIUM_VERSION) {
-          setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MEDIUM));
+          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MEDIUM));
           setAddMovies(ADDED_CARDS_MEDIUM);
         } else {
-          setMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MIN));
+          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MIN));
           setAddMovies(ADDED_CARDS_MIN);
         }
         return;
@@ -318,13 +339,13 @@ function App() {
         return;
       }
       if (windowInnerWidth > LARGE_VERSION) {
-        setMovies(moviesSearch.slice(0, CARD_WIDTH_MAX));
+        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MAX));
         setAddMovies(ADDED_CARDS_MAX);
       } else if (windowInnerWidth >= MEDIUM_VERSION) {
-        setMovies(moviesSearch.slice(0, CARD_WIDTH_MEDIUM));
+        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MEDIUM));
         setAddMovies(ADDED_CARDS_MEDIUM);
       } else {
-        setMovies(moviesSearch.slice(0, CARD_WIDTH_MIN));
+        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MIN));
         setAddMovies(ADDED_CARDS_MIN);
       }
     }
@@ -348,7 +369,7 @@ function App() {
     isLoggedIn,
     isShort,
     isRendered,
-    isNotFoundMovies,
+    isNeedToSearchMovies,
   ]);
 
   useEffect(() => {
@@ -370,8 +391,13 @@ function App() {
       localStorage.getItem("moviesFilterCheckbox")
     );
     if (JSON.parse(localStorage.getItem("checkbox"))) {
-      setMovies(moviesFilterCheckbox.slice(0, movies.length + addMovies));
-    } else setMovies(moviesSearch.slice(0, movies.length + addMovies));
+      setFilteredMovies(
+        moviesFilterCheckbox.slice(0, filteredMovies.length + addMovies)
+      );
+    } else
+      setFilteredMovies(
+        moviesSearch.slice(0, filteredMovies.length + addMovies)
+      );
   }
 
   function handleSaveMovie(movie, setSaved) {
@@ -445,15 +471,15 @@ function App() {
                   onBurgerMenu={handleOpenBurgerMenu}
                   handleUnsaveMovie={handleUnsaveMovie}
                   handleSaveMovie={handleSaveMovie}
-                  movies={movies}
-                  setMovies={setMovies}
+                  movies={filteredMovies}
+                  setMovies={setFilteredMovies}
                   savedMovies={savedMovies}
                   handleSubmit={handleSubmitSearchMovies}
                   handleMoreMovies={handleMoreMovies}
                   isShort={isShort}
                   setIsShort={setIsShort}
                   switchCheckbox={handleCheckbox}
-                  isNotFoundMovies={isNotFoundMovies}
+                  isNeedToSearchMovies={isNeedToSearchMovies}
                 />
               }
             />
@@ -465,7 +491,6 @@ function App() {
                   loggedIn={isLoggedIn}
                   isLoggedIn={isLoggedIn}
                   savedMovies={savedMovies}
-                  setSavedMovies={setSavedMovies}
                   onBurgerMenu={handleOpenBurgerMenu}
                   handleUnsaveMovie={handleUnsaveMovie}
                   handleSubmit={handleSubmitSearchSavedMovies}

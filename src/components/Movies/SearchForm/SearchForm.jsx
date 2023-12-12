@@ -63,7 +63,7 @@ function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
         </form>
         <span className="search__form-error">{errors.search}</span>
       </div>
-      <FilterCheckbox isShort={isShort} switchCheckbox={switchCheckbox} />
+      <FilterCheckbox isShort={isShort} switchCheckbox={switchCheckbox} disabled={!value}/>
     </div>
   );
 }

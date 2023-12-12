@@ -3,27 +3,21 @@ import Header from "../Header/Header";
 import SearchForm from "../Movies/SearchForm/SearchForm";
 import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
-import Preloader from "../Movies/Preloader/Preloader";
 import "./SavedMovies.css";
+import "../Movies/Movies.css";
 
 function SavedMovies({
   loggedIn,
   savedMovies,
-  setSavedMovies,
   onBurgerMenu,
   handleSubmit,
   isShort,
   setIsShort,
   handleUnsaveMovie,
-  isNotFoundMovies,
+  isNeedToSearchMovies,
   switchCheckbox,
 }) {
   const isSavedPage = true;
-
-  useEffect(() => {
-    const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
-    setSavedMovies(savedMovies);
-  }, []);
 
   return (
     <div className="saved-movies">
@@ -40,13 +34,13 @@ function SavedMovies({
           switchCheckbox={switchCheckbox}
         />
         {(savedMovies.length === 0 || undefined || null) ? (
-          <p className="movies_not-found">Ничего не найдено</p>
+          <p className="movies_text">Ничего не найдено</p>
         ) : (
           <MoviesCardList
             movies={savedMovies}
             savedMovies={savedMovies}
             handleUnsaveMovie={handleUnsaveMovie}
-            isNotFoundMovies={isNotFoundMovies}
+            isNeedToSearchMovies={isNeedToSearchMovies}
           />
         )}
       </main>
