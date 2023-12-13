@@ -47,7 +47,6 @@ function App() {
   const [isShort, setIsShort] = useState(false);
   const [isNeedToSearchMovies, setIsNeedToSearchMovies] = useState(false);
   const [isNotFoundMovies, setIsNotFoundMovies] = useState(false);
-  const [isRendered, setIsRendered] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -204,8 +203,11 @@ function App() {
     return filtered;
   }
 
+  function filterDuration(movies) {
+  return movies.filter((m) => m.duration <= SHORT_MOVIE)
+}
+
   function handleSubmitSearchMovies(search, isShort) {
-    setIsRendered(!isRendered);
     localStorage.setItem("searchString", search);
     localStorage.setItem("checkbox", isShort);
     const allMovies = JSON.parse(localStorage.getItem("allMovies"));
@@ -248,11 +250,11 @@ function App() {
   }, [filteredMovies]);
 
   useEffect(() => {
-    if (localStorage.getItem("movies")) {
-      const movies = JSON.parse(localStorage.getItem("movies"));
+    if (localStorage.getItem("allMovies")) {
+      const movies = JSON.parse(localStorage.getItem("allMovies"));
       setMovies(movies);
       if (localStorage.getItem("checkbox") === "true") {
-        setFilteredMovies(filteredMovies);
+        setFilteredMovies(filterDuration(movies));
       } else {
         setFilteredMovies(movies);
       }
@@ -288,7 +290,7 @@ function App() {
       localStorage.setItem("checkbox", !isShort);
       if (moviesSearch) {
         const moviesFilterCheckbox = !isShort
-          ? moviesSearch.filter((item) => item.duration <= SHORT_MOVIE)
+          ? moviesSearch.filter((i) => i.duration <= SHORT_MOVIE)
           : moviesSearch;
         localStorage.setItem(
           "moviesFilterCheckbox",
@@ -368,7 +370,6 @@ function App() {
     pathname,
     isLoggedIn,
     isShort,
-    isRendered,
     isNeedToSearchMovies,
   ]);
 
@@ -494,8 +495,6 @@ function App() {
                   onBurgerMenu={handleOpenBurgerMenu}
                   handleUnsaveMovie={handleUnsaveMovie}
                   handleSubmit={handleSubmitSearchSavedMovies}
-                  isRendered={isRendered}
-                  setIsRendered={setIsRendered}
                   switchCheckbox={handleCheckbox}
                   isShort={isShort}
                   setIsShort={setIsShort}

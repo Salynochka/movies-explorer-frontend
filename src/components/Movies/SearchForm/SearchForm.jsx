@@ -5,7 +5,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../../utils/useFormValidation";
 
 function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
-  const [value, setValue] = useState({});
+  const [value, setValue] = useState('');
   const [error, setError] = useState(false);
   const location = useLocation();
 
@@ -46,7 +46,7 @@ function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
   return (
     <div className="search">
       <div className="search__info">
-        <form className="search__form" onSubmit={handleSubmitted} name="search">
+        <form className="search__form" name="search">
           <input
             type="text"
             className="search__input"
@@ -59,7 +59,7 @@ function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
             minLength="1"
             required
           />
-          <button className="search__button" type="submit" disabled={!isValid}/>
+          <button className="search__button" type="submit" disabled={!isValid} onClick={handleSubmitted}/>
         </form>
         <span className="search__form-error">{errors.search}</span>
       </div>
