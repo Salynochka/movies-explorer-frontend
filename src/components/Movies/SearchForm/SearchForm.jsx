@@ -5,11 +5,11 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import { useFormValidation } from "../../../utils/useFormValidation";
 
 function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const location = useLocation();
 
-  const {onChange, errors, isValid } = useFormValidation();
+  const { onChange, errors, isValid } = useFormValidation();
 
   const isMoviesPage = location.pathname === "/movies";
   const isSavedMoviesPage = location.pathname === "/saved-movies";
@@ -18,8 +18,8 @@ function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
     setValue(evt.target.value);
     if (isMoviesPage) {
       localStorage.setItem("searchString", evt.target.value);
-    } 
-    onChange(evt)
+    }
+    onChange(evt);
   }
 
   useEffect(() => {
@@ -59,11 +59,27 @@ function SearchForm({ handleSubmit, isShort, setIsShort, switchCheckbox }) {
             minLength="1"
             required
           />
-          <button className="search__button" type="submit" disabled={!isValid} onClick={handleSubmitted}/>
+          <button
+            className="search__button"
+            type="submit"
+            disabled={!isValid}
+            onClick={handleSubmitted}
+          />
         </form>
         <span className="search__form-error">{errors.search}</span>
       </div>
-      <FilterCheckbox isShort={isShort} switchCheckbox={switchCheckbox} disabled={!value}/>
+      {isMoviesPage ? (
+        <FilterCheckbox
+          isShort={isShort}
+          switchCheckbox={switchCheckbox}
+          disabled={!value}
+        />
+      ) : (
+        <FilterCheckbox
+          isShort={isShort}
+          switchCheckbox={switchCheckbox}
+        />
+      )}
     </div>
   );
 }
