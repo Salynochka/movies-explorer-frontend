@@ -13,8 +13,8 @@ function MoviesCard({
   const isMoviesPage = location.pathname === "/movies";
   const isSavedMoviesPage = location.pathname === "/saved-movies";
 
-  const { isAdd, id } = movie;
-  const [isSaved, setIsSaved] = useState(isAdd);
+  const { isSave, id } = movie;
+  const [isSaved, setIsSaved] = useState(isSave);
 
   function durationHours(duration) {
     const hours = Math.floor(duration / 60);

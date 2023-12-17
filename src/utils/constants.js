@@ -1,8 +1,10 @@
-export const LARGE_VERSION = 1180;
-export const MEDIUM_VERSION = 768;
+export const LARGE_VERSION = 1160;
+export const MEDIUM_VERSION = 900;
+export const SMALL_VERSION = 740;
 
 export const CARD_WIDTH_MAX = 16;
 export const CARD_WIDTH_MEDIUM = 12;
+export const CARD_WIDTH_MIDDLE = 8;
 export const CARD_WIDTH_MIN = 5;
 
 export const ADDED_CARDS_MAX = 4;

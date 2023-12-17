@@ -18,11 +18,13 @@ import Preloader from "../Movies/Preloader/Preloader";
 import {
   LARGE_VERSION,
   MEDIUM_VERSION,
+  SMALL_VERSION,
   CARD_WIDTH_MAX,
   CARD_WIDTH_MEDIUM,
   CARD_WIDTH_MIN,
   ADDED_CARDS_MAX,
   ADDED_CARDS_MEDIUM,
+  CARD_WIDTH_MIDDLE,
   ADDED_CARDS_MIN,
   SHORT_MOVIE,
 } from "../../utils/constants.js";
@@ -249,7 +251,12 @@ function App() {
     const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
     const moviesSavedSearch = filterMovies(savedMovies, search, isShort);
     // localStorage.setItem( "moviesSavedSearch", JSON.stringify(moviesSavedSearch));
-    setSavedMovies(moviesSavedSearch);
+    localStorage.setItem("moviesSavedSearch", JSON.stringify(moviesSavedSearch));
+    if (localStorage.getItem("checkbox") === "true") {
+      setSavedMovies(filterDuration(moviesSavedSearch));
+    } else {
+      setSavedMovies(moviesSavedSearch);
+    }
     if (search.length === 0) {
       alert("Нужно ввести ключевое слово");
     }
@@ -282,7 +289,7 @@ function App() {
   useEffect(() => {
     const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
     setSavedMovies(savedMovies);
-  }, []);
+  }, [pathname]);
 
   function handleCheckbox() {
     setIsShort(!isShort);
@@ -342,6 +349,9 @@ function App() {
         } else if (windowInnerWidth >= MEDIUM_VERSION) {
           setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MEDIUM));
           setAddMovies(ADDED_CARDS_MEDIUM);
+        } else if (windowInnerWidth >= SMALL_VERSION) {
+          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MIDDLE));
+          setAddMovies(ADDED_CARDS_MIN);
         } else {
           setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MIN));
           setAddMovies(ADDED_CARDS_MIN);
@@ -356,6 +366,9 @@ function App() {
       } else if (windowInnerWidth >= MEDIUM_VERSION) {
         setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MEDIUM));
         setAddMovies(ADDED_CARDS_MEDIUM);
+      } else if (windowInnerWidth >= SMALL_VERSION) {
+        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MIDDLE));
+        setAddMovies(ADDED_CARDS_MIN);
       } else {
         setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MIN));
         setAddMovies(ADDED_CARDS_MIN);
@@ -413,7 +426,7 @@ function App() {
         movieSave.isSave = true;
         const addToMovies = [...savedMovies, movieSave];
         setSavedMovies(addToMovies);
-        //localStorage.setItem("savedMovies", JSON.stringify(addToMovies));
+        localStorage.setItem("savedMovies", JSON.stringify(addToMovies));
         setSaved(true);
       })
       .catch((err) => {
@@ -430,7 +443,7 @@ function App() {
           (savedMovie) => savedMovie._id !== movie._id
         );
         setSavedMovies(savedMoviesCards);
-        //  localStorage.setItem("savedMovies", JSON.stringify(savedMoviesCards));
+        localStorage.setItem("savedMovies", JSON.stringify(savedMoviesCards));
         setSaved(false);
       })
       .catch((err) => {
