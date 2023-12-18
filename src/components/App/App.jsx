@@ -250,7 +250,6 @@ function App() {
   function handleSubmitSearchSavedMovies(search, isShort) {
     const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
     const moviesSavedSearch = filterMovies(savedMovies, search, isShort);
-    // localStorage.setItem( "moviesSavedSearch", JSON.stringify(moviesSavedSearch));
     localStorage.setItem("moviesSavedSearch", JSON.stringify(moviesSavedSearch));
     if (localStorage.getItem("checkbox") === "true") {
       setSavedMovies(filterDuration(moviesSavedSearch));
@@ -423,6 +422,7 @@ function App() {
     mainApi
       .saveMovie(movie, token)
       .then((movieSave) => {
+        const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
         movieSave.isSave = true;
         const addToMovies = [...savedMovies, movieSave];
         setSavedMovies(addToMovies);
@@ -439,6 +439,7 @@ function App() {
     mainApi
       .unsaveMovie(movie._id, token)
       .then(() => {
+        const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
         const savedMoviesCards = savedMovies.filter(
           (savedMovie) => savedMovie._id !== movie._id
         );
