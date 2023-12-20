@@ -40,6 +40,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
+  const [savedFilteredMovies, setSavedFilteredMovies] = useState([]);
 
   const [addMovies, setAddMovies] = useState(0);
   const [windowInnerWidth, setWindowInnerWidth] = useState(window.innerWidth);
@@ -440,12 +441,24 @@ function App() {
       .unsaveMovie(movie._id, token)
       .then(() => {
         const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+        const moviesSavedSearch = JSON.parse(
+          localStorage.getItem("moviesSavedSearch")
+        );
         const savedMoviesCards = savedMovies.filter(
           (savedMovie) => savedMovie._id !== movie._id
         );
-        setSavedMovies(savedMoviesCards);
-        localStorage.setItem("savedMovies", JSON.stringify(savedMoviesCards));
         setSaved(false);
+        
+        if (moviesSavedSearch) {
+          const savedMoviesList = moviesSavedSearch.filter(
+            (savedMovie) => savedMovie._id !== movie._id
+          );
+          setSavedMovies(savedMoviesList);
+          localStorage.setItem("moviesSavedSearch", JSON.stringify(savedMoviesList));
+        } else {
+          setSavedMovies(savedMoviesCards);
+        }
+        localStorage.setItem("savedMovies", JSON.stringify(savedMoviesCards));
       })
       .catch((err) => {
         console.log(err);
