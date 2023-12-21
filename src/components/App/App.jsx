@@ -16,16 +16,6 @@ import Navigation from "../Main/Navigation/Navigation";
 import ErrorWindow from "../ErrorWindow/ErrorWindow";
 import Preloader from "../Movies/Preloader/Preloader";
 import {
-  LARGE_VERSION,
-  MEDIUM_VERSION,
-  SMALL_VERSION,
-  CARD_WIDTH_MAX,
-  CARD_WIDTH_MEDIUM,
-  CARD_WIDTH_MIN,
-  ADDED_CARDS_MAX,
-  ADDED_CARDS_MEDIUM,
-  CARD_WIDTH_MIDDLE,
-  ADDED_CARDS_MIN,
   SHORT_MOVIE,
 } from "../../utils/constants.js";
 
@@ -40,10 +30,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
-  const [savedFilteredMovies, setSavedFilteredMovies] = useState([]);
-
-  const [addMovies, setAddMovies] = useState(0);
-  const [windowInnerWidth, setWindowInnerWidth] = useState(window.innerWidth);
+  
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
 
@@ -329,95 +316,6 @@ function App() {
     }
   }
 
-  function changeLengthOfMovies() {
-    const moviesSearch = JSON.parse(localStorage.getItem("moviesSearch"));
-    const moviesFilterCheckbox = JSON.parse(
-      localStorage.getItem("moviesFilterCheckbox")
-    );
-    if (moviesSearch || moviesFilterCheckbox) {
-      setIsNeedToSearchMovies(false);
-      if (
-        JSON.parse(localStorage.getItem("checkbox")) &&
-        moviesFilterCheckbox
-      ) {
-        if (moviesFilterCheckbox === null) {
-          return;
-        }
-        if (windowInnerWidth > LARGE_VERSION) {
-          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MAX));
-          setAddMovies(ADDED_CARDS_MAX);
-        } else if (windowInnerWidth >= MEDIUM_VERSION) {
-          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MEDIUM));
-          setAddMovies(ADDED_CARDS_MEDIUM);
-        } else if (windowInnerWidth >= SMALL_VERSION) {
-          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MIDDLE));
-          setAddMovies(ADDED_CARDS_MIN);
-        } else {
-          setFilteredMovies(moviesFilterCheckbox.slice(0, CARD_WIDTH_MIN));
-          setAddMovies(ADDED_CARDS_MIN);
-        }
-        return;
-      } else if (moviesSearch === null) {
-        return;
-      }
-      if (windowInnerWidth > LARGE_VERSION) {
-        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MAX));
-        setAddMovies(ADDED_CARDS_MAX);
-      } else if (windowInnerWidth >= MEDIUM_VERSION) {
-        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MEDIUM));
-        setAddMovies(ADDED_CARDS_MEDIUM);
-      } else if (windowInnerWidth >= SMALL_VERSION) {
-        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MIDDLE));
-        setAddMovies(ADDED_CARDS_MIN);
-      } else {
-        setFilteredMovies(moviesSearch.slice(0, CARD_WIDTH_MIN));
-        setAddMovies(ADDED_CARDS_MIN);
-      }
-    }
-  }
-
-  function changeWidthWindow() {
-    setWindowInnerWidth(window.innerWidth);
-  }
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      window.addEventListener("resize", changeWidthWindow);
-      changeLengthOfMovies();
-      return () => {
-        window.addEventListener("resize", changeWidthWindow);
-      };
-    }
-  }, [windowInnerWidth, pathname, isLoggedIn, isShort, isNeedToSearchMovies]);
-
-  useEffect(() => {
-    function handleResize() {
-      const windowInnerWidth = window.innerWidth;
-      if (windowInnerWidth > LARGE_VERSION) {
-        setIsOpen(false);
-      }
-    }
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.addEventListener("resize", handleResize);
-    };
-  }, []);
-
-  function handleMoreMovies() {
-    const moviesSearch = JSON.parse(localStorage.getItem("moviesSearch"));
-    const moviesFilterCheckbox = JSON.parse(
-      localStorage.getItem("moviesFilterCheckbox")
-    );
-    if (JSON.parse(localStorage.getItem("checkbox"))) {
-      setFilteredMovies(
-        moviesFilterCheckbox.slice(0, filteredMovies.length + addMovies)
-      );
-    } else
-      setFilteredMovies(
-        moviesSearch.slice(0, filteredMovies.length + addMovies)
-      );
-  }
-
   function handleSaveMovie(movie, setSaved) {
     const token = localStorage.getItem("token");
     mainApi
@@ -507,7 +405,6 @@ function App() {
                   setMovies={setFilteredMovies}
                   savedMovies={savedMovies}
                   handleSubmit={handleSubmitSearchMovies}
-                  handleMoreMovies={handleMoreMovies}
                   isShort={isShort}
                   setIsShort={setIsShort}
                   switchCheckbox={handleCheckbox}
